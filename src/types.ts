@@ -130,6 +130,10 @@ export interface StudentSubmission {
     feedback?: Feedback;
     readingProgress?: number;
   }>;
+  games?: Record<string, {
+    data: any;
+    submittedAt: string;
+  }>;
 }
 
 export interface UserProfile {

@@ -400,6 +400,14 @@ export default function InteractiveQuestTab({
     setTimeout(() => setToastMessage(null), 3000);
   };
 
+  // Persist a game's result onto the current student's submission record,
+  // so teachers can see it in 學習統計 / 成長表單 review.
+  const saveGameResult = (gameKey: string, data: any) => {
+    if (currentStudent?.studentId) {
+      onSaveQuest(currentStudent.studentId, `game_${gameKey}`, data);
+    }
+  };
+
   // ----------------------------------------------------
   // GAME STATE 1: MBTI QUIZ (12 questions, 4 options each, 4 axes)
   // ----------------------------------------------------
@@ -506,6 +514,17 @@ export default function InteractiveQuestTab({
     } else {
       showToast('🎉 MBTI 測驗完成！已算出您的性格傾向！');
       setMbtiStep(mbtiStep + 1); // completion view
+      const pickFinal = (axis: string, a: string, b: string) => {
+        let ca = 0, cb = 0;
+        mbtiQuestions.forEach((q, i) => {
+          if (q.axis !== axis) return;
+          const ans = nextAnswers[i];
+          if (ans === a) ca++; else if (ans) cb++;
+        });
+        return ca >= cb ? a : b;
+      };
+      const finalType = pickFinal('EI', 'E', 'I') + pickFinal('SN', 'S', 'N') + pickFinal('TF', 'T', 'F') + pickFinal('JP', 'J', 'P');
+      saveGameResult('mbti', { type: finalType, answers: nextAnswers });
     }
   };
 
@@ -626,17 +645,19 @@ export default function InteractiveQuestTab({
   ];
 
   const handleAdventureChoice = (points: Record<string, number>) => {
-    setAdventurePoints(prev => ({
-      同理: Math.max(0, prev.同理 + (points.同理 || 0)),
-      責任: Math.max(0, prev.責任 + (points.責任 || 0)),
-      勇氣: Math.max(0, prev.勇氣 + (points.勇氣 || 0))
-    }));
+    const nextPoints = {
+      同理: Math.max(0, adventurePoints.同理 + (points.同理 || 0)),
+      責任: Math.max(0, adventurePoints.責任 + (points.責任 || 0)),
+      勇氣: Math.max(0, adventurePoints.勇氣 + (points.勇氣 || 0))
+    };
+    setAdventurePoints(nextPoints);
     if (adventureStage < adventureScenarios.length - 1) {
       setAdventureStage(adventureStage + 1);
       showToast('⚔️ 抉擇完成，前往下一個情境冒險！');
     } else {
       setAdventureStage(adventureStage + 1); // Complete
       showToast('🌟 恭喜你，冒險關卡全數完成！');
+      saveGameResult('adventure', { points: nextPoints });
     }
   };
 
@@ -667,8 +688,10 @@ export default function InteractiveQuestTab({
         if (exists) {
           showToast('⚠️ 這兩個角色之間已經建立了連結！');
         } else {
-          setConnections(prev => [...prev, { from: selectedNode, to: node, rel: selectedRel }]);
+          const nextConnections = [...connections, { from: selectedNode, to: node, rel: selectedRel }];
+          setConnections(nextConnections);
           showToast(`💖 建立了「${selectedNode}」與「${node}」的 ${selectedRel} 關係！`);
+          saveGameResult('relationships', { connections: nextConnections });
         }
       }
       setSelectedNode(null);
@@ -707,6 +730,7 @@ export default function InteractiveQuestTab({
 
   const saveReflection = () => {
     showToast('💾 您的價值排序反思已成功記錄！');
+    saveGameResult('value_scale', { ranking: valuesList, reflection: reflectionText });
   };
 
   // ----------------------------------------------------
@@ -810,6 +834,7 @@ export default function InteractiveQuestTab({
   useEffect(() => {
     if (cards.length > 0 && cards.every(c => c.isMatched)) {
       setMemoryFinished(true);
+      saveGameResult('memory_cards', { moves: memoryMoves, score: memoryScore, timeSeconds: memoryTimer });
     }
   }, [cards]);
 
@@ -841,6 +866,7 @@ export default function InteractiveQuestTab({
     setWarmthIndex(prev => Math.min(100, prev + 2));
     setGratitudeMsg('');
     showToast('🎈 溫暖的感恩泡泡已成功升空！');
+    saveGameResult('gratitude', { message: newBubble.text, anonymous: isAnonymous });
   };
 
   // ----------------------------------------------------
@@ -866,6 +892,7 @@ export default function InteractiveQuestTab({
       [side]: prev[side] + 1
     }));
     showToast(`🗳️ 成功投票給 ${side === 'pro' ? '正方' : '反方'}！`);
+    saveGameResult('debate', { vote: side });
   };
 
   const handleAddComment = (e: React.FormEvent) => {
@@ -909,6 +936,7 @@ export default function InteractiveQuestTab({
     setSavedMoods(prev => [newRecord, ...prev]);
     setMoodNote('');
     showToast('🌡️ 今天的溫度心情已成功記錄至班級！');
+    saveGameResult('mood', newRecord);
   };
 
   // ----------------------------------------------------
@@ -922,7 +950,11 @@ export default function InteractiveQuestTab({
   ]);
 
   const toggleBadgeTask = (id: number) => {
-    setBadgeTasks(prev => prev.map(t => t.id === id ? { ...t, done: !t.done } : t));
+    setBadgeTasks(prev => {
+      const next = prev.map(t => t.id === id ? { ...t, done: !t.done } : t);
+      saveGameResult('badges', { tasks: next, unlockedCount: next.filter(t => t.done).length });
+      return next;
+    });
     showToast('🏆 徽章任務狀態已更新！');
   };
 
@@ -1666,7 +1698,11 @@ export default function InteractiveQuestTab({
                   <div className="flex gap-3 justify-end">
                     <button onClick={resetPuzzle} className="px-5 py-2 border-2 border-[#F1E0CE] text-slate-500 font-black text-xs rounded-xl hover:bg-slate-50 transition-all cursor-pointer">重置拼圖</button>
                     <button
-                      onClick={() => showToast(Object.values(puzzlePlaced).every(Boolean) ? '🎉 恭喜完成生命拼圖地圖！' : '⚠️ 還有拼圖尚未完成喔！')}
+                      onClick={() => {
+                        const done = Object.values(puzzlePlaced).every(Boolean);
+                        showToast(done ? '🎉 恭喜完成生命拼圖地圖！' : '⚠️ 還有拼圖尚未完成喔！');
+                        if (done) saveGameResult('puzzle', { placed: puzzlePlaced });
+                      }}
                       className="px-6 py-2 bg-[#E65100] hover:bg-[#D84315] text-white font-black text-xs rounded-xl shadow-sm transition-all cursor-pointer active:scale-98"
                     >
                       完成送出

@@ -46,6 +46,55 @@ const COLORS = [
 export default function LearningStatisticsTab({ submissions }: LearningStatisticsTabProps) {
   const totalStudentsCount = submissions.length || 1;
 
+  const GAME_LABELS: Array<{ key: string; label: string; emoji: string }> = [
+    { key: 'mbti', label: 'MBTI', emoji: '🧠' },
+    { key: 'puzzle', label: '拼圖地圖', emoji: '🧩' },
+    { key: 'adventure', label: '情境冒險', emoji: '🧭' },
+    { key: 'relationships', label: '人際連連看', emoji: '🕸️' },
+    { key: 'value_scale', label: '價值天平', emoji: '⚖️' },
+    { key: 'memory_cards', label: '故事翻翻卡', emoji: '🎴' },
+    { key: 'gratitude', label: '感恩泡泡', emoji: '🧼' },
+    { key: 'debate', label: '哲學辯論', emoji: '🗣️' },
+    { key: 'mood', label: '心情溫度計', emoji: '🌡️' },
+    { key: 'badges', label: '成長徽章', emoji: '🏆' },
+  ];
+
+  const summarizeGameData = (key: string, data: any): string => {
+    switch (key) {
+      case 'mbti': return `性格類型：${data?.type || '—'}`;
+      case 'puzzle': return `已拼入 ${Object.values(data?.placed || {}).filter(Boolean).length}/5 個主題`;
+      case 'adventure': return `同理${data?.points?.同理 ?? 0} · 責任${data?.points?.責任 ?? 0} · 勇氣${data?.points?.勇氣 ?? 0}`;
+      case 'relationships': return `建立了 ${data?.connections?.length ?? 0} 條關係連結`;
+      case 'value_scale': return `排序：${(data?.ranking || []).join(' > ')}`;
+      case 'memory_cards': return `${data?.moves ?? 0} 次翻牌，${data?.timeSeconds ?? 0} 秒完成`;
+      case 'gratitude': return `「${data?.message || ''}」`;
+      case 'debate': return `投票支持：${data?.vote === 'pro' ? '正方' : '反方'}`;
+      case 'mood': return `心情：${data?.note || ''}`;
+      case 'badges': return `已解鎖 ${data?.unlockedCount ?? 0} 枚徽章`;
+      default: return '';
+    }
+  };
+
+  const recentGameActivity = useMemo(() => {
+    const items: Array<{ studentName: string; label: string; emoji: string; summary: string; submittedAt: string; sortKey: string }> = [];
+    submissions.forEach(sub => {
+      Object.entries(sub.games || {}).forEach(([gameKey, entry]: [string, any]) => {
+        const shortKey = gameKey.replace('game_', '');
+        const meta = GAME_LABELS.find(g => g.key === shortKey);
+        if (!meta) return;
+        items.push({
+          studentName: sub.studentName,
+          label: meta.label,
+          emoji: meta.emoji,
+          summary: summarizeGameData(shortKey, entry.data),
+          submittedAt: entry.submittedAt,
+          sortKey: entry.submittedAt
+        });
+      });
+    });
+    return items.sort((a, b) => (a.sortKey < b.sortKey ? 1 : -1)).slice(0, 15);
+  }, [submissions]);
+
   // 1. Calculate Worksheet Completions
   const statsData = useMemo(() => {
     let woopCount = 0;
@@ -432,6 +481,54 @@ export default function LearningStatisticsTab({ submissions }: LearningStatistic
               })}
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* Interactive Games completion overview + recent activity feed */}
+      <div className="bg-white border border-slate-100 rounded-2xl shadow-xs p-6 mt-6">
+        <h3 className="font-black text-slate-800 text-sm mb-1 flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-[#E65100]" />
+          互動遊戲作答與統計數據
+        </h3>
+        <p className="text-xs text-slate-400 font-bold mb-5">學生在「互動遊戲」分頁完成的 10 款遊戲結果，會即時彙整在這裡。</p>
+
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
+          {GAME_LABELS.map((g) => {
+            const count = submissions.filter(s => s.games?.[`game_${g.key}`]).length;
+            const pct = Math.round((count / totalStudentsCount) * 100);
+            return (
+              <div key={g.key} className="border border-slate-100 rounded-xl p-3 text-center bg-slate-50/60">
+                <div className="text-xl mb-1">{g.emoji}</div>
+                <div className="text-[11px] font-black text-slate-600 leading-tight mb-1">{g.label}</div>
+                <div className="text-sm font-black text-[#E65100] font-mono">{count}/{submissions.length}</div>
+                <div className="text-[10px] font-bold text-slate-400">{pct}% 完成</div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="border-t border-slate-100 pt-4">
+          <h4 className="text-xs font-black text-slate-500 mb-3">最近作答動態</h4>
+          {recentGameActivity.length === 0 ? (
+            <p className="text-xs text-slate-300 font-bold py-4 text-center">目前還沒有學生完成任何互動遊戲。</p>
+          ) : (
+            <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+              {recentGameActivity.map((item, idx) => (
+                <div key={idx} className="flex items-center justify-between bg-slate-50/60 border border-slate-100 rounded-xl px-3.5 py-2.5">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <span className="text-lg shrink-0">{item.emoji}</span>
+                    <div className="min-w-0">
+                      <div className="text-xs font-black text-slate-700 truncate">
+                        {item.studentName} <span className="text-slate-400 font-bold">完成了</span> {item.label}
+                      </div>
+                      <div className="text-[11px] text-slate-400 font-bold truncate">{item.summary}</div>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-black text-slate-400 shrink-0 ml-2">{item.submittedAt}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

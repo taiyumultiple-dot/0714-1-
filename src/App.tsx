@@ -343,21 +343,36 @@ export default function App() {
   // 3. PERSISTENT QUEST RECORD HANDLER
   const handleSaveQuest = (
     studentId: string, 
-    questType: 'autopilot' | 'socrates' | 'trolley' | 'fallacy', 
+    questType: string, 
     data: any
   ) => {
     setSubmissions(prev => prev.map(sub => {
       if (sub.studentId === studentId) {
+        // Interactive-game results (互動遊戲 tab) are namespaced under sub.games
+        // so they don't collide with the older fixed quest-type fields below.
+        if (questType.startsWith('game_')) {
+          const updatedGames = { ...(sub.games || {}) };
+          if (!data) {
+            delete updatedGames[questType];
+          } else {
+            updatedGames[questType] = {
+              data,
+              submittedAt: new Date().toISOString().replace('T', ' ').substring(0, 16)
+            };
+          }
+          return { ...sub, games: updatedGames };
+        }
+
         if (!data) {
           // Reset action
-          const updated = { ...sub };
+          const updated: any = { ...sub };
           delete updated[questType];
           return updated;
         }
         return {
           ...sub,
           [questType]: {
-            ...(sub[questType] || {}),
+            ...((sub as any)[questType] || {}),
             ...data,
             submittedAt: new Date().toISOString().replace('T', ' ').substring(0, 16)
           }

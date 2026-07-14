@@ -31,6 +31,7 @@ import WorksheetTab from './components/WorksheetTab';
 import KeywordWallTab from './components/KeywordWallTab';
 import CharacterStoryTab from './components/CharacterStoryTab';
 import LearningStatisticsTab from './components/LearningStatisticsTab';
+import InteractiveQuestTab from './components/InteractiveQuestTab';
 import { ACHIEVEMENTS } from './achievements';
 import AuthScreen from './components/AuthScreen';
 import CharacterAvatarModal from './components/CharacterAvatarModal';
@@ -213,6 +214,7 @@ export default function App() {
 
   // Current Navigation Tab: '首頁' | '課程地圖' | '思辨與遊戲' | '成長表單' | '角色故事'
   const [activeTab, setActiveTab] = useState<string>('首頁');
+  const [activeQuestType, setActiveQuestType] = useState<'autopilot' | 'socrates' | 'trolley' | 'fallacy' | 'teacher_panel' | undefined>(undefined);
 
   // Achievement popup tracking states
   const [unlockedBadgeForPopup, setUnlockedBadgeForPopup] = useState<any>(null);
@@ -388,21 +390,25 @@ export default function App() {
   const navItems = [
     { name: '首頁', icon: Home, badge: null },
     { name: '課程地圖', icon: Map, badge: null },
+    { name: '互動遊戲', icon: Gamepad2, badge: null },
     { name: '角色故事', icon: Users, badge: null },
     ...(currentUser?.role === 'teacher' ? [{ name: '學習統計', icon: TrendingUp, badge: null }] : [])
   ];
 
-  const handleTabSelection = (tabName: string) => {
+  const handleTabSelection = (tabName: string, extra?: any) => {
     if (tabName === 'show_tour') {
       setShowTour(true);
       return;
     }
-    if (!currentUser && ['課程地圖', '學習統計'].includes(tabName)) {
+    if (!currentUser && ['課程地圖', '學習統計', '互動遊戲', '成長表單', '關鍵字牆'].includes(tabName)) {
       setAuthModalTab('student_login');
       setShowAuthModal(true);
       return;
     }
     setActiveTab(tabName);
+    if (extra?.questType) {
+      setActiveQuestType(extra.questType);
+    }
   };
 
   return (
@@ -583,6 +589,17 @@ export default function App() {
                 onChangeSubmissions={setSubmissions}
                 activeStudentId={activeStudentId}
                 role={role}
+              />
+            )}
+
+            {activeTab === '互動遊戲' && (
+              <InteractiveQuestTab 
+                currentStudent={currentStudent}
+                onSaveQuest={handleSaveQuest}
+                role={role}
+                submissions={submissions}
+                onSaveQuestFeedback={handleSaveQuestFeedback}
+                defaultQuest={activeQuestType}
               />
             )}
 

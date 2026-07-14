@@ -343,7 +343,7 @@ export default function HomeTab({
 
 
         {/* 4. "選擇單元" Section - Matches reference image EXACTLY */}
-        <div className="bg-[#FCFAF6] rounded-3xl border border-[#F1E0CE] p-6 md:p-8 shadow-3xs space-y-6">
+        <div id="select-unit-section" className="bg-[#FCFAF6] rounded-3xl border border-[#F1E0CE] p-6 md:p-8 shadow-3xs space-y-6">
           
           <div className="flex items-center gap-2 border-b border-[#F1E0CE]/60 pb-4">
             {/* Elegant orange star logo */}
@@ -426,55 +426,80 @@ export default function HomeTab({
             <div className="flex items-center justify-between min-w-[700px] gap-2 px-2">
               
               {/* Step 1 */}
-              <div className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs">
-                <div className="w-8 h-8 rounded-full bg-white border border-[#E0A96D] flex items-center justify-center text-base shadow-3xs">
+              <div 
+                onClick={() => {
+                  const element = document.getElementById('select-unit-section');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs cursor-pointer hover:bg-[#FFFBF5] hover:scale-[1.03] transition-all group"
+                title="點選滾動至單元選擇區域"
+              >
+                <div className="w-8 h-8 rounded-full bg-white border border-[#E0A96D] flex items-center justify-center text-base shadow-3xs group-hover:rotate-12 transition-transform">
                   🏠
                 </div>
-                <span className="text-xs font-black text-[#5C4D3C]">選擇單元</span>
+                <span className="text-xs font-black text-[#5C4D3C] group-hover:text-orange-600 transition-colors">選擇單元</span>
               </div>
 
               {/* Arrow */}
               <span className="text-[#D0BFA7] font-bold text-base">→</span>
 
               {/* Step 2 */}
-              <div className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs">
-                <div className="w-8 h-8 rounded-full bg-white border border-[#E0A96D] flex items-center justify-center text-base shadow-3xs">
+              <div 
+                onClick={() => onNavigate('成長表單')}
+                className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs cursor-pointer hover:bg-[#FFFBF5] hover:scale-[1.03] transition-all group"
+                title="點選前往瀏覽成長學習單分類"
+              >
+                <div className="w-8 h-8 rounded-full bg-white border border-[#E0A96D] flex items-center justify-center text-base shadow-3xs group-hover:rotate-12 transition-transform">
                   👥
                 </div>
-                <span className="text-xs font-black text-[#5C4D3C]">瀏覽學習單分類</span>
+                <span className="text-xs font-black text-[#5C4D3C] group-hover:text-orange-600 transition-colors">瀏覽學習單分類</span>
               </div>
 
               {/* Arrow */}
               <span className="text-[#D0BFA7] font-bold text-base">→</span>
 
               {/* Step 3 */}
-              <div className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs">
-                <div className="w-8 h-8 rounded-full bg-white border border-[#E0A96D] flex items-center justify-center text-base shadow-3xs">
+              <div 
+                onClick={() => onNavigate('成長表單')}
+                className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs cursor-pointer hover:bg-[#FFFBF5] hover:scale-[1.03] transition-all group"
+                title="點選前往成長表單填寫作答"
+              >
+                <div className="w-8 h-8 rounded-full bg-white border border-[#E0A96D] flex items-center justify-center text-base shadow-3xs group-hover:rotate-12 transition-transform">
                   📝
                 </div>
-                <span className="text-xs font-black text-[#5C4D3C]">開始作答</span>
+                <span className="text-xs font-black text-[#5C4D3C] group-hover:text-orange-600 transition-colors">開始作答</span>
               </div>
 
               {/* Arrow */}
               <span className="text-[#D0BFA7] font-bold text-base">→</span>
 
               {/* Step 4 */}
-              <div className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs">
-                <div className="w-8 h-8 rounded-full bg-white border border-[#E0A96D] flex items-center justify-center text-base shadow-3xs">
+              <div 
+                onClick={() => onNavigate('成長表單')}
+                className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs cursor-pointer hover:bg-[#FFFBF5] hover:scale-[1.03] transition-all group"
+                title="點選前往成長表單送出提交"
+              >
+                <div className="w-8 h-8 rounded-full bg-white border border-[#E0A96D] flex items-center justify-center text-base shadow-3xs group-hover:rotate-12 transition-transform">
                   ☑️
                 </div>
-                <span className="text-xs font-black text-[#5C4D3C]">送出學習單</span>
+                <span className="text-xs font-black text-[#5C4D3C] group-hover:text-orange-600 transition-colors">送出學習單</span>
               </div>
 
               {/* Arrow */}
               <span className="text-[#D0BFA7] font-bold text-base">→</span>
 
               {/* Step 5 */}
-              <div className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs">
-                <div className="w-8 h-8 rounded-full bg-white border border-[#E0A96D] flex items-center justify-center text-base shadow-3xs">
+              <div 
+                onClick={() => onNavigate('成長表單')}
+                className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs cursor-pointer hover:bg-[#FFFBF5] hover:scale-[1.03] transition-all group"
+                title="點選前往成長表單查看老師評分與引導回饋"
+              >
+                <div className="w-8 h-8 rounded-full bg-white border border-[#E0A96D] flex items-center justify-center text-base shadow-3xs group-hover:rotate-12 transition-transform">
                   🕒
                 </div>
-                <span className="text-xs font-black text-[#5C4D3C]">等待老師回饋</span>
+                <span className="text-xs font-black text-[#5C4D3C] group-hover:text-orange-600 transition-colors">等待老師回饋</span>
               </div>
 
             </div>

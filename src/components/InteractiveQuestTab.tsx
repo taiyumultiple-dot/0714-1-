@@ -40,6 +40,12 @@ import {
   MessageSquare
 } from 'lucide-react';
 
+import charKehuaImg from '../assets/images/characters/char_kehua.jpg';
+import charBojunImg from '../assets/images/characters/char_bojun.jpg';
+import charXiaowenImg from '../assets/images/characters/char_xiaowen.jpg';
+import charXiaopingImg from '../assets/images/characters/char_xiaoping.jpg';
+import storyHeroPair from '../assets/images/characters/story_hero_pair.png';
+
 interface InteractiveQuestTabProps {
   currentStudent: any;
   onSaveQuest: (studentId: string, questType: any, data: any) => void;
@@ -141,6 +147,164 @@ const GAMES = [
     number: '10'
   }
 ];
+
+const renderGameIllustration = (gameId: number) => {
+  switch (gameId) {
+    case 1: // MBTI
+      return (
+        <div className="w-full h-full bg-[#FFF9F2] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#F1E0CE] relative overflow-hidden select-none">
+          <span className="text-[8px] font-black text-[#C48C46] tracking-wider mb-1">MBTI</span>
+          <svg className="w-8 h-8" viewBox="0 0 40 40" fill="none">
+            {/* Brain outline */}
+            <path d="M12 25C10 25 8 23 8 20C8 17 10 15 12 15C12 13 14 11 17 11C20 11 21 13 22 14C23 13 24 11 27 11C30 11 32 13 32 15C34 15 36 17 36 20C36 23 34 25 32 25" stroke="#C48C46" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M14 25C14 28 16 30 19 30M30 25C30 28 28 30 25 30" stroke="#C48C46" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="20" y1="12" x2="20" y2="30" stroke="#C48C46" strokeWidth="1" strokeDasharray="2 2" />
+          </svg>
+          <div className="absolute bottom-1 right-2 text-xs">📝</div>
+        </div>
+      );
+    case 2: // Life Puzzle Map
+      return (
+        <div className="w-full h-full bg-[#F2F8FF] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#CCE1FB] relative overflow-hidden select-none">
+          <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
+            <path d="M6 18C6 11.3726 11.3726 6 18 6H30C36.6274 6 42 11.3726 42 18V30C42 36.6274 36.6274 42 30 42H18C11.3726 42 6 36.6274 6 30V18Z" fill="#E0F2FE" stroke="#3B82F6" strokeWidth="1.5" />
+            <path d="M12 18C16 16 18 22 22 20C26 18 28 24 32 22C36 20 36 24 36 26" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M24 6C24 16 20 22 26 30C32 38 28 42 28 42" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="1 2" />
+            <circle cx="16" cy="14" r="3" fill="#22C55E" />
+            <circle cx="32" cy="32" r="4" fill="#10B981" />
+          </svg>
+        </div>
+      );
+    case 3: // Scenario Adventure
+      return (
+        <div className="w-full h-full bg-[#F5FBF5] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#CDE7CD] relative overflow-hidden select-none">
+          <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
+            <path d="M24 42V26M24 26L12 14M24 26L36 14" stroke="#2E7D32" strokeWidth="2" strokeLinecap="round" />
+            <circle cx="24" cy="16" r="5" fill="#E8F5E9" stroke="#2E7D32" strokeWidth="1.5" />
+            <text x="21" y="20" className="text-[10px] font-black fill-[#2E7D32]" style={{ fontFamily: 'monospace' }}>?</text>
+            <circle cx="21" cy="33" r="1.5" fill="#81C784" />
+            <circle cx="21" cy="38" r="1.5" fill="#81C784" />
+          </svg>
+        </div>
+      );
+    case 4: // Relationships Connection
+      return (
+        <div className="w-full h-full bg-[#FAF6FC] rounded-xl flex flex-col items-center justify-center p-0.5 border border-[#ECCDF2] relative overflow-hidden select-none">
+          <div className="grid grid-cols-2 gap-1 w-full h-full p-1 relative">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <svg className="w-full h-full" viewBox="0 0 60 40">
+                <line x1="12" y1="10" x2="48" y2="10" stroke="#7B1FA2" strokeWidth="0.8" strokeDasharray="2 2" />
+                <line x1="12" y1="10" x2="12" y2="30" stroke="#7B1FA2" strokeWidth="0.8" />
+                <line x1="48" y1="10" x2="48" y2="30" stroke="#7B1FA2" strokeWidth="0.8" />
+                <line x1="12" y1="30" x2="48" y2="30" stroke="#7B1FA2" strokeWidth="0.8" strokeDasharray="2 2" />
+                <line x1="12" y1="10" x2="48" y2="30" stroke="#7B1FA2" strokeWidth="0.8" />
+              </svg>
+            </div>
+            <div className="flex flex-col items-center scale-75 z-10">
+              <img src={charXiaopingImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
+              <span className="text-[6px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">同學</span>
+            </div>
+            <div className="flex flex-col items-center scale-75 z-10">
+              <img src={charBojunImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
+              <span className="text-[6px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">朋友</span>
+            </div>
+            <div className="flex flex-col items-center scale-75 z-10">
+              <img src={charXiaowenImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
+              <span className="text-[6px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">家人</span>
+            </div>
+            <div className="flex flex-col items-center scale-75 z-10">
+              <img src={charKehuaImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
+              <span className="text-[6px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">我</span>
+            </div>
+          </div>
+        </div>
+      );
+    case 5: // Value Scales
+      return (
+        <div className="w-full h-full bg-[#FFF9F5] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#FCE1D1] relative overflow-hidden select-none">
+          <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
+            <path d="M24 10V38M14 18H34" stroke="#E65100" strokeWidth="2" strokeLinecap="round" />
+            <path d="M14 18L10 30H18L14 18Z" fill="#FFE0B2" stroke="#E65100" strokeWidth="1.2" />
+            <path d="M34 18L30 30H38L34 18Z" fill="#FFE0B2" stroke="#E65100" strokeWidth="1.2" />
+            <path d="M18 38H30" stroke="#E65100" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </div>
+      );
+    case 6: // Story Memory Flip Cards
+      return (
+        <div className="w-full h-full bg-[#FFF5F6] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#FCD2B6] relative overflow-hidden select-none">
+          <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
+            <rect x="8" y="14" width="20" height="26" rx="2" transform="rotate(-15 8 14)" fill="white" stroke="#C2185B" strokeWidth="1.5" />
+            <rect x="20" y="8" width="20" height="26" rx="2" transform="rotate(10 20 8)" fill="#FFF1F2" stroke="#C2185B" strokeWidth="1.5" />
+            <path d="M28 20C28 19 29 18 30 18C31 18 32 19 32 20C32 21.5 30 23 30 23C30 23 28 21.5 28 20Z" fill="#C2185B" />
+          </svg>
+        </div>
+      );
+    case 7: // Gratitude Bubbles
+      return (
+        <div className="w-full h-full bg-[#F0FDF4] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#BBF7D0] relative overflow-hidden select-none">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="absolute w-6 h-6 rounded-full border border-sky-400/40 bg-sky-200/10 top-2 left-2 flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full bg-white/60 -mt-2 -ml-2" />
+            </div>
+            <div className="absolute w-5 h-5 rounded-full border border-pink-400/30 bg-pink-200/10 bottom-2 right-2 flex items-center justify-center">
+              <div className="w-1.5 h-1.5 rounded-full bg-white/60 -mt-1.5 -ml-1.5" />
+            </div>
+            <div className="absolute w-8 h-8 rounded-full border border-emerald-400/40 bg-emerald-200/20 top-3 right-3 flex items-center justify-center">
+              <span className="text-[8px]">💖</span>
+            </div>
+          </div>
+        </div>
+      );
+    case 8: // Philosophical Debate
+      return (
+        <div className="w-full h-full bg-[#F0F9FF] rounded-xl flex flex-col items-center justify-center p-0.5 border border-[#BAE6FD] relative overflow-hidden select-none">
+          <div className="flex items-center justify-around w-full h-full relative">
+            <div className="flex flex-col items-center scale-75">
+              <img src={charKehuaImg} className="w-4 h-4 rounded-full border border-sky-500 object-cover bg-white" />
+              <span className="text-[6px] font-black text-sky-800 scale-90 mt-0.5">可華</span>
+            </div>
+            <div className="text-[7px] font-black text-orange-600 bg-orange-50 border border-orange-200 px-1 py-0.5 rounded-md scale-90 z-10">VS</div>
+            <div className="flex flex-col items-center scale-75">
+              <img src={charXiaopingImg} className="w-4 h-4 rounded-full border border-pink-500 object-cover bg-white" />
+              <span className="text-[6px] font-black text-pink-800 scale-90 mt-0.5">曉萍</span>
+            </div>
+          </div>
+        </div>
+      );
+    case 9: // Mood Thermometer
+      return (
+        <div className="w-full h-full bg-[#FFF1F2] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#FECDD3] relative overflow-hidden select-none">
+          <div className="flex items-center gap-1.5 w-full justify-center">
+            <div className="w-3 h-10 bg-slate-200 rounded-full p-0.5 relative flex flex-col justify-end border border-slate-300">
+              <div className="w-full bg-gradient-to-t from-rose-500 to-amber-400 rounded-full" style={{ height: '70%' }} />
+              <div className="absolute -bottom-1 -left-0.5 w-3 h-3 bg-rose-500 rounded-full border border-rose-600" />
+            </div>
+            <div className="flex flex-col text-[7px] leading-tight text-left text-slate-400">
+              <span>🥵 100℃</span>
+              <span>😊 70℃</span>
+              <span>😐 37℃</span>
+              <span>🥶 0℃</span>
+            </div>
+          </div>
+        </div>
+      );
+    case 10: // Badge Challenge
+      return (
+        <div className="w-full h-full bg-[#F9FDF9] rounded-xl flex flex-col items-center justify-center p-1 border border-[#D1EED1] relative overflow-hidden select-none">
+          <div className="grid grid-cols-3 gap-0.5">
+            {['🏅', '🎖️', '⭐', '🏆', '💎', '👑'].map((emoji, index) => (
+              <div key={index} className="w-3.5 h-3.5 rounded-md bg-amber-50 border border-amber-200 flex items-center justify-center text-[8px]">
+                {emoji}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    default:
+      return null;
+  }
+};
 
 export default function InteractiveQuestTab({
   currentStudent,
@@ -606,271 +770,373 @@ export default function InteractiveQuestTab({
         {activeGameId === null ? (
           <>
             {/* HERO BANNER SECTION */}
-            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF8F0] via-[#FCF5EB] to-[#FFF3E0] border border-[#F1E0CE] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-3xs">
+            <div id="lobby-hero-banner" className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+              {/* Floral / Botanical Ornaments inside banner */}
+              <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(230,81,0,0.06)_0,transparent_75%)] pointer-events-none" />
+              <div className="absolute bottom-0 right-0 w-48 h-48 bg-[radial-gradient(circle_at_center,rgba(76,175,80,0.06)_0,transparent_75%)] pointer-events-none" />
               
-              {/* Floral Ornaments inside banner */}
-              <div className="absolute top-0 left-0 w-24 h-24 bg-[radial-gradient(circle_at_center,rgba(230,81,0,0.04)_0,transparent_70%)] pointer-events-none" />
-              <div className="absolute bottom-0 right-0 w-36 h-36 bg-[radial-gradient(circle_at_center,rgba(76,175,80,0.04)_0,transparent_70%)] pointer-events-none" />
+              {/* Floating Leaf SVGs */}
+              <div className="absolute top-4 right-1/3 opacity-20 pointer-events-none text-emerald-600 animate-pulse">🌱</div>
+              <div className="absolute bottom-4 left-1/4 opacity-25 pointer-events-none text-orange-500 animate-bounce">🍂</div>
 
               <div className="space-y-4 max-w-2xl text-center md:text-left z-10">
-                <div className="inline-flex items-center gap-2 bg-[#FFEEDD] border border-[#F5CBA7] text-[#D84315] px-4 py-1.5 rounded-full text-xs font-black tracking-wide shadow-3xs uppercase">
-                  <Gamepad2 className="w-4.5 h-4.5" />
+                <div className="inline-flex items-center gap-2 bg-[#FFEAD5] border border-[#F3C29F] text-[#D84315] px-4 py-1.5 rounded-full text-xs font-black tracking-wide shadow-xs uppercase">
+                  <Gamepad2 className="w-4 h-4 text-orange-600" />
                   <span>互動遊戲 ‧ 班級同樂大廳</span>
                 </div>
                 
-                <h1 className="text-2xl md:text-3xl font-black text-[#4A321F] leading-tight tracking-tight">
-                  班級同樂互動大廳
+                <h1 className="text-2xl md:text-4xl font-black text-[#4A321F] leading-tight tracking-tight">
+                  互動遊戲｜班級同樂大廳
                 </h1>
                 
-                <p className="text-sm font-medium text-slate-500 leading-relaxed max-w-xl">
+                <p className="text-sm md:text-base font-extrabold text-[#7D5C43]/90 leading-relaxed max-w-xl">
                   老師掌控節奏，學生掃描 QR Code 即可加入，一起參與互動遊戲，讓學習更有趣！
                 </p>
               </div>
 
-              {/* Character illustrations decoration */}
-              <div className="relative shrink-0 flex items-center justify-center gap-2 z-10 bg-white/40 p-4 rounded-2xl border border-white/60 shadow-3xs">
-                <div className="text-center">
-                  <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-2xl border border-white shadow-3xs">👦🏻</div>
-                  <span className="text-[10px] font-bold text-slate-500">陳可華</span>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center text-2xl border border-white shadow-3xs">👩🏻</div>
-                  <span className="text-[10px] font-bold text-slate-500">張曉萍</span>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-2xl border border-white shadow-3xs">👵🏻</div>
-                  <span className="text-[10px] font-bold text-slate-500">可華爺爺</span>
+              {/* Character illustrations decoration - Story Hero Pair from Character stories */}
+              <div className="relative shrink-0 flex items-center justify-center z-10">
+                {/* Decorative plant elements */}
+                <div className="absolute -left-10 -bottom-6 text-4xl select-none opacity-85 animate-pulse">🌿</div>
+                <div className="absolute -right-8 -top-8 text-4xl select-none opacity-85 animate-bounce">🌸</div>
+                
+                {/* Frame or container for the pair */}
+                <div className="relative bg-white/70 backdrop-blur-xs p-3 rounded-3xl border-2 border-[#EAD5C3] shadow-md overflow-hidden max-w-[280px]">
+                  <img 
+                    src={storyHeroPair} 
+                    alt="張曉萍 與 陳可華" 
+                    className="w-full h-auto object-cover rounded-2xl hover:scale-102 transition-transform duration-500" 
+                    referrerPolicy="no-referrer"
+                  />
+                  {/* Tiny captions */}
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-amber-50/90 border border-[#F3C29F] py-1 px-3 rounded-full shadow-xs flex items-center gap-1.5 whitespace-nowrap">
+                    <span className="text-[10px] font-black text-[#8D6E63]">張曉萍 ＆ 陳可華</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* MAIN DASHBOARD PANEL */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* MAIN DASHBOARD PANEL - THREE COLUMN MASTER LAYOUT */}
+            <div id="lobby-main-dashboard" className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               
-              {/* Column 1: 本班遊戲入口 */}
-              <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-5 flex flex-col justify-between">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2.5 border-b border-[#F1E0CE]/60 pb-3">
-                    <div className="p-2 bg-[#FFF0DF] rounded-xl text-[#E65100]">
-                      <Users className="w-5 h-5" />
+              {/* LEFT GROUP (col-span-9): Contains 本班遊戲入口, 老師控制台 at the top, and 10 Games below */}
+              <div className="lg:col-span-9 space-y-6">
+                
+                {/* Top Row: 本班遊戲入口 (col-span-5) & 老師控制台 (col-span-7) */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                  
+                  {/* 本班遊戲入口 Card */}
+                  <div className="md:col-span-5 bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                    <div className="absolute -top-12 -left-12 text-6xl opacity-5 pointer-events-none">🌿</div>
+                    
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2 border-b-2 border-[#EAD5C3]/40 pb-3 mb-2">
+                        <div className="p-1.5 bg-[#FFEAD5] rounded-xl text-[#E65100]">
+                          <Users className="w-4 h-4" />
+                        </div>
+                        <h3 className="font-black text-[#4A321F] text-sm">本班遊戲入口</h3>
+                      </div>
+
+                      {/* Horizontal layout card */}
+                      <div className="flex items-center gap-4 bg-white border border-[#EAD5C3]/60 p-4 rounded-2xl shadow-3xs">
+                        {/* QR Code Box */}
+                        <div className="w-24 h-24 shrink-0 bg-[#FFFDF9] border-2 border-[#FAD8C1] rounded-xl p-1.5 flex flex-col items-center justify-center relative shadow-inner group">
+                          {/* Fake QR code blocks */}
+                          <div className="w-full h-full bg-[radial-gradient(#4A321F_2.5px,transparent_2.5px)] [background-size:6px_6px] opacity-90" />
+                          <div className="absolute top-2 left-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
+                          <div className="absolute top-2 right-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
+                          <div className="absolute bottom-2 left-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
+                          
+                          <div className="absolute w-4 h-4 bg-[#FFEAD5] border-2 border-[#E65100] rounded-full flex items-center justify-center shadow-xs">
+                            <span className="text-[8px]">📙</span>
+                          </div>
+                          
+                          <div className="absolute left-0 right-0 h-0.5 bg-[#E65100] opacity-80 shadow-[0_0_8px_#E65100] top-1/2 animate-bounce" />
+                        </div>
+
+                        {/* Class Info */}
+                        <div className="space-y-1.5 flex-1 text-left">
+                          <span className="text-[10px] font-black text-slate-400 block uppercase">班級代碼</span>
+                          <span className="text-2xl font-black text-[#E65100] tracking-widest font-mono bg-[#FFF8F2] py-0.5 px-2.5 rounded-lg border border-[#FCD2B5] inline-block">4A28</span>
+                          
+                          <div className="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 inline-flex items-center gap-1.5 mt-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            <span>已加入 32 / 40 人</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="font-black text-[#4A321F] text-base">本班遊戲入口</h3>
+
+                    {/* Action buttons side-by-side */}
+                    <div className="grid grid-cols-2 gap-2 mt-4">
+                      <button 
+                        onClick={handleCopyLink}
+                        className="py-2.5 bg-white hover:bg-orange-50 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer active:scale-98"
+                      >
+                        <LinkIcon className="w-3.5 h-3.5" />
+                        <span>複製連結</span>
+                      </button>
+                      <button 
+                        onClick={() => {
+                          setActiveGameId(1);
+                          showToast('🎮 遊戲開始！歡迎加入第一關！');
+                        }}
+                        className="py-2.5 bg-[#E65100] hover:bg-[#D84315] text-white border-2 border-[#D84315] font-black text-xs rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer active:scale-98 hover:shadow-md"
+                      >
+                        <Play className="w-3.5 h-3.5 fill-current" />
+                        <span>開始遊戲</span>
+                      </button>
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-4 bg-white border border-[#F1E0CE]/50 p-4 rounded-2xl shadow-3xs">
-                    {/* QR Code graphic */}
-                    <div className="w-24 h-24 shrink-0 bg-white border-2 border-orange-200 rounded-xl p-1.5 flex flex-col items-center justify-center relative">
-                      {/* Fake QR code blocks */}
-                      <div className="w-full h-full bg-[radial-gradient(#4A321F_2px,transparent_2px)] [background-size:6px_6px] opacity-80" />
-                      <div className="absolute top-2 left-2 w-5 h-5 border-2 border-[#4A321F] bg-white" />
-                      <div className="absolute top-2 right-2 w-5 h-5 border-2 border-[#4A321F] bg-white" />
-                      <div className="absolute bottom-2 left-2 w-5 h-5 border-2 border-[#4A321F] bg-white" />
-                    </div>
+                  {/* 老師控制台 Card */}
+                  <div className="md:col-span-7 bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                    
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2 border-b-2 border-[#EAD5C3]/40 pb-3 mb-2">
+                        <div className="p-1.5 bg-[#FFEAD5] rounded-xl text-[#E65100]">
+                          <Tv className="w-4 h-4" />
+                        </div>
+                        <h3 className="font-black text-[#4A321F] text-sm">老師控制台</h3>
+                      </div>
 
-                    <div className="space-y-1.5">
-                      <div className="text-xs font-bold text-slate-400">班級代碼</div>
-                      <div className="text-2xl font-black text-[#E65100] tracking-wide font-mono">4A28</div>
-                      <div className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full inline-block border border-emerald-100">
-                        ● 已加入 32 / 40 人
+                      {/* Game mode selectors */}
+                      <div className="space-y-1.5">
+                        <label className="text-[11px] font-black text-slate-400 block text-left uppercase">🎮 遊戲模式</label>
+                        <div className="grid grid-cols-3 gap-1.5 bg-white p-1 rounded-xl border border-[#EAD5C3]/40 shadow-3xs">
+                          <button className="py-1 px-2.5 bg-[#FFF0E0] border border-[#F3C29F] rounded-lg text-xs font-black text-[#D84315] flex items-center justify-center gap-1 shadow-3xs">
+                            <span>👤 個人作答</span>
+                          </button>
+                          <button className="py-1 px-2.5 hover:bg-slate-50 border border-transparent rounded-lg text-xs font-black text-slate-500 flex items-center justify-center gap-1 transition-all">
+                            <span>👥 小組競賽</span>
+                          </button>
+                          <button className="py-1 px-2.5 hover:bg-slate-50 border border-transparent rounded-lg text-xs font-black text-slate-500 flex items-center justify-center gap-1 transition-all">
+                            <span>🤝 全班合作</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Class teams setup with portraits */}
+                      <div className="space-y-1.5">
+                        <label className="text-[11px] font-black text-slate-400 block text-left uppercase">👥 參賽小隊設定 (共 4 隊)</label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {/* Team 1: 張曉萍 */}
+                          <div className="bg-white border border-[#F0E2D5] p-1.5 rounded-xl flex items-center justify-between gap-2 shadow-3xs hover:border-[#F3C29F] transition-colors">
+                            <div className="flex items-center gap-2">
+                              <img src={charXiaopingImg} className="w-6 h-6 rounded-full border border-pink-200 object-cover" />
+                              <span className="text-xs font-black text-slate-800">張曉萍隊</span>
+                            </div>
+                            <span className="text-[10px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                          </div>
+                          
+                          {/* Team 2: 王博鈞 */}
+                          <div className="bg-white border border-[#F0E2D5] p-1.5 rounded-xl flex items-center justify-between gap-2 shadow-3xs hover:border-[#F3C29F] transition-colors">
+                            <div className="flex items-center gap-2">
+                              <img src={charBojunImg} className="w-6 h-6 rounded-full border border-blue-200 object-cover" />
+                              <span className="text-xs font-black text-slate-800">王博鈞隊</span>
+                            </div>
+                            <span className="text-[10px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                          </div>
+
+                          {/* Team 3: 陳可華 */}
+                          <div className="bg-white border border-[#F0E2D5] p-1.5 rounded-xl flex items-center justify-between gap-2 shadow-3xs hover:border-[#F3C29F] transition-colors">
+                            <div className="flex items-center gap-2">
+                              <img src={charKehuaImg} className="w-6 h-6 rounded-full border border-sky-200 object-cover" />
+                              <span className="text-xs font-black text-slate-800">陳可華隊</span>
+                            </div>
+                            <span className="text-[10px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                          </div>
+
+                          {/* Team 4: 王小文 */}
+                          <div className="bg-white border border-[#F0E2D5] p-1.5 rounded-xl flex items-center justify-between gap-2 shadow-3xs hover:border-[#F3C29F] transition-colors">
+                            <div className="flex items-center gap-2">
+                              <img src={charXiaowenImg} className="w-6 h-6 rounded-full border border-purple-200 object-cover" />
+                              <span className="text-xs font-black text-slate-800">王小文隊</span>
+                            </div>
+                            <span className="text-[10px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-2.5 pt-4">
-                  <button 
-                    onClick={handleCopyLink}
-                    className="w-full py-2.5 border-2 border-[#E65100] hover:bg-orange-50 text-[#E65100] font-black text-xs rounded-xl transition-all shadow-3xs flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <LinkIcon className="w-4 h-4" />
-                    <span>複製連結</span>
-                  </button>
-                  <button 
-                    onClick={() => {
-                      setActiveGameId(1);
-                      showToast('🎮 遊戲開始！歡迎加入第一關！');
-                    }}
-                    className="w-full py-2.5 bg-[#E65100] hover:bg-[#D84315] text-white font-black text-xs rounded-xl transition-all shadow-3xs flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <Play className="w-4 h-4" />
-                    <span>開始遊戲</span>
-                  </button>
+                {/* Bottom Row: 10 款互動遊戲列表 (takes full width of Left Group - col-span-9) */}
+                <div className="space-y-4 pt-2">
+                  <div className="flex items-center gap-2 border-b-2 border-[#EAD5C3]/40 pb-2">
+                    <Gamepad2 className="w-5 h-5 text-[#E65100]" />
+                    <h2 className="text-base font-black text-[#4A321F]">課堂專用互動遊戲（共 10 款）</h2>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
+                    {GAMES.map((game) => (
+                      <div 
+                        key={game.id}
+                        className="bg-white border-2 border-[#EAD5C3] hover:border-[#E65100] p-4 rounded-3xl transition-all duration-300 shadow-3xs flex flex-col justify-between min-h-[225px] group hover:-translate-y-1 relative"
+                      >
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center">
+                            <span className={`text-[10px] font-black font-mono px-2 py-0.5 rounded-md border ${
+                              game.id === 2 
+                                ? 'bg-emerald-50 border-emerald-200 text-emerald-600'
+                                : game.id === 7
+                                  ? 'bg-sky-50 border-sky-200 text-sky-600'
+                                  : 'bg-orange-50 border-[#FCE1CE] text-[#E65100]'
+                            }`}>
+                              {game.number}
+                            </span>
+                          </div>
+
+                          {/* Custom vector illustration inside */}
+                          <div className="h-14 w-full rounded-xl overflow-hidden shadow-3xs">
+                            {renderGameIllustration(game.id)}
+                          </div>
+
+                          <div className="space-y-1 text-left">
+                            <h4 className="font-black text-xs text-[#4A321F] group-hover:text-[#E65100] transition-colors leading-tight line-clamp-1">
+                              {game.title}
+                            </h4>
+                            <p className="text-[10px] text-slate-400 font-bold leading-normal line-clamp-2">
+                              {game.description}
+                            </p>
+                          </div>
+                        </div>
+
+                        <button 
+                          onClick={() => {
+                            setActiveGameId(game.id);
+                            showToast(`🎮 歡迎進入：${game.title}！`);
+                          }}
+                          className="w-full mt-2.5 py-1.5 bg-white hover:bg-orange-50 border-2 border-[#EAD5C3] group-hover:border-[#E65100] rounded-xl text-[10px] font-black text-[#4A321F] group-hover:text-[#E65100] transition-all shadow-3xs flex items-center justify-center gap-0.5 cursor-pointer"
+                        >
+                          <span>進入遊戲</span>
+                          <ChevronRight className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Column 2: 老師控制台 */}
-              <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-4">
-                <div className="flex items-center gap-2.5 border-b border-[#F1E0CE]/60 pb-3">
-                  <div className="p-2 bg-[#FFF0DF] rounded-xl text-[#E65100]">
-                    <Tv className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-black text-[#4A321F] text-base">老師控制台</h3>
-                </div>
-
-                <div className="space-y-3">
-                  <label className="text-xs font-black text-slate-400 block">遊戲模式</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    <button className="py-2 px-1 bg-[#FFF0DF] border border-[#E65100] text-[#E65100] font-black text-xs rounded-xl shadow-3xs">
-                      個人作答
-                    </button>
-                    <button className="py-2 px-1 bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 font-bold text-xs rounded-xl shadow-3xs">
-                      小組競賽
-                    </button>
-                    <button className="py-2 px-1 bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 font-bold text-xs rounded-xl shadow-3xs">
-                      全班合作
-                    </button>
-                  </div>
-                </div>
-
-                <div className="space-y-2.5">
-                  <label className="text-xs font-black text-slate-400 block">小隊設定 (共 4 隊)</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="bg-white border border-[#F1E0CE]/50 p-2 rounded-xl flex items-center gap-2">
-                      <span className="text-base">👩🏻‍🎓</span>
-                      <div className="text-left leading-none">
-                        <div className="text-[11px] font-black text-slate-800">張曉萍隊</div>
-                        <span className="text-[9px] text-slate-400">8人加入</span>
-                      </div>
-                    </div>
-                    <div className="bg-white border border-[#F1E0CE]/50 p-2 rounded-xl flex items-center gap-2">
-                      <span className="text-base">👦🏻</span>
-                      <div className="text-left leading-none">
-                        <div className="text-[11px] font-black text-slate-800">王博鈞隊</div>
-                        <span className="text-[9px] text-slate-400">8人加入</span>
-                      </div>
-                    </div>
-                    <div className="bg-white border border-[#F1E0CE]/50 p-2 rounded-xl flex items-center gap-2">
-                      <span className="text-base">👧🏻</span>
-                      <div className="text-left leading-none">
-                        <div className="text-[11px] font-black text-slate-800">王小文隊</div>
-                        <span className="text-[9px] text-slate-400">8人加入</span>
-                      </div>
-                    </div>
-                    <div className="bg-white border border-[#F1E0CE]/50 p-2 rounded-xl flex items-center gap-2">
-                      <span className="text-base">👦🏻</span>
-                      <div className="text-left leading-none">
-                        <div className="text-[11px] font-black text-slate-800">陳可華隊</div>
-                        <span className="text-[9px] text-slate-400">8人加入</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Column 3: 投影與課堂互動流程 */}
-              <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-4 flex flex-col justify-between">
-                <div className="space-y-3.5">
-                  <div className="flex items-center justify-between border-b border-[#F1E0CE]/60 pb-3">
+              {/* RIGHT GROUP (col-span-3): Projection settings and Classroom Timelines */}
+              <div className="lg:col-span-3 space-y-6">
+                
+                {/* 投影模式設定 */}
+                <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm space-y-4">
+                  <div className="flex items-center justify-between border-b-2 border-[#EAD5C3]/60 pb-3">
                     <span className="font-black text-[#4A321F] text-sm">投影模式設定</span>
                     {/* Toggle switch simulation */}
                     <div className="flex items-center gap-1.5">
-                      <span className="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">已開啟</span>
-                      <div className="w-10 h-5 bg-emerald-500 rounded-full p-0.5 cursor-pointer flex justify-end">
+                      <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">已開啟</span>
+                      <div className="w-9 h-5 bg-emerald-500 rounded-full p-0.5 cursor-pointer flex justify-end shadow-inner">
                         <div className="w-4 h-4 bg-white rounded-full shadow-xs" />
                       </div>
                     </div>
                   </div>
 
-                  <div className="space-y-2 text-xs font-medium text-slate-500 leading-relaxed">
-                    <div className="flex justify-between">
-                      <span>隨機出題模式:</span>
-                      <span className="font-bold text-[#E65100]">開啟 (不重覆)</span>
+                  <div className="space-y-3.5 text-xs font-extrabold text-[#7D5C43] leading-relaxed text-left">
+                    <div className="flex justify-between items-center bg-white border border-[#F0E2D5] p-2.5 rounded-xl shadow-3xs">
+                      <span className="text-slate-400 text-[11px]">隨機出題模式:</span>
+                      <span className="font-black text-[#E65100]">開啟 (不重覆)</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>單題答題計時:</span>
-                      <span className="font-bold text-[#E65100]">30 秒 / 題</span>
+                    <div className="flex justify-between items-center bg-white border border-[#F0E2D5] p-2.5 rounded-xl shadow-3xs">
+                      <span className="text-slate-400 text-[11px]">單題答題計時:</span>
+                      <span className="font-black text-[#E65100]">30 秒 / 題</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-amber-50/50 border border-amber-100 rounded-2xl p-3 space-y-2">
-                  <div className="text-xs font-black text-[#B4570B] flex items-center gap-1.5">
-                    <span>📋</span>
-                    <span>課堂互動五步驟</span>
+                {/* 課堂互動流程 */}
+                <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm space-y-4 relative overflow-hidden">
+                  <div className="absolute -bottom-10 -right-10 text-5xl opacity-5 pointer-events-none">🌿</div>
+                  
+                  <div className="flex items-center gap-2 border-b-2 border-[#EAD5C3]/60 pb-3">
+                    <span className="text-lg">📋</span>
+                    <h3 className="font-black text-[#4A321F] text-sm">課堂互動流程</h3>
                   </div>
-                  <ol className="text-[10px] text-slate-500 space-y-1 font-semibold list-decimal pl-4 leading-normal">
-                    <li>老師開啟投影模式並投影大螢幕</li>
-                    <li>學生掃描 QR Code 加入同樂大廳</li>
-                    <li>老師點擊遊戲列表中的「進入遊戲」</li>
-                    <li>學生在手機端與大螢幕同步作答</li>
-                    <li>公布排行榜與老師點評總結</li>
-                  </ol>
+
+                  {/* Vertical Timeline stepper */}
+                  <div className="space-y-4 relative pl-5 text-left">
+                    <div className="absolute left-1.5 top-2 bottom-2 w-0.5 border-l-2 border-dashed border-[#F3C29F]" />
+                    
+                    <div className="relative">
+                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[8px] text-white font-black">1</div>
+                      <div className="leading-tight">
+                        <div className="text-xs font-black text-[#4A321F]">Step 1 老師選擇遊戲</div>
+                        <p className="text-[10px] text-slate-400 font-bold leading-normal mt-0.5">點選下方 10 款互動遊戲之一，按「進入遊戲」</p>
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[8px] text-white font-black">2</div>
+                      <div className="leading-tight">
+                        <div className="text-xs font-black text-[#4A321F]">Step 2 學生掃描 QR Code</div>
+                        <p className="text-[10px] text-slate-400 font-bold leading-normal mt-0.5">學生開啟手機鏡頭，掃描 left 側班級大 QR Code</p>
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[8px] text-white font-black">3</div>
+                      <div className="leading-tight">
+                        <div className="text-xs font-black text-[#4A321F]">Step 3 學生進入遊戲</div>
+                        <p className="text-[10px] text-slate-400 font-bold leading-normal mt-0.5">學生輸入座號姓名，一秒登入班級同樂大廳</p>
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[8px] text-white font-black">4</div>
+                      <div className="leading-tight">
+                        <div className="text-xs font-black text-[#4A321F]">Step 4 全班即時作答／小組比賽</div>
+                        <p className="text-[10px] text-slate-400 font-bold leading-normal mt-0.5">手機端與課堂大投影同步作答，累積生命點數</p>
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[8px] text-white font-black">5</div>
+                      <div className="leading-tight">
+                        <div className="text-xs font-black text-[#4A321F]">Step 5 顯示結果與總結</div>
+                        <p className="text-[10px] text-slate-400 font-bold leading-normal mt-0.5">大螢幕秀出全班答題分佈，老師進行一鍵點評</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* 10 INTERACTIVE GAMES LIST */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 pb-2">
-                <Gamepad2 className="w-5 h-5 text-[#E65100]" />
-                <h2 className="text-lg font-black text-[#4A321F]">本班生命教育互動遊戲列表 (共 10 款)</h2>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                {GAMES.map((game) => (
-                  <div 
-                    key={game.id}
-                    className={`p-4 pt-5 pb-5 rounded-2xl border border-[#F1E0CE] bg-white hover:border-[#E65100] transition-all duration-300 shadow-3xs flex flex-col justify-between min-h-[220px] group`}
-                  >
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-start">
-                        <span className="text-sm font-black font-mono text-[#E65100]/60 bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-md">
-                          {game.number}
-                        </span>
-                        <div className="text-2xl">{game.emoji}</div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <h4 className="font-black text-sm text-[#4A321F] group-hover:text-[#E65100] transition-colors line-clamp-1">
-                          {game.title}
-                        </h4>
-                        <p className="text-[11px] text-slate-400 leading-normal font-medium line-clamp-3">
-                          {game.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    <button 
-                      onClick={() => {
-                        setActiveGameId(game.id);
-                        showToast(`🎮 歡迎進入：${game.title}！`);
-                      }}
-                      className="w-full mt-4 py-1.5 border border-[#E65100]/40 group-hover:border-[#E65100] rounded-xl text-xs font-black text-[#E65100] bg-white hover:bg-orange-50 transition-all shadow-3xs flex items-center justify-center gap-1 cursor-pointer"
-                    >
-                      <span>進入遊戲</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* FOOTER TIPS CARDS */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-[#F1E0CE]/60">
-              <div className="bg-white/60 border border-[#F1E0CE]/40 rounded-2xl p-4 flex gap-3 items-start">
-                <div className="p-2 bg-orange-50 border border-orange-100 rounded-xl text-[#E65100]">💡</div>
-                <div className="space-y-1">
-                  <h5 className="font-black text-xs text-slate-800">活絡班級氣氛</h5>
-                  <p className="text-[11px] text-slate-400 font-medium leading-relaxed">
-                    在課程剛開始或下半堂使用，透過 3-5 分鐘的即時對抗快速提升全班學生的專注力與學習熱忱。
+            {/* FOOTER TIPS CARDS - BOTTOM 3 COLUMN USAGE ADVICE (Matches Image 1 exactly) */}
+            <div id="lobby-footer-tips" className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t-2 border-[#EAD5C3]/60">
+              {/* Card 1: 使用建議 */}
+              <div className="bg-white border-2 border-[#EAD5C3]/40 rounded-2xl p-5 flex gap-3.5 items-start relative overflow-hidden group hover:border-[#E65100] transition-colors">
+                <div className="absolute -bottom-6 -right-6 text-3xl opacity-10 pointer-events-none group-hover:scale-110 transition-transform">💡</div>
+                <div className="p-2.5 bg-orange-50 border border-[#FCD2B5] rounded-xl text-[#E65100] text-xl shadow-xs">💡</div>
+                <div className="space-y-1 text-left">
+                  <h5 className="font-black text-sm text-[#4A321F]">使用建議</h5>
+                  <p className="text-[11px] text-slate-400 font-bold leading-relaxed">
+                    活絡氣氛、提升專注力，讓每一堂課都充滿參與感。
                   </p>
                 </div>
               </div>
-              <div className="bg-white/60 border border-[#F1E0CE]/40 rounded-2xl p-4 flex gap-3 items-start">
-                <div className="p-2 bg-orange-50 border border-orange-100 rounded-xl text-[#E65100]">📖</div>
-                <div className="space-y-1">
-                  <h5 className="font-black text-xs text-slate-800">搭配教科書單元</h5>
-                  <p className="text-[11px] text-slate-400 font-medium leading-relaxed">
-                    本大廳 10 款互動遊戲與泰宇生命教育課本 1-5 單元完全契合，老師可於講授到特定章節時開啟對應遊戲。
+              
+              {/* Card 2: 課中互動 */}
+              <div className="bg-white border-2 border-[#EAD5C3]/40 rounded-2xl p-5 flex gap-3.5 items-start relative overflow-hidden group hover:border-[#E65100] transition-colors">
+                <div className="absolute -bottom-6 -right-6 text-3xl opacity-10 pointer-events-none group-hover:scale-110 transition-transform">🌸</div>
+                <div className="p-2.5 bg-orange-50 border border-[#FCD2B5] rounded-xl text-[#E65100] text-xl shadow-xs">📖</div>
+                <div className="space-y-1 text-left">
+                  <h5 className="font-black text-sm text-[#4A321F]">課中互動</h5>
+                  <p className="text-[11px] text-slate-400 font-bold leading-relaxed">
+                    搭配課程內容，強化理解與思考，讓學生主動參與學習。
                   </p>
                 </div>
               </div>
-              <div className="bg-white/60 border border-[#F1E0CE]/40 rounded-2xl p-4 flex gap-3 items-start">
-                <div className="p-2 bg-orange-50 border border-orange-100 rounded-xl text-[#E65100]">📈</div>
-                <div className="space-y-1">
-                  <h5 className="font-black text-xs text-slate-800">一鍵評分與引導</h5>
-                  <p className="text-[11px] text-slate-400 font-medium leading-relaxed">
-                    所有遊戲成果、心情打卡、價值選擇皆會即時汇总至學習統計中，方便導師在後台進行一鍵總結與反思給分。
+
+              {/* Card 3: 課後複習 */}
+              <div className="bg-white border-2 border-[#EAD5C3]/40 rounded-2xl p-5 flex gap-3.5 items-start relative overflow-hidden group hover:border-[#E65100] transition-colors">
+                <div className="absolute -bottom-6 -right-6 text-3xl opacity-10 pointer-events-none group-hover:scale-110 transition-transform">🌻</div>
+                <div className="p-2.5 bg-orange-50 border border-[#FCD2B5] rounded-xl text-[#E65100] text-xl shadow-xs">📊</div>
+                <div className="space-y-1 text-left">
+                  <h5 className="font-black text-sm text-[#4A321F]">課後複習</h5>
+                  <p className="text-[11px] text-slate-400 font-bold leading-relaxed">
+                    筆記學習重點，檢視學習成果，培養自我反思能力。
                   </p>
                 </div>
               </div>
@@ -903,26 +1169,91 @@ export default function InteractiveQuestTab({
             {/* GAME VIEW 1: MBTI QUIZ */}
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 1 && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Banner */}
-                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl p-6 text-white space-y-2 shadow-xs">
-                    <span className="text-xs font-black bg-white/20 px-3 py-1 rounded-full border border-white/20">01 心理測驗 MBTI</span>
-                    <h2 className="text-xl font-black">16 型人格生命探索測驗</h2>
-                    <p className="text-xs text-amber-50">回答 4 道核心情境題，發掘您的性格傾向，看見自己對生命的認知視角！</p>
-                  </div>
+              <div id="game-view-mbti" className="space-y-6">
+                {/* 1. Upper Banner */}
+                <div className="w-full bg-gradient-to-r from-[#FF9800] via-[#E65100] to-[#FF5722] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
+                  <div className="absolute -bottom-6 left-1/4 text-6xl opacity-10 pointer-events-none select-none">✨</div>
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
+                    <span>關卡 01 ‧ 心理測驗</span>
+                  </span>
+                  <h2 className="text-2xl font-black">16 型人格生命探索測驗</h2>
+                  <p className="text-xs text-[#FFF3E0] font-bold max-w-xl">
+                    回答 4 道核心情境題，發掘您的性格傾向，看見自己對生命的認知視角與潛在價值觀！
+                  </p>
+                </div>
 
-                  {/* Question Cards / Result */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs">
-                    {mbtiStep < mbtiQuestions.length ? (
-                      <div className="space-y-6">
-                        <div className="flex justify-between items-center border-b border-slate-100 pb-3">
-                          <span className="text-sm font-black text-slate-500">第 {mbtiStep + 1} 題 / 共 4 題</span>
-                          <span className="text-xs font-bold text-slate-400">依真實直覺作答即可</span>
+                {/* 2. Three-Column Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  
+                  {/* Left Column (col-span-3): Progress and Task Cards */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">📊</div>
+                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-3.5 flex items-center gap-1.5 uppercase">
+                        <span>📊</span>
+                        <span>人格傾向分佈度</span>
+                      </h4>
+
+                      <div className="space-y-4 text-xs font-black">
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-[11px] text-[#7D6B5D]">
+                            <span>外向 (E)</span>
+                            <span>內向 (I)</span>
+                          </div>
+                          <div className="w-full h-3 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden flex p-0.5">
+                            <div className="bg-orange-500 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[0] === 'E' ? '75%' : '25%' }} />
+                            <div className="bg-indigo-400 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[0] === 'E' ? '25%' : '75%' }} />
+                          </div>
                         </div>
 
-                        <div className="space-y-4">
-                          <h3 className="text-base font-black text-[#3E2723] leading-relaxed">
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-[11px] text-[#7D6B5D]">
+                            <span>感覺 (S)</span>
+                            <span>直覺 (N)</span>
+                          </div>
+                          <div className="w-full h-3 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden flex p-0.5">
+                            <div className="bg-orange-500 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[1] === 'S' ? '70%' : '30%' }} />
+                            <div className="bg-indigo-400 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[1] === 'S' ? '30%' : '70%' }} />
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-[11px] text-[#7D6B5D]">
+                            <span>思考 (T)</span>
+                            <span>情感 (F)</span>
+                          </div>
+                          <div className="w-full h-3 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden flex p-0.5">
+                            <div className="bg-orange-500 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[2] === 'T' ? '65%' : '35%' }} />
+                            <div className="bg-indigo-400 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[2] === 'T' ? '35%' : '65%' }} />
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-[11px] text-[#7D6B5D]">
+                            <span>判斷 (J)</span>
+                            <span>感知 (P)</span>
+                          </div>
+                          <div className="w-full h-3 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden flex p-0.5">
+                            <div className="bg-orange-500 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[3] === 'J' ? '60%' : '40%' }} />
+                            <div className="bg-indigo-400 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[3] === 'J' ? '40%' : '60%' }} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Middle Column (col-span-6): Interactive Question / Result Area */}
+                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
+                    {mbtiStep < mbtiQuestions.length ? (
+                      <div className="space-y-6">
+                        <div className="flex justify-between items-center border-b-2 border-[#F1E0CE]/60 pb-3">
+                          <span className="text-xs font-black text-slate-500">第 {mbtiStep + 1} 題 / 共 4 題</span>
+                          <span className="text-xs font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full">依直覺作答</span>
+                        </div>
+
+                        <div className="space-y-4 text-left">
+                          <h3 className="text-base font-black text-[#4A321F] leading-relaxed">
                             {mbtiQuestions[mbtiStep].q}
                           </h3>
 
@@ -931,12 +1262,12 @@ export default function InteractiveQuestTab({
                               <button
                                 key={idx}
                                 onClick={() => handleMbtiAnswer(opt.val)}
-                                className="w-full text-left p-4 rounded-2xl border-2 border-[#F1E0CE] hover:border-[#E65100] hover:bg-orange-50/50 transition-all shadow-3xs cursor-pointer flex justify-between items-center group"
+                                className="w-full text-left p-4 rounded-2xl border-2 border-[#F1E0CE] hover:border-[#E65100] hover:bg-orange-50/50 transition-all shadow-xs cursor-pointer flex justify-between items-center group active:scale-98"
                               >
-                                <span className="text-sm font-extrabold text-[#4A321F] group-hover:text-[#E65100]">
+                                <span className="text-xs font-black text-[#4A321F] group-hover:text-[#E65100]">
                                   {opt.label}
                                 </span>
-                                <span className="text-xs font-bold text-slate-400 bg-slate-50 border border-slate-100 px-2 py-1 rounded-lg group-hover:bg-[#FFEEDD] group-hover:text-[#E65100] font-mono">
+                                <span className="text-[10px] font-black text-slate-400 bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-lg group-hover:bg-[#FFEEDD] group-hover:text-[#E65100] font-mono">
                                   {opt.desc}
                                 </span>
                               </button>
@@ -954,7 +1285,7 @@ export default function InteractiveQuestTab({
                           <h3 className="text-3xl font-black text-[#E65100] tracking-wider font-mono">
                             {getMbtiResult()}
                           </h3>
-                          <div className="text-sm font-extrabold text-slate-700">
+                          <div className="text-sm font-black text-slate-700">
                             {getMbtiResult() === 'INFP' && '✨ 溫柔守護者 ‧ 尋求生命和諧與理想主義 ✨'}
                             {getMbtiResult() === 'ENFP' && '✨ 追夢冒險家 ‧ 充滿創意的生命旅人 ✨'}
                             {getMbtiResult() === 'INFJ' && '✨ 心靈引路人 ‧ 探尋深層生命意義者 ✨'}
@@ -963,14 +1294,14 @@ export default function InteractiveQuestTab({
                           </div>
                         </div>
 
-                        <p className="text-xs text-slate-500 leading-relaxed max-w-md mx-auto font-medium">
+                        <p className="text-xs text-slate-500 leading-relaxed max-w-md mx-auto font-bold bg-[#FAF5EC]/60 p-4 rounded-xl border border-[#F1E0CE]/60 text-left">
                           這代表你格外在乎生命的內在連結。你相信生命具有無限可能，不甘於平庸，且願意給予身邊每個人溫柔的包容！
                         </p>
 
                         <div className="flex gap-3 justify-center pt-4">
                           <button
                             onClick={resetMbti}
-                            className="px-6 py-2 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl hover:bg-orange-50 transition-all cursor-pointer shadow-3xs"
+                            className="px-6 py-2 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl hover:bg-orange-50 transition-all cursor-pointer shadow-xs active:scale-98"
                           >
                             重做測驗
                           </button>
@@ -978,65 +1309,24 @@ export default function InteractiveQuestTab({
                       </div>
                     )}
                   </div>
-                </div>
 
-                <div className="space-y-6">
-                  {/* Progress Meter */}
-                  <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-4">
-                    <h4 className="font-black text-[#4A321F] text-sm flex items-center gap-1.5">
-                      <span>📊</span>
-                      <span>人格傾向分佈度</span>
-                    </h4>
-
-                    <div className="space-y-3.5 text-xs font-black">
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-[11px] text-[#7D6B5D]">
-                          <span>外向 (E)</span>
-                          <span>內向 (I)</span>
-                        </div>
-                        <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden flex">
-                          <div className="bg-orange-400 transition-all duration-500" style={{ width: mbtiAnswers[0] === 'E' ? '75%' : '25%' }} />
-                          <div className="bg-indigo-300 transition-all duration-500" style={{ width: mbtiAnswers[0] === 'E' ? '25%' : '75%' }} />
+                  {/* Right Column (col-span-3): Results / Tips / Encouragement Cards */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">🌿</div>
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-lg shadow-sm">👨🏻</div>
+                        <div className="text-left leading-none">
+                          <h5 className="font-black text-xs text-slate-800">可華爸爸的小叮嚀</h5>
+                          <span className="text-[10px] text-slate-400">生命諮商導師</span>
                         </div>
                       </div>
-
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-[11px] text-[#7D6B5D]">
-                          <span>感覺 (S)</span>
-                          <span>直覺 (N)</span>
-                        </div>
-                        <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden flex">
-                          <div className="bg-orange-400 transition-all duration-500" style={{ width: mbtiAnswers[1] === 'S' ? '70%' : '30%' }} />
-                          <div className="bg-indigo-300 transition-all duration-500" style={{ width: mbtiAnswers[1] === 'S' ? '30%' : '70%' }} />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-[11px] text-[#7D6B5D]">
-                          <span>思考 (T)</span>
-                          <span>情感 (F)</span>
-                        </div>
-                        <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden flex">
-                          <div className="bg-orange-400 transition-all duration-500" style={{ width: mbtiAnswers[2] === 'T' ? '65%' : '35%' }} />
-                          <div className="bg-indigo-300 transition-all duration-500" style={{ width: mbtiAnswers[2] === 'T' ? '35%' : '65%' }} />
-                        </div>
-                      </div>
+                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                        「小博，MBTI性格測驗沒有好與壞之分。它只是幫助你明白自己習慣用什麼眼光看生命、用什麼模式與世界交流。多去欣賞班上跟你性格截然不同的同學！」
+                      </p>
                     </div>
                   </div>
 
-                  {/* Dad's Tip */}
-                  <div className="bg-[#FFFDF9] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-lg shadow-3xs">👨🏻</div>
-                      <div className="text-left leading-none">
-                        <h5 className="font-black text-xs text-slate-800">可華爸爸的小叮嚀</h5>
-                        <span className="text-[9px] text-slate-400">生命諮商導師</span>
-                      </div>
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-relaxed font-bold bg-[#FAF5EC]/40 p-3 rounded-xl border border-[#F1E0CE]/40">
-                      「小博，MBTI性格測驗沒有好與壞之分。它只是幫助你明白自己習慣用什麼眼光看生命、用什麼模式與世界交流。多去欣賞班上跟你性格截然不同的同學！」
-                    </p>
-                  </div>
                 </div>
               </div>
             )}
@@ -1045,32 +1335,81 @@ export default function InteractiveQuestTab({
             {/* GAME VIEW 2: LIFE PUZZLE MAP */}
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 2 && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Banner */}
-                  <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-3xl p-6 text-white space-y-2 shadow-xs">
-                    <span className="text-xs font-black bg-white/20 px-3 py-1 rounded-full border border-white/20">02 生命拼圖地圖</span>
-                    <h2 className="text-xl font-black">五大單元生命拼圖</h2>
-                    <p className="text-xs text-blue-50">點擊左側的生命單元板塊，將它們拼入教室大螢幕的生命拼圖地圖中，點亮完整人生！</p>
+              <div id="game-view-puzzle" className="space-y-6">
+                {/* 1. Upper Banner */}
+                <div className="w-full bg-gradient-to-r from-[#1E88E5] via-[#3F51B5] to-[#5C6BC0] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
+                    <span>關卡 02 ‧ 生命拼圖地圖</span>
+                  </span>
+                  <h2 className="text-2xl font-black">五大單元生命拼圖</h2>
+                  <p className="text-xs text-[#E8EAF6] font-bold max-w-xl">
+                    點擊各單元版塊將其拼入拼圖地圖中，點亮完整人生，拼湊出我們班專屬的生命樣貌！
+                  </p>
+                </div>
+
+                {/* 2. Three-Column Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  
+                  {/* Left Column (col-span-3): Progress and Checklist */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">🧩</div>
+                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-3.5 flex items-center gap-1.5 uppercase">
+                        <span>🧩</span>
+                        <span>拼圖完成進度</span>
+                      </h4>
+
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <span className="text-2xl font-black text-[#E65100] font-mono">
+                            {Object.values(puzzlePlaced).filter(Boolean).length} / 5
+                          </span>
+                          <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
+                            {Math.round((Object.values(puzzlePlaced).filter(Boolean).length / 5) * 100)}% 已點亮
+                          </span>
+                        </div>
+                        
+                        <div className="w-full h-3 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden p-0.5">
+                          <div 
+                            className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all duration-300"
+                            style={{ width: `${(Object.values(puzzlePlaced).filter(Boolean).length / 5) * 100}%` }}
+                          />
+                        </div>
+
+                        {/* List of puzzle elements */}
+                        <div className="space-y-2 pt-2 border-t border-[#EAD5C3]/60">
+                          {Object.entries(puzzlePlaced).map(([key, placed]) => (
+                            <div key={key} className="flex items-center justify-between text-xs font-black text-[#7D6B5D]">
+                              <span>{key}</span>
+                              <span className={`px-2 py-0.5 rounded-md text-[10px] ${
+                                placed ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'
+                              }`}>
+                                {placed ? '已拼入' : '待拼入'}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Puzzle Board Canvas */}
-                  <div className="bg-white border border-slate-100 rounded-3xl p-6 shadow-3xs space-y-6">
-                    <div className="text-center">
-                      <h3 className="text-sm font-black text-slate-500">✨ 班級生命地圖拼湊區 ✨</h3>
+                  {/* Middle Column (col-span-6): Interactive Puzzle Board Canvas */}
+                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
+                    <div className="text-center mb-4">
+                      <h3 className="text-xs font-black text-slate-500">✨ 班級生命地圖拼湊區 ✨</h3>
                     </div>
 
-                    <div className="relative w-full max-w-lg mx-auto aspect-[4/3] border-4 border-[#F1E0CE] rounded-2xl bg-[#FFFBF5] overflow-hidden shadow-2xs flex items-center justify-center p-4">
-                      {/* Grid representation of puzzle layout */}
+                    <div className="relative w-full max-w-lg mx-auto aspect-[4/3] border-4 border-[#FCD2B5] rounded-2xl bg-[#FFFDF9] overflow-hidden shadow-inner flex items-center justify-center p-4">
                       <div className="grid grid-cols-3 gap-3 w-full h-full">
                         {Object.entries(puzzlePlaced).map(([key, placed]) => (
                           <div 
                             key={key}
                             onClick={() => handlePlacePuzzle(key)}
-                            className={`border-2 rounded-xl flex flex-col items-center justify-center p-3 text-center transition-all cursor-pointer ${
+                            className={`border-2 rounded-xl flex flex-col items-center justify-center p-3 text-center transition-all cursor-pointer select-none ${
                               placed 
-                                ? 'bg-gradient-to-br from-orange-100 to-amber-100 border-amber-400 text-amber-800 scale-98 shadow-inner' 
-                                : 'bg-[#FAF6F0]/60 border-dashed border-[#F1E0CE] text-slate-300 hover:bg-[#FAF6F0] hover:scale-102 hover:border-[#E65100]'
+                                ? 'bg-gradient-to-br from-orange-50 to-amber-100 border-[#FF9800] text-[#E65100] scale-98 shadow-sm font-black' 
+                                : 'bg-[#FAF6F0]/40 border-dashed border-[#F1E0CE] text-slate-300 hover:bg-[#FAF6F0] hover:scale-102 hover:border-[#E65100]'
                             }`}
                           >
                             <span className="text-2xl mb-1">{placed ? '🏆' : '➕'}</span>
@@ -1080,55 +1419,41 @@ export default function InteractiveQuestTab({
                             </span>
                           </div>
                         ))}
-                        {/* Final placeholder to look elegant */}
-                        <div className="border-2 border-dashed border-[#F1E0CE] bg-[#FAF6F0]/20 rounded-xl flex items-center justify-center text-slate-300 font-bold text-xs">
-                          完整人生
+                        {/* Complete life indicator */}
+                        <div className="border-2 border-dashed border-[#F1E0CE] bg-[#FAF6F0]/20 rounded-xl flex flex-col items-center justify-center text-slate-400 font-black text-[10px] p-2 leading-tight">
+                          <span>🧭</span>
+                          <span className="mt-1">完整生命</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex gap-3 justify-center">
+                    <div className="flex gap-3 justify-center mt-6">
                       <button
                         onClick={resetPuzzle}
-                        className="px-6 py-2 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl hover:bg-orange-50 transition-all cursor-pointer shadow-3xs"
+                        className="px-6 py-2 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl hover:bg-orange-50 transition-all cursor-pointer shadow-xs active:scale-98"
                       >
                         重置地圖
                       </button>
                     </div>
                   </div>
-                </div>
 
-                <div className="space-y-6">
-                  {/* Progress gauge */}
-                  <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-4">
-                    <span className="text-xs font-black text-slate-400 block">拼圖完成進度</span>
-                    
-                    <div className="flex items-center gap-4">
-                      <div className="text-3xl font-black text-[#E65100] font-mono">
-                        {Object.values(puzzlePlaced).filter(Boolean).length} / 5
+                  {/* Right Column (col-span-3): Grandpa's Encouragement */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">🌿</div>
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-lg shadow-sm">👵🏻</div>
+                        <div className="text-left leading-none">
+                          <h5 className="font-black text-xs text-slate-800">可華爺爺的鼓勵</h5>
+                          <span className="text-[10px] text-slate-400">生命智者</span>
+                        </div>
                       </div>
-                      <div className="flex-1 h-3.5 bg-slate-100 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all duration-300"
-                          style={{ width: `${(Object.values(puzzlePlaced).filter(Boolean).length / 5) * 100}%` }}
-                        />
-                      </div>
+                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                        「小博，生命並不是一天拼出來的。哲學思考是火，引領我們看清路；人學探索是眼，幫我們看見人的多元。把這五個單元慢慢嵌入你心裡，你便有了完整生命的能量！」
+                      </p>
                     </div>
                   </div>
 
-                  {/* Grandpa's Tip */}
-                  <div className="bg-[#FFFDF9] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-lg shadow-3xs">👵🏻</div>
-                      <div className="text-left leading-none">
-                        <h5 className="font-black text-xs text-slate-800">可華爺爺的鼓勵</h5>
-                        <span className="text-[9px] text-slate-400">生命智者</span>
-                      </div>
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-relaxed font-bold bg-[#FAF5EC]/40 p-3 rounded-xl border border-[#F1E0CE]/40">
-                      「小博，生命並不是一天拼出來的。哲學思考是火，引領我們看清路；人學探索是眼，幫我們看見人的多元。把這五個單元慢慢嵌入你心裡，你便有了完整生命的能量！」
-                    </p>
-                  </div>
                 </div>
               </div>
             )}
@@ -1137,26 +1462,76 @@ export default function InteractiveQuestTab({
             {/* GAME VIEW 3: SCENARIO ADVENTURE */}
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 3 && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Banner */}
-                  <div className="bg-gradient-to-r from-emerald-500 to-green-600 rounded-3xl p-6 text-white space-y-2 shadow-xs">
-                    <span className="text-xs font-black bg-white/20 px-3 py-1 rounded-full border border-white/20">03 情境選擇大冒險</span>
-                    <h2 className="text-xl font-black">情境抉擇 ‧ 生命智慧拉鋸戰</h2>
-                    <p className="text-xs text-emerald-50">遭遇道德或生活兩難情境時，您的選擇將會塑建您最核心的生命價值點數！</p>
-                  </div>
+              <div id="game-view-adventure" className="space-y-6">
+                {/* 1. Upper Banner */}
+                <div className="w-full bg-gradient-to-r from-[#2E7D32] via-[#4CAF50] to-[#8BC34A] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
+                    <span>關卡 03 ‧ 情境抉擇</span>
+                  </span>
+                  <h2 className="text-2xl font-black">情境抉擇 ‧ 生命智慧拉鋸戰</h2>
+                  <p className="text-xs text-[#E8F5E9] font-bold max-w-xl">
+                    遭遇道德或生活兩難情境時，您的選擇將會塑建您最核心的生命價值點數！
+                  </p>
+                </div>
 
-                  {/* Question Cards / Result */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs">
-                    {adventureStage < adventureScenarios.length ? (
-                      <div className="space-y-6">
-                        <div className="flex justify-between items-center border-b border-slate-100 pb-3">
-                          <span className="text-sm font-black text-slate-500">冒險關卡：{adventureScenarios[adventureStage].title}</span>
-                          <span className="text-xs font-bold text-slate-400">做出你的價值抉擇</span>
+                {/* 2. Three-Column Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  
+                  {/* Left Column (col-span-3): Points Display */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">🛡️</div>
+                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-3.5 flex items-center gap-1.5 uppercase">
+                        <span>🛡️</span>
+                        <span>冒險價值指標</span>
+                      </h4>
+
+                      <div className="space-y-4 font-black text-xs text-[#7D6B5D]">
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-[11px]">
+                            <span>❤️ 同理心</span>
+                            <span className="text-[#2E7D32]">{adventurePoints.同理} pts</span>
+                          </div>
+                          <div className="w-full h-2.5 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden p-0.5">
+                            <div className="h-full bg-emerald-500 rounded-full transition-all" style={{ width: `${Math.min(100, adventurePoints.同理 * 15)}%` }} />
+                          </div>
                         </div>
 
-                        <div className="space-y-4">
-                          <p className="text-sm font-extrabold text-[#4A321F] bg-slate-50 p-4 rounded-2xl leading-relaxed border border-slate-100">
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-[11px]">
+                            <span>🛡️ 誠信責任</span>
+                            <span className="text-blue-600">{adventurePoints.責任} pts</span>
+                          </div>
+                          <div className="w-full h-2.5 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden p-0.5">
+                            <div className="h-full bg-blue-500 rounded-full transition-all" style={{ width: `${Math.min(100, adventurePoints.責任 * 15)}%` }} />
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-[11px]">
+                            <span>🔥 道德勇氣</span>
+                            <span className="text-amber-600">{adventurePoints.勇氣} pts</span>
+                          </div>
+                          <div className="w-full h-2.5 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden p-0.5">
+                            <div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${Math.min(100, adventurePoints.勇氣 * 15)}%` }} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Middle Column (col-span-6): Interactive Scenario Board */}
+                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
+                    {adventureStage < adventureScenarios.length ? (
+                      <div className="space-y-6">
+                        <div className="flex justify-between items-center border-b-2 border-[#F1E0CE]/60 pb-3">
+                          <span className="text-xs font-black text-slate-500">冒險關卡：{adventureScenarios[adventureStage].title}</span>
+                          <span className="text-xs font-black text-emerald-600 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">抉擇關卡 {adventureStage + 1} / 3</span>
+                        </div>
+
+                        <div className="space-y-4 text-left">
+                          <p className="text-xs font-bold text-[#4A321F] bg-[#FAF8F5] p-4 rounded-2xl leading-relaxed border border-[#EAD5C3] shadow-inner">
                             {adventureScenarios[adventureStage].story}
                           </p>
 
@@ -1165,11 +1540,9 @@ export default function InteractiveQuestTab({
                               <button
                                 key={idx}
                                 onClick={() => handleAdventureChoice(opt.points)}
-                                className="w-full text-left p-4 rounded-2xl border-2 border-[#F1E0CE] hover:border-[#E65100] hover:bg-orange-50/50 transition-all shadow-3xs cursor-pointer"
+                                className="w-full text-left p-4 rounded-2xl border-2 border-[#F1E0CE] hover:border-[#E65100] hover:bg-orange-50/50 transition-all shadow-xs cursor-pointer active:scale-98 font-bold text-xs text-[#4A321F]"
                               >
-                                <span className="text-sm font-black text-[#4A321F]">
-                                  {opt.text}
-                                </span>
+                                {opt.text}
                               </button>
                             ))}
                           </div>
@@ -1203,7 +1576,7 @@ export default function InteractiveQuestTab({
                         <div className="flex gap-3 justify-center pt-4">
                           <button
                             onClick={resetAdventure}
-                            className="px-6 py-2 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl hover:bg-orange-50 transition-all cursor-pointer shadow-3xs"
+                            className="px-6 py-2 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl hover:bg-orange-50 transition-all cursor-pointer shadow-xs active:scale-98"
                           >
                             重來一次
                           </button>
@@ -1211,45 +1584,24 @@ export default function InteractiveQuestTab({
                       </div>
                     )}
                   </div>
-                </div>
 
-                <div className="space-y-6">
-                  {/* Current values values display */}
-                  <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-4">
-                    <span className="text-xs font-black text-slate-400 block">當前價值點數</span>
-                    
-                    <div className="space-y-3">
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs font-bold">
-                          <span>❤️ 同理心</span>
-                          <span>{adventurePoints.同理} pts</span>
-                        </div>
-                        <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                          <div className="h-full bg-emerald-500 transition-all" style={{ width: `${Math.min(100, adventurePoints.同理 * 4)}%` }} />
+                  {/* Right Column (col-span-3): Character Card */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">🌸</div>
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <div className="w-9 h-9 rounded-full bg-rose-100 flex items-center justify-center text-lg shadow-sm">👩🏻</div>
+                        <div className="text-left leading-none">
+                          <h5 className="font-black text-xs text-slate-800">張曉萍的小提醒</h5>
+                          <span className="text-[10px] text-slate-400">貼心好同學</span>
                         </div>
                       </div>
-
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs font-bold">
-                          <span>🛡️ 誠信責任</span>
-                          <span>{adventurePoints.責任} pts</span>
-                        </div>
-                        <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                          <div className="h-full bg-blue-500 transition-all" style={{ width: `${Math.min(100, adventurePoints.責任 * 4)}%` }} />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs font-bold">
-                          <span>🔥 道德勇氣</span>
-                          <span>{adventurePoints.勇氣} pts</span>
-                        </div>
-                        <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                          <div className="h-full bg-amber-500 transition-all" style={{ width: `${Math.min(100, adventurePoints.勇氣 * 4)}%` }} />
-                        </div>
-                      </div>
+                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                        「可華，在這個道德兩難的生命大冒險裡，無論做出什麼選擇都考驗著我們的心靈指南針。別害怕，跟著你心底最真誠的同理心和正義感去探索吧！」
+                      </p>
                     </div>
                   </div>
+
                 </div>
               </div>
             )}
@@ -1257,33 +1609,82 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {/* GAME VIEW 4: RELATIONSHIP LINKS */}
             {/* ------------------------------------------------------------------------------------------------- */}
+            {/* ------------------------------------------------------------------------------------------------- */}
+            {/* GAME VIEW 4: RELATIONSHIP LINKS */}
+            {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 4 && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Banner */}
-                  <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-3xl p-6 text-white space-y-2 shadow-xs">
-                    <span className="text-xs font-black bg-white/20 px-3 py-1 rounded-full border border-white/20">04 人際關係連連看</span>
-                    <h2 className="text-xl font-black">建立本班溫暖支持網絡</h2>
-                    <p className="text-xs text-purple-50">點擊第一個角色大頭貼，再點擊另一個角色大頭貼，即可拉出紅線建立彼此的陪伴與支持連結！</p>
+              <div id="game-view-relationships" className="space-y-6">
+                {/* 1. Upper Banner */}
+                <div className="w-full bg-gradient-to-r from-[#6A1B9A] via-[#8E24AA] to-[#AB47BC] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
+                    <span>關卡 04 ‧ 人際關係連連看</span>
+                  </span>
+                  <h2 className="text-2xl font-black">建立本班溫暖支持網絡</h2>
+                  <p className="text-xs text-[#F3E5F5] font-bold max-w-xl">
+                    點擊第一個角色大頭貼，再點擊另一個角色大頭貼，即可拉出關係線建立彼此的陪伴與支持連結！
+                  </p>
+                </div>
+
+                {/* 2. Three-Column Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  
+                  {/* Left Column (col-span-3): Connections List */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">💖</div>
+                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-3.5 flex items-center gap-1.5 uppercase">
+                        <span>💖</span>
+                        <span>已建立支持網絡 ({connections.length})</span>
+                      </h4>
+
+                      <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+                        {connections.length === 0 ? (
+                          <p className="text-[10px] text-slate-400 font-bold py-4 text-center">暫無關係連結，快在右側點擊兩個角色建立紅線吧！</p>
+                        ) : (
+                          connections.map((c, idx) => (
+                            <div key={idx} className="bg-white border border-[#EAD5C3] p-2 rounded-xl flex justify-between items-center shadow-xs text-xs font-bold text-[#4A321F]">
+                              <div className="flex items-center gap-1">
+                                <span className="truncate max-w-[50px]">{c.from}</span>
+                                <span className="text-[#E65100]">↔️</span>
+                                <span className="truncate max-w-[50px]">{c.to}</span>
+                                <span className="bg-indigo-50 text-indigo-600 border border-indigo-100 px-1.5 py-0.5 rounded-md text-[9px] ml-1 shrink-0">
+                                  {c.rel}
+                                </span>
+                              </div>
+
+                              <button 
+                                onClick={() => handleRemoveConnection(idx)}
+                                className="text-slate-300 hover:text-red-500 transition-colors shrink-0 p-1"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Graph Interaction Board */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-6">
-                    <div className="text-center space-y-2">
-                      <h3 className="text-sm font-black text-slate-500">💖 人際關係支持網畫布 💖</h3>
-                      <p className="text-[11px] text-slate-400">目前選擇：{selectedNode ? <span className="text-indigo-600 font-bold">{selectedNode}</span> : '無'}</p>
+                  {/* Middle Column (col-span-6): Interactive Relations Canvas */}
+                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
+                    <div className="text-center mb-4 space-y-1">
+                      <h3 className="text-xs font-black text-slate-500">💖 關係連線互動大畫布 💖</h3>
+                      <p className="text-[10px] text-slate-400 font-bold">
+                        目前已點選角色：{selectedNode ? <span className="text-purple-600 font-black bg-purple-50 px-2 py-0.5 rounded border border-purple-100">{selectedNode}</span> : <span className="text-slate-400">請先點選下方第一個角色</span>}
+                      </p>
                     </div>
 
                     {/* Nodes grid */}
-                    <div className="grid grid-cols-3 gap-4 max-w-md mx-auto py-4">
+                    <div className="grid grid-cols-3 gap-3 max-w-md mx-auto py-2">
                       {['陳可華', '王博鈞', '張曉萍', '王小文', '可華爸爸', '可華爺爺'].map(node => (
                         <div 
                           key={node}
                           onClick={() => handleNodeClick(node)}
-                          className={`p-3 border-2 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
+                          className={`p-3 border-2 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer transition-all select-none ${
                             selectedNode === node 
-                              ? 'border-indigo-600 bg-indigo-50/50 scale-105 shadow-md' 
-                              : 'border-dashed border-[#F1E0CE] bg-[#FCFAF6] hover:bg-indigo-50/20 hover:border-indigo-400 hover:scale-102'
+                              ? 'border-purple-600 bg-purple-50 scale-102 shadow-md font-black text-purple-700' 
+                              : 'border-dashed border-[#F1E0CE] bg-[#FCFAF6] hover:bg-purple-50/20 hover:border-purple-400 hover:scale-102'
                           }`}
                         >
                           <span className="text-2xl">
@@ -1294,22 +1695,22 @@ export default function InteractiveQuestTab({
                             {node === '可華爸爸' && '👨🏻'}
                             {node === '可華爺爺' && '👵🏻'}
                           </span>
-                          <span className="text-xs font-black text-[#4A321F] mt-1">{node}</span>
+                          <span className="text-[11px] font-black text-[#4A321F] mt-1">{node}</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-center gap-3 border-t border-slate-100 pt-4">
-                      <span className="text-xs font-black text-slate-400">關係類型：</span>
-                      <div className="flex gap-1.5 flex-wrap">
+                    <div className="flex items-center justify-center gap-3 border-t border-[#F1E0CE] pt-4 mt-4">
+                      <span className="text-xs font-black text-slate-400">關係標籤：</span>
+                      <div className="flex gap-1.5 flex-wrap justify-center">
                         {['家人', '死黨', '陪伴者', '支持者'].map(r => (
                           <button
                             key={r}
                             onClick={() => setSelectedRel(r)}
                             className={`px-3 py-1 text-xs font-black rounded-lg transition-all border ${
                               selectedRel === r 
-                                ? 'bg-indigo-600 border-indigo-600 text-white shadow-3xs' 
-                                : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'
+                                ? 'bg-purple-600 border-purple-600 text-white shadow-xs' 
+                                : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50 cursor-pointer'
                             }`}
                           >
                             {r}
@@ -1318,35 +1719,24 @@ export default function InteractiveQuestTab({
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="space-y-6">
-                  {/* Connection list */}
-                  <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-4">
-                    <span className="text-xs font-black text-slate-400 block">已建立連結清單</span>
-                    
-                    <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
-                      {connections.map((c, idx) => (
-                        <div key={idx} className="bg-white border border-slate-100 p-2.5 rounded-xl flex justify-between items-center shadow-3xs text-xs font-black">
-                          <div className="flex items-center gap-1.5">
-                            <span>{c.from}</span>
-                            <span className="text-[#E65100]">↔️</span>
-                            <span>{c.to}</span>
-                            <span className="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-0.5 rounded-md text-[10px] ml-1">
-                              {c.rel}
-                            </span>
-                          </div>
-
-                          <button 
-                            onClick={() => handleRemoveConnection(idx)}
-                            className="text-slate-300 hover:text-red-500 transition-colors"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
+                  {/* Right Column (col-span-3): Character card */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <div className="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-lg shadow-sm">👧🏻</div>
+                        <div className="text-left leading-none">
+                          <h5 className="font-black text-xs text-slate-800">王小文的悄悄話</h5>
+                          <span className="text-[10px] text-slate-400">暖心好朋友</span>
                         </div>
-                      ))}
+                      </div>
+                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                        「可華，我們在世界上都不是一座孤島。看著你拉出的這條關係連結網，我才明白原來我們身邊隨時都包圍著這麼多默默支持我們的人，心裡好溫暖喔！」
+                      </p>
                     </div>
                   </div>
+
                 </div>
               </div>
             )}
@@ -1354,46 +1744,98 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {/* GAME VIEW 5: VALUE SCALES */}
             {/* ------------------------------------------------------------------------------------------------- */}
+            {/* ------------------------------------------------------------------------------------------------- */}
+            {/* GAME VIEW 5: VALUE SCALES */}
+            {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 5 && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Banner */}
-                  <div className="bg-gradient-to-r from-orange-500 to-amber-600 rounded-3xl p-6 text-white space-y-2 shadow-xs">
-                    <span className="text-xs font-black bg-white/20 px-3 py-1 rounded-full border border-white/20">05 價值天平排序戰</span>
-                    <h2 className="text-xl font-black">核心生命價值天平</h2>
-                    <p className="text-xs text-amber-50">點擊卡片旁的「上移」或「下移」，將您最看重、最守護的核心價值排在最頂端。看見您靈魂的側重傾斜！</p>
+              <div id="game-view-value-scales" className="space-y-6">
+                {/* 1. Upper Banner */}
+                <div className="w-full bg-gradient-to-r from-[#E65100] via-[#F57C00] to-[#FFB74D] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
+                    <span>關卡 05 ‧ 價值天平</span>
+                  </span>
+                  <h2 className="text-2xl font-black">核心生命價值天平</h2>
+                  <p className="text-xs text-orange-50 font-bold max-w-xl">
+                    點擊各項卡片旁的「上移」或「下移」，將您最看重、最守護的核心生命價值排在最頂端，看見您靈魂的側重！
+                  </p>
+                </div>
+
+                {/* 2. Three-Column Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  
+                  {/* Left Column (col-span-3): Gravity Tilt Scales */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden flex flex-col items-center">
+                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">⚖️</div>
+                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-3.5 flex items-center gap-1.5 uppercase w-full">
+                        <span>⚖️</span>
+                        <span>心靈天平傾斜</span>
+                      </h4>
+
+                      <div className="w-full text-center space-y-3">
+                        <div className="text-[11px] font-black text-slate-400">當前天平狀態</div>
+                        <div className="text-xs font-black text-[#E65100] bg-orange-50 px-2.5 py-1.5 rounded-lg border border-orange-200 leading-tight">
+                          首要核心：{valuesList[0]}
+                        </div>
+                      </div>
+
+                      {/* Graphic balance scales */}
+                      <div className="relative py-6 flex flex-col items-center select-none">
+                        {/* Horizontal balance bar that tilts */}
+                        <div 
+                          className="w-44 h-3 bg-[#8D6E63] rounded-full flex justify-between px-2 transition-transform duration-500 relative"
+                          style={{ transform: `rotate(${tiltValue}deg)` }}
+                        >
+                          <div className="w-7 h-7 rounded-full bg-amber-400 border-2 border-[#5D4037] shadow-sm flex items-center justify-center text-[9px] font-black -mt-2 truncate text-slate-800">
+                            {valuesList[0]?.slice(0, 2)}
+                          </div>
+                          <div className="w-7 h-7 rounded-full bg-slate-300 border-2 border-[#5D4037] shadow-sm flex items-center justify-center text-[9px] font-black -mt-2 truncate text-slate-500">
+                            {valuesList[valuesList.length - 1]?.slice(0, 2)}
+                          </div>
+                        </div>
+                        {/* Stand */}
+                        <div className="w-2.5 h-16 bg-[#5D4037]" />
+                        <div className="w-16 h-2 bg-[#4E342E] rounded-t-md" />
+                      </div>
+
+                      <p className="text-[9px] text-[#7D6B5D] font-bold text-center leading-relaxed">
+                        天平將隨著您最看重（卡片首位）與最輕忽的價值自動產生傾斜。
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Interaction Card */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <h3 className="text-sm font-black text-slate-500 border-b border-slate-100 pb-2">🔄 調整價值優先順序</h3>
+                  {/* Middle Column (col-span-6): Interactive Value Scales Ordering & Writing */}
+                  <div className="lg:col-span-6 space-y-6">
+                    {/* Ordering card */}
+                    <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
+                      <h3 className="text-xs font-black text-slate-500 border-b-2 border-[#F1E0CE]/60 pb-3 mb-4">🔄 拖曳微調價值優先順序</h3>
                       
-                      <div className="space-y-2">
+                      <div className="space-y-2 text-left">
                         {valuesList.map((val, idx) => (
                           <div 
                             key={val}
-                            className="bg-[#FCFAF6] border border-[#F1E0CE]/50 px-4 py-2.5 rounded-xl flex items-center justify-between shadow-3xs text-xs font-black"
+                            className="bg-[#FCFAF7] border-2 border-[#F1E0CE]/50 px-4 py-2.5 rounded-xl flex items-center justify-between shadow-xs text-xs font-black text-[#4A321F] hover:border-[#E65100]/60 transition-colors"
                           >
                             <div className="flex items-center gap-2">
-                              <span className="w-5 h-5 rounded bg-[#E65100]/10 text-[#E65100] flex items-center justify-center font-bold">
+                              <span className="w-5 h-5 rounded bg-[#E65100]/10 text-[#E65100] flex items-center justify-center font-black text-[10px]">
                                 {idx + 1}
                               </span>
                               <span>{val}</span>
                             </div>
 
-                            <div className="flex gap-1">
+                            <div className="flex gap-1.5">
                               <button 
                                 onClick={() => moveValue(idx, 'up')}
                                 disabled={idx === 0}
-                                className="p-1 border border-slate-200 rounded hover:bg-slate-50 disabled:opacity-30 cursor-pointer"
+                                className="p-1 px-2 border-2 border-slate-200 hover:border-orange-300 rounded-lg bg-white disabled:opacity-30 cursor-pointer text-[10px] hover:bg-orange-50 active:scale-95 transition-all font-black"
                               >
                                 ⬆️
                               </button>
                               <button 
                                 onClick={() => moveValue(idx, 'down')}
                                 disabled={idx === valuesList.length - 1}
-                                className="p-1 border border-slate-200 rounded hover:bg-slate-50 disabled:opacity-30 cursor-pointer"
+                                className="p-1 px-2 border-2 border-slate-200 hover:border-orange-300 rounded-lg bg-white disabled:opacity-30 cursor-pointer text-[10px] hover:bg-orange-50 active:scale-95 transition-all font-black"
                               >
                                 ⬇️
                               </button>
@@ -1403,70 +1845,47 @@ export default function InteractiveQuestTab({
                       </div>
                     </div>
 
-                    <div className="flex flex-col justify-between items-center text-center p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                      <div className="space-y-1">
-                        <h4 className="text-xs font-black text-slate-400">當前天平狀態</h4>
-                        <div className="text-sm font-black text-[#E65100]">
-                          最重要核心：{valuesList[0]}
-                        </div>
-                      </div>
-
-                      {/* Graphic balance scales */}
-                      <div className="relative py-8 flex flex-col items-center">
-                        {/* Horizontal balance bar that tilts */}
-                        <div 
-                          className="w-48 h-3.5 bg-amber-800 rounded-full flex justify-between px-2 transition-transform duration-500 relative"
-                          style={{ transform: `rotate(${tiltValue}deg)` }}
+                    {/* Reflection input card */}
+                    <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm space-y-3">
+                      <h3 className="text-xs font-black text-slate-500 flex items-center gap-1.5 border-b-2 border-[#F1E0CE]/60 pb-3">
+                        <span>📝</span>
+                        <span>我的價值反思（寫作大廳同步）</span>
+                      </h3>
+                      <textarea
+                        value={reflectionText}
+                        onChange={(e) => setReflectionText(e.target.value)}
+                        placeholder="請用一兩句話寫下：為什麼您會做出這樣的價值優先順序選擇？這代表您最想守護的是什麼？"
+                        className="w-full h-24 p-3 border-2 border-[#F1E0CE] rounded-2xl text-xs font-bold text-slate-700 focus:outline-none focus:border-[#E65100] bg-[#FAF8F5]/30 focus:bg-white transition-all resize-none"
+                      />
+                      <div className="flex justify-end">
+                        <button 
+                          onClick={saveReflection}
+                          className="px-5 py-2 bg-[#E65100] hover:bg-[#D84315] text-white font-black text-xs rounded-xl shadow-xs flex items-center gap-1 cursor-pointer active:scale-98 transition-transform"
                         >
-                          <div className="w-6 h-6 rounded-full bg-amber-400 border border-white shadow-3xs flex items-center justify-center text-[10px] -mt-1">{valuesList[0]}</div>
-                          <div className="w-6 h-6 rounded-full bg-slate-300 border border-white shadow-3xs flex items-center justify-center text-[10px] -mt-1">{valuesList[valuesList.length - 1]}</div>
-                        </div>
-                        {/* Stand */}
-                        <div className="w-3 h-20 bg-amber-900" />
-                        <div className="w-20 h-3 bg-amber-950 rounded-t-lg" />
+                          <Send className="w-3.5 h-3.5" />
+                          <span>儲存我的反思</span>
+                        </button>
                       </div>
+                    </div>
+                  </div>
 
-                      <p className="text-[10px] text-slate-400 font-bold leading-normal">
-                        天平將隨著您最在乎的價值卡片（如「自由」與「責任」）產生傾斜。
+                  {/* Right Column (col-span-3): Father's guidance */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">🌿</div>
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-lg shadow-sm">👨🏻</div>
+                        <div className="text-left leading-none">
+                          <h5 className="font-black text-xs text-slate-800">可華爸爸的引導</h5>
+                          <span className="text-[10px] text-slate-400">生命諮商導師</span>
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                        「小博，在『自由』與『責任』之間，我們每個人都在尋求一種平衡。自由給予我們飛翔的羽翼，而責任則是拉住風箏的那根線。想一想，若一味追求其中一個，生命會面臨什麼樣的失衡呢？」
                       </p>
                     </div>
                   </div>
 
-                  {/* Refelction form */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-3">
-                    <h3 className="text-sm font-black text-[#4A321F]">我的價值反思（寫作大廳同步）</h3>
-                    <textarea
-                      value={reflectionText}
-                      onChange={(e) => setReflectionText(e.target.value)}
-                      placeholder="請用一兩句話寫下：為什麼您會做出這樣的價值優先順序選擇？這代表您最想守護的是什麼？"
-                      className="w-full h-24 p-3 border-2 border-[#F1E0CE] rounded-2xl text-xs font-bold text-slate-700 focus:outline-none focus:border-[#E65100]"
-                    />
-                    <div className="flex justify-end">
-                      <button 
-                        onClick={saveReflection}
-                        className="px-5 py-2 bg-[#E65100] hover:bg-[#D84315] text-white font-black text-xs rounded-xl shadow-3xs flex items-center gap-1 cursor-pointer"
-                      >
-                        <Send className="w-4 h-4" />
-                        <span>儲存我的反思</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-6">
-                  {/* Tips Card */}
-                  <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-lg shadow-3xs">👨🏻</div>
-                      <div className="text-left leading-none">
-                        <h5 className="font-black text-xs text-slate-800">可華爸爸的價值引導</h5>
-                        <span className="text-[9px] text-slate-400">生命導引大師</span>
-                      </div>
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-relaxed font-bold bg-[#FAF5EC]/40 p-3 rounded-xl border border-[#F1E0CE]/40">
-                      「小博，在『自由』與『責任』之間，我們每個人都在尋求一種平衡。自由給予我們飛翔的羽翼，而責任則是拉住風箏的那根線。想一想，若一味追求其中一個，生命會面臨什麼樣的失衡呢？」
-                    </p>
-                  </div>
                 </div>
               </div>
             )}
@@ -1474,26 +1893,74 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {/* GAME VIEW 6: LIFE STORY FLIP CARDS */}
             {/* ------------------------------------------------------------------------------------------------- */}
+            {/* ------------------------------------------------------------------------------------------------- */}
+            {/* GAME VIEW 6: LIFE STORY FLIP CARDS */}
+            {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 6 && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Banner */}
-                  <div className="bg-gradient-to-r from-pink-500 to-rose-600 rounded-3xl p-6 text-white space-y-2 shadow-xs">
-                    <span className="text-xs font-black bg-white/20 px-3 py-1 rounded-full border border-white/20">06 生命故事翻翻卡</span>
-                    <h2 className="text-xl font-black">故事與價值的記憶對對碰</h2>
-                    <p className="text-xs text-rose-50">翻轉兩張卡片，如果生命核心價值（例如「勇氣」）能與具體生命情境故事完美配對，即完成匹配！</p>
+              <div id="game-view-life-memory" className="space-y-6">
+                {/* 1. Upper Banner */}
+                <div className="w-full bg-gradient-to-r from-[#EC4899] via-[#F43F5E] to-[#FB7185] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
+                    <span>關卡 06 ‧ 生命故事翻翻卡</span>
+                  </span>
+                  <h2 className="text-2xl font-black">故事與價值的記憶對對碰</h2>
+                  <p className="text-xs text-rose-50 font-bold max-w-xl">
+                    翻轉兩張卡片，如果生命核心價值（例如「勇氣」）能與具體的生命情境故事完美呼應配對，即配對成功！
+                  </p>
+                </div>
+
+                {/* 2. Three-Column Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  
+                  {/* Left Column (col-span-3): Matching Guide */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">⭐</div>
+                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-3 flex items-center gap-1.5 uppercase">
+                        <span>⭐</span>
+                        <span>生命價值配對指南</span>
+                      </h4>
+
+                      <ul className="text-[11px] text-[#7D6B5D] font-bold space-y-2.5 leading-relaxed">
+                        <li className="flex items-start gap-1">
+                          <span className="text-[#E65100]">🎯</span>
+                          <span><b>勇氣</b> ↔ 面對困難仍然堅定前行</span>
+                        </li>
+                        <li className="flex items-start gap-1">
+                          <span className="text-[#E65100]">🎯</span>
+                          <span><b>同理</b> ↔ 站在同學角度設身處地</span>
+                        </li>
+                        <li className="flex items-start gap-1">
+                          <span className="text-[#E65100]">🎯</span>
+                          <span><b>責任</b> ↔ 切實履行給家人的諾言</span>
+                        </li>
+                        <li className="flex items-start gap-1">
+                          <span className="text-[#E65100]">🎯</span>
+                          <span><b>夢想</b> ↔ 堅定追尋心中喜愛的世界</span>
+                        </li>
+                        <li className="flex items-start gap-1">
+                          <span className="text-[#E65100]">🎯</span>
+                          <span><b>感恩</b> ↔ 對他人的熱心由衷說謝謝</span>
+                        </li>
+                        <li className="flex items-start gap-1">
+                          <span className="text-[#E65100]">🎯</span>
+                          <span><b>尊重</b> ↔ 欣賞班上每個人獨特之處</span>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
 
-                  {/* Playable Grid */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-6">
-                    <div className="flex justify-between items-center border-b border-slate-100 pb-2 text-xs font-black">
+                  {/* Middle Column (col-span-6): Interactive Card Play Area */}
+                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
+                    <div className="flex justify-between items-center border-b-2 border-[#F1E0CE]/60 pb-3 mb-4 text-xs font-black text-[#4A321F]">
                       <div className="flex gap-4">
-                        <span>計步：{memoryMoves} 步</span>
-                        <span>得分：{memoryScore} 分</span>
+                        <span className="bg-orange-50 px-2.5 py-1 rounded-lg border border-orange-200">計步：{memoryMoves} 步</span>
+                        <span className="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-lg border border-emerald-200">得分：{memoryScore} 分</span>
                       </div>
                       <button 
                         onClick={initMemoryGame}
-                        className="text-pink-600 font-extrabold flex items-center gap-1 hover:underline cursor-pointer"
+                        className="text-pink-600 font-extrabold flex items-center gap-1 hover:underline cursor-pointer bg-pink-50 px-2.5 py-1 rounded-lg border border-pink-200"
                       >
                         <RefreshCw className="w-3.5 h-3.5" />
                         <span>重新洗牌</span>
@@ -1502,12 +1969,12 @@ export default function InteractiveQuestTab({
 
                     {memoryFinished ? (
                       <div className="text-center py-8 space-y-4">
-                        <div className="text-4xl">🏆</div>
-                        <h3 className="text-xl font-black text-rose-600 animate-pulse">恭喜全班成功配對所有生命故事！</h3>
-                        <p className="text-xs text-slate-400">總計花費了 {memoryMoves} 步，獲得 {memoryScore} 分！</p>
+                        <div className="text-4xl animate-bounce">🏆</div>
+                        <h3 className="text-lg font-black text-rose-600">恭喜全班成功配對所有生命故事！</h3>
+                        <p className="text-xs text-slate-400 font-bold">總計花費了 {memoryMoves} 步，獲得 {memoryScore} 分！</p>
                         <button 
                           onClick={initMemoryGame}
-                          className="px-6 py-2 bg-[#E65100] hover:bg-[#D84315] text-white font-black text-xs rounded-xl shadow-3xs cursor-pointer"
+                          className="px-6 py-2 bg-[#E65100] hover:bg-[#D84315] text-white font-black text-xs rounded-xl shadow-xs cursor-pointer"
                         >
                           再玩一次
                         </button>
@@ -1518,20 +1985,20 @@ export default function InteractiveQuestTab({
                           <div 
                             key={card.id}
                             onClick={() => handleCardClick(card.id)}
-                            className={`aspect-square rounded-2xl flex items-center justify-center text-center p-2.5 border-2 text-xs font-black transition-all cursor-pointer ${
+                            className={`aspect-square rounded-2xl flex items-center justify-center text-center p-2 border-2 text-[11px] font-black transition-all cursor-pointer select-none ${
                               card.isMatched 
-                                ? 'bg-[#F0FDF4] border-emerald-300 text-emerald-800 scale-95 shadow-inner' 
+                                ? 'bg-emerald-50/70 border-emerald-300 text-emerald-800 scale-95 shadow-inner' 
                                 : card.isFlipped 
-                                  ? 'bg-rose-50 border-rose-300 text-rose-800 rotate-1' 
-                                  : 'bg-[#FCFAF6] border-[#F1E0CE] text-slate-300 hover:border-rose-400 hover:bg-[#FFFBF5] relative overflow-hidden'
+                                  ? 'bg-rose-50 border-rose-300 text-rose-800 rotate-1 shadow-xs' 
+                                  : 'bg-[#FCFAF7] border-[#F1E0CE] text-slate-400 hover:border-pink-400 hover:bg-[#FFFBF5] relative overflow-hidden hover:scale-102'
                             }`}
                           >
                             {card.isFlipped || card.isMatched ? (
-                              <span className="leading-tight break-all font-extrabold">{card.text}</span>
+                              <span className="leading-tight font-black">{card.text}</span>
                             ) : (
                               <div className="flex flex-col items-center">
                                 <span className="text-lg">⭐</span>
-                                <span className="text-[10px] text-slate-400 font-bold mt-1">翻轉生命</span>
+                                <span className="text-[9px] text-slate-400 font-bold mt-1">點擊翻轉</span>
                               </div>
                             )}
                           </div>
@@ -1539,21 +2006,24 @@ export default function InteractiveQuestTab({
                       </div>
                     )}
                   </div>
-                </div>
 
-                <div className="space-y-6">
-                  {/* Matching Guide */}
-                  <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-4">
-                    <span className="text-xs font-black text-slate-400 block">生命配對指南</span>
-                    <ul className="text-xs text-slate-500 font-bold space-y-2 leading-relaxed">
-                      <li>• <b>勇氣</b> ↔ 面對重重困難仍然前行</li>
-                      <li>• <b>同理</b> ↔ 站在同學的角度設身處地</li>
-                      <li>• <b>責任</b> ↔ 切實履行給家人的諾言</li>
-                      <li>• <b>夢想</b> ↔ 堅定追尋內心所愛的世界</li>
-                      <li>• <b>感恩</b> ↔ 時刻記得對他人的好說謝謝</li>
-                      <li>• <b>尊重</b> ↔ 理解班上每個人都是獨一無二</li>
-                    </ul>
+                  {/* Right Column (col-span-3): Encouragement character card */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <div className="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-lg shadow-sm">👩🏻</div>
+                        <div className="text-left leading-none">
+                          <h5 className="font-black text-xs text-slate-800">張曉萍的小提醒</h5>
+                          <span className="text-[10px] text-slate-400">貼心好同學</span>
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                        「可華，在記憶卡片的翻轉中，你是不是也發現生命情境故事與內在核心價值，其實是緊密呼應、互相陪伴的呢？靜下心來，你一定能完全配對成功的！」
+                      </p>
+                    </div>
                   </div>
+
                 </div>
               </div>
             )}
@@ -1561,105 +2031,180 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {/* GAME VIEW 7: GRATITUDE BUBBLE WALL */}
             {/* ------------------------------------------------------------------------------------------------- */}
+            {/* ------------------------------------------------------------------------------------------------- */}
+            {/* GAME VIEW 7: GRATITUDE BUBBLE WALL */}
+            {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 7 && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Banner */}
-                  <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-3xl p-6 text-white space-y-2 shadow-xs">
-                    <span className="text-xs font-black bg-white/20 px-3 py-1 rounded-full border border-white/20">07 感恩泡泡站</span>
-                    <h2 className="text-xl font-black">班級溫馨感恩泡泡牆</h2>
-                    <p className="text-xs text-emerald-50">寫下您對同學、家人或老師最誠摯的感謝，送出您的溫暖泡泡，讓全班大螢幕熱鬧起來！</p>
-                  </div>
+              <div id="game-view-gratitude-bubbles" className="space-y-6">
+                {/* 1. Upper Banner */}
+                <div className="w-full bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500 rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
+                    <span>關卡 07 ‧ 感恩泡泡站</span>
+                  </span>
+                  <h2 className="text-2xl font-black">班級溫馨感恩泡泡牆</h2>
+                  <p className="text-xs text-emerald-50 font-bold max-w-xl">
+                    寫下您對同學、家人或老師最誠摯的感謝，送出您的溫暖泡泡，讓全班大螢幕熱鬧起來！
+                  </p>
+                </div>
 
-                  {/* Bubble form */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-4">
-                    <h3 className="text-sm font-black text-[#4A321F] border-b border-slate-100 pb-2">🎈 吹起我的感恩泡泡</h3>
-                    
-                    <form onSubmit={handleSendBubble} className="space-y-4">
-                      <div className="space-y-2">
-                        <textarea
-                          value={gratitudeMsg}
-                          onChange={(e) => setGratitudeMsg(e.target.value)}
-                          placeholder="小文，今天在走廊跌倒時謝謝你熱心扶起我，還幫我撿起課本..."
-                          className="w-full h-24 p-3 border-2 border-[#F1E0CE] rounded-2xl text-xs font-bold text-slate-700 focus:outline-none focus:border-emerald-500"
-                        />
+                {/* 2. Three-Column Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start text-[#4A321F]">
+                  
+                  {/* Left Column (col-span-3): Warmth Index Display */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">🎈</div>
+                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-4 flex items-center gap-1.5 uppercase">
+                        <span>💖</span>
+                        <span>班級感恩溫暖指數</span>
+                      </h4>
+
+                      <div className="text-center space-y-3 py-2">
+                        <div className="text-4xl font-black text-rose-500 font-mono animate-pulse">
+                          {warmthIndex} ℃
+                        </div>
+                        <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200 p-0.5">
+                          <div 
+                            className="h-full bg-gradient-to-r from-pink-500 to-rose-500 rounded-full transition-all duration-500" 
+                            style={{ width: `${warmthIndex}%` }} 
+                          />
+                        </div>
+                        <p className="text-[10px] text-slate-400 font-bold leading-relaxed">
+                          每發送一顆泡泡，班級感恩指數就會上升 2℃！大家攜手共創班級大愛，點亮我們的幸福世界！
+                        </p>
                       </div>
 
-                      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-                        {/* Bubble Color select */}
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-black text-slate-400">泡泡色系：</span>
-                          <div className="flex gap-1.5">
-                            {['#FED7AA', '#FBCFE8', '#D9F99D', '#BAE6FD'].map(c => (
-                              <button
-                                type="button"
-                                key={c}
-                                onClick={() => setBubbleColor(c)}
-                                className="w-5 h-5 rounded-full border-2 transition-all cursor-pointer"
-                                style={{ backgroundColor: c, borderColor: bubbleColor === c ? '#E65100' : 'transparent' }}
-                              />
-                            ))}
+                      <div className="mt-4 pt-3 border-t border-[#EAD5C3]/60 flex items-center justify-between text-[11px] font-black text-slate-500">
+                        <span>已發送泡泡總數</span>
+                        <span className="text-xs text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-100">{bubbles.length} 個</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Middle Column (col-span-6): Send Form & Floating Bubbles Wall */}
+                  <div className="lg:col-span-6 space-y-6">
+                    {/* Send Form */}
+                    <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm space-y-4 text-left">
+                      <h3 className="text-xs font-black text-slate-500 border-b-2 border-[#F1E0CE]/60 pb-3 flex items-center gap-1">
+                        <span>✍️</span>
+                        <span>撰寫您的溫馨感恩卡</span>
+                      </h3>
+
+                      <form onSubmit={handleSendBubble} className="space-y-4">
+                        <div>
+                          <textarea
+                            value={gratitudeMsg}
+                            onChange={(e) => setGratitudeMsg(e.target.value)}
+                            placeholder="在這裡寫下您想對同學、老師或家人表達的誠摯謝意與溫暖話語..."
+                            rows={3}
+                            maxLength={120}
+                            className="w-full px-4 py-3 border-2 border-[#F1E0CE] rounded-2xl text-xs font-bold text-slate-700 focus:outline-none focus:border-emerald-500 bg-[#FAF8F5]/30 focus:bg-white transition-all resize-none leading-relaxed"
+                          />
+                          <div className="text-right text-[10px] text-slate-400 font-bold mt-1">
+                            最多 120 字（當前：{gratitudeMsg.length} 字）
                           </div>
                         </div>
 
-                        {/* Anonymous selection & Send */}
-                        <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-                          <label className="flex items-center gap-1.5 text-xs font-black text-slate-500 cursor-pointer">
-                            <input
-                              type="checkbox"
-                              checked={isAnonymous}
-                              onChange={(e) => setIsAnonymous(e.target.checked)}
-                              className="w-4 h-4 rounded border-[#F1E0CE] text-emerald-600 focus:ring-emerald-500"
-                            />
-                            <span>匿名分享至大螢幕</span>
-                          </label>
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                          {/* Color Picker & Anon Toggle */}
+                          <div className="space-y-2 text-left">
+                            <span className="text-[10px] text-slate-400 font-black block">選擇泡泡背景色：</span>
+                            <div className="flex items-center gap-2">
+                              {[
+                                { color: '#FED7AA', label: '暖橘' },
+                                { color: '#FBCFE8', label: '粉櫻' },
+                                { color: '#D9F99D', label: '青葉' },
+                                { color: '#BAE6FD', label: '晴藍' }
+                              ].map(b => (
+                                <button
+                                  key={b.color}
+                                  type="button"
+                                  onClick={() => setBubbleColor(b.color)}
+                                  className={`w-6 h-6 rounded-full border-2 transition-all cursor-pointer ${
+                                    bubbleColor === b.color 
+                                      ? 'border-[#E65100] scale-110 shadow-xs' 
+                                      : 'border-transparent scale-100 hover:scale-105'
+                                  }`}
+                                  style={{ backgroundColor: b.color }}
+                                  title={b.label}
+                                />
+                              ))}
+                            </div>
+                          </div>
 
-                          <button 
-                            type="submit"
-                            className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs rounded-xl shadow-3xs flex items-center gap-1 cursor-pointer"
+                          <div className="flex items-center gap-4">
+                            <label className="flex items-center gap-1.5 text-xs font-black text-slate-500 cursor-pointer select-none">
+                              <input
+                                type="checkbox"
+                                checked={isAnonymous}
+                                onChange={(e) => setIsAnonymous(e.target.checked)}
+                                className="w-4 h-4 text-emerald-600 border-2 border-[#EAD5C3] rounded-sm focus:ring-0 cursor-pointer"
+                              />
+                              <span>匿名送出</span>
+                            </label>
+
+                            <button
+                              type="submit"
+                              disabled={!gratitudeMsg.trim()}
+                              className={`px-5 py-2.5 rounded-2xl text-xs font-black text-white shadow-3xs flex items-center gap-1.5 active:scale-98 transition-all cursor-pointer ${
+                                gratitudeMsg.trim() 
+                                  ? 'bg-emerald-600 hover:bg-emerald-700 shadow-sm' 
+                                  : 'bg-slate-300 pointer-events-none'
+                              }`}
+                            >
+                              <span>🎈 送出泡泡</span>
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                    {/* Bubbles Wall Display */}
+                    <div className="space-y-3">
+                      <h3 className="text-xs font-black text-slate-500 text-left flex items-center gap-1 pl-2">
+                        <span>🎈</span>
+                        <span>感恩泡泡即時飄浮牆（最新升空）</span>
+                      </h3>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {bubbles.map((b, idx) => (
+                          <div
+                            key={idx}
+                            style={{ backgroundColor: b.color }}
+                            className="p-4 rounded-3xl shadow-xs border-2 border-white text-left space-y-2 transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
                           >
-                            <Send className="w-4 h-4" />
-                            <span>送出心意</span>
-                          </button>
+                            <div className="absolute top-0 right-0 w-12 h-12 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.25)_0,transparent_60%)] pointer-events-none rounded-full" />
+                            <p className="text-[11px] font-black text-slate-800 leading-relaxed">
+                              「{b.text}」
+                            </p>
+                            <div className="flex justify-between items-center text-[9px] font-bold text-slate-500 pt-1 border-t border-black/5">
+                              <span>來自：{b.sender}</span>
+                              <span className="text-[8px] tracking-wide uppercase px-1.5 py-0.5 bg-white/40 rounded-md border border-white/20">🎈 溫暖升空</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column (col-span-3): Encouragement character card */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <div className="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-lg shadow-sm">👩🏻</div>
+                        <div className="text-left leading-none">
+                          <h5 className="font-black text-xs text-slate-800">張曉萍的小提醒</h5>
+                          <span className="text-[10px] text-slate-400">貼心好同學</span>
                         </div>
                       </div>
-                    </form>
-                  </div>
-
-                  {/* Active Bubbles list */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-4">
-                    <h3 className="text-sm font-black text-slate-400">💭 目前牆上的溫馨泡泡</h3>
-
-                    {/* Floating-like bubbles container */}
-                    <div className="flex flex-wrap gap-4 justify-center py-4">
-                      {bubbles.map((b, idx) => (
-                        <div 
-                          key={idx}
-                          className="max-w-xs p-4 rounded-3xl border border-[#F1E0CE]/60 text-xs font-black shadow-3xs transition-transform hover:scale-102 flex flex-col justify-between"
-                          style={{ backgroundColor: b.color, transform: `rotate(${(idx % 2 === 0) ? '1' : '-1.5'}deg)` }}
-                        >
-                          <p className="leading-relaxed text-[#3E2723] mb-2">{b.text}</p>
-                          <span className="text-[10px] text-slate-400 self-end block mt-1">
-                            👤 來自 {b.sender} 的感謝
-                          </span>
-                        </div>
-                      ))}
+                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                        「可華，在感恩泡泡升空的那一刻，我深深感覺到心靈被溫柔地包裹。學會看見別人的好、心存感激，就像是在黑夜裡點亮一盞盞明亮的小橘燈。這就是生命教育裡最美的『同理與感恩』喔！」
+                      </p>
                     </div>
                   </div>
-                </div>
 
-                <div className="space-y-6">
-                  {/* Warmth indicator */}
-                  <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-4 text-center">
-                    <span className="text-xs font-black text-slate-400 block">全班溫暖熱度指數</span>
-                    
-                    <div className="inline-flex p-5 bg-orange-50 rounded-full text-orange-600 font-black text-3xl font-mono animate-pulse shadow-inner">
-                      {warmthIndex}°C
-                    </div>
-                    <p className="text-[11px] text-slate-400 font-bold leading-normal">
-                      每當有一位同學送出感恩泡泡，班級的溫度將隨之升高。讓我們一起打造 100°C 的超溫馨班級！
-                    </p>
-                  </div>
                 </div>
               </div>
             )}
@@ -1668,139 +2213,174 @@ export default function InteractiveQuestTab({
             {/* GAME VIEW 8: PHILOSOPHICAL DEBATE */}
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 8 && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Banner */}
-                  <div className="bg-gradient-to-r from-sky-500 to-blue-600 rounded-3xl p-6 text-white space-y-2 shadow-xs">
-                    <span className="text-xs font-black bg-white/20 px-3 py-1 rounded-full border border-white/20">08 哲學辯論快攻</span>
-                    <h2 className="text-xl font-black">幸福比成功更重要嗎？</h2>
-                    <p className="text-xs text-sky-50">全班思想大碰撞！聽完正方與反方的核心理念後，投下您認同的一票，並在觀戰席中寫下反駁吧！</p>
-                  </div>
-
-                  {/* Debate Arena */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Pro */}
-                    <div className="bg-white border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-4 flex flex-col justify-between">
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl">🔵</span>
-                          <div>
-                            <h4 className="font-black text-sm text-slate-800">正方觀點：王博鈞</h4>
-                            <span className="text-[10px] text-slate-400 font-bold">「幸福是生命唯一的終極指針」</span>
-                          </div>
-                        </div>
-                        <p className="text-xs text-slate-500 leading-relaxed font-bold bg-slate-50 p-3 rounded-xl border border-slate-100">
-                          「如果一個人取得了巨大的世俗成功（如萬貫家財或至高名望），內心卻感到空虛、焦慮、日夜難眠，這種成功還有什麼意義呢？我們拼搏的所有外在事物，本質上都是為了獲取內心的幸福。因此，幸福本身才是目的，成功只是手段。」
-                        </p>
-                      </div>
-
-                      <button 
-                        onClick={() => handleVote('pro')}
-                        className={`w-full py-2 border-2 rounded-xl text-xs font-black transition-all cursor-pointer shadow-3xs flex items-center justify-center gap-1 ${
-                          userVote === 'pro' 
-                            ? 'bg-blue-600 border-blue-600 text-white' 
-                            : 'border-blue-500 text-blue-500 hover:bg-blue-50'
-                        }`}
-                      >
-                        <span>支持 正方：王博鈞</span>
-                      </button>
-                    </div>
-
-                    {/* Con */}
-                    <div className="bg-white border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-4 flex flex-col justify-between">
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl">🔴</span>
-                          <div>
-                            <h4 className="font-black text-sm text-slate-800">反方觀點：陳可華</h4>
-                            <span className="text-[10px] text-slate-400 font-bold">「成功為幸福構築基石與保障」</span>
-                          </div>
-                        </div>
-                        <p className="text-xs text-slate-500 leading-relaxed font-bold bg-slate-50 p-3 rounded-xl border border-slate-100">
-                          「幸福如果缺乏現實物質保障和自我實踐的成功支持，往往只是脆弱的泡沫。在學業、事業上取得成功，能極大拓展一個人的生命厚度與選擇自由，讓我們有能力去守護家人的幸福。成功是實實在在的耕耘！」
-                        </p>
-                      </div>
-
-                      <button 
-                        onClick={() => handleVote('con')}
-                        className={`w-full py-2 border-2 rounded-xl text-xs font-black transition-all cursor-pointer shadow-3xs flex items-center justify-center gap-1 ${
-                          userVote === 'con' 
-                            ? 'bg-red-600 border-red-600 text-white' 
-                            : 'border-red-500 text-red-500 hover:bg-red-50'
-                        }`}
-                      >
-                        <span>支持 反方：陳可華</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Comment Section */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-4">
-                    <h3 className="text-sm font-black text-[#4A321F] border-b border-slate-100 pb-2">🗣️ 觀戰評論席（即時同步）</h3>
-                    
-                    <form onSubmit={handleAddComment} className="flex gap-2">
-                      <input
-                        type="text"
-                        value={debateComment}
-                        onChange={(e) => setDebateComment(e.target.value)}
-                        placeholder="發表您的關鍵論點或反駁想法..."
-                        className="flex-1 px-3 py-2 border-2 border-[#F1E0CE] rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:border-blue-500"
-                      />
-                      <button 
-                        type="submit"
-                        className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs rounded-xl shadow-3xs flex items-center gap-1 shrink-0 cursor-pointer"
-                      >
-                        <MessageSquare className="w-4 h-4" />
-                        <span>發表評論</span>
-                      </button>
-                    </form>
-
-                    <div className="space-y-3 max-h-48 overflow-y-auto pr-1">
-                      {comments.map((c, idx) => (
-                        <div key={idx} className="bg-slate-50/50 border border-slate-100 p-2.5 rounded-xl text-xs font-black flex gap-2">
-                          <span className="shrink-0 text-[#E65100]">
-                            {c.side === 'pro' && '🔵'}
-                            {c.side === 'con' && '🔴'}
-                            {c.side === 'teacher' && '👩🏻‍🏫'}
-                            {c.side === 'spectator' && '💬'}
-                          </span>
-                          <div className="space-y-1">
-                            <span className="text-[10px] text-slate-400 font-bold block">{c.user}</span>
-                            <p className="text-slate-600 leading-normal">{c.text}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+              <div id="game-view-debate" className="space-y-6">
+                {/* 1. Upper Banner */}
+                <div className="w-full bg-gradient-to-r from-[#1976D2] via-[#2196F3] to-[#64B5F6] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
+                    <span>關卡 08 ‧ 哲學辯論快攻</span>
+                  </span>
+                  <h2 className="text-2xl font-black">幸福比成功更重要嗎？</h2>
+                  <p className="text-xs text-blue-50 font-bold max-w-xl">
+                    全班生命哲思思想大碰撞！聽完正方與反方的核心理念後，投下您認同的一票，並在觀戰席中寫下想法吧！
+                  </p>
                 </div>
 
-                <div className="space-y-6">
-                  {/* Poll stats */}
-                  <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-4">
-                    <span className="text-xs font-black text-slate-400 block">班級投票即時看板</span>
-                    
-                    <div className="space-y-3.5 text-xs font-black">
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-[11px] text-blue-600">
-                          <span>正方：王博鈞</span>
-                          <span>{debateVotes.pro} 票 ({(debateVotes.pro / (debateVotes.pro + debateVotes.con) * 100).toFixed(0)}%)</span>
-                        </div>
-                        <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
-                          <div className="h-full bg-blue-500 transition-all duration-300" style={{ width: `${(debateVotes.pro / (debateVotes.pro + debateVotes.con) * 100)}%` }} />
-                        </div>
-                      </div>
+                {/* 2. Three-Column Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  
+                  {/* Left Column (col-span-3): Live Poll Stats */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">🗳️</div>
+                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-4 flex items-center gap-1.5 uppercase">
+                        <span>🗳️</span>
+                        <span>班級投票即時看板</span>
+                      </h4>
 
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-[11px] text-red-600">
-                          <span>反方：陳可華</span>
-                          <span>{debateVotes.con} 票 ({(debateVotes.con / (debateVotes.pro + debateVotes.con) * 100).toFixed(0)}%)</span>
+                      <div className="space-y-4 text-xs font-black">
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-[11px] text-blue-600">
+                            <span>🔵 正方：王博鈞</span>
+                            <span>{debateVotes.pro} 票 ({(debateVotes.pro / Math.max(1, debateVotes.pro + debateVotes.con) * 100).toFixed(0)}%)</span>
+                          </div>
+                          <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                            <div className="h-full bg-blue-500 transition-all duration-300" style={{ width: `${(debateVotes.pro / Math.max(1, debateVotes.pro + debateVotes.con) * 100)}%` }} />
+                          </div>
                         </div>
-                        <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
-                          <div className="h-full bg-red-500 transition-all duration-300" style={{ width: `${(debateVotes.con / (debateVotes.pro + debateVotes.con) * 100)}%` }} />
+
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-[11px] text-red-600">
+                            <span>🔴 反方：陳可華</span>
+                            <span>{debateVotes.con} 票 ({(debateVotes.con / Math.max(1, debateVotes.pro + debateVotes.con) * 100).toFixed(0)}%)</span>
+                          </div>
+                          <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                            <div className="h-full bg-red-500 transition-all duration-300" style={{ width: `${(debateVotes.con / Math.max(1, debateVotes.pro + debateVotes.con) * 100)}%` }} />
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
+
+                  {/* Middle Column (col-span-6): Interactive Debate Cards & Comments */}
+                  <div className="lg:col-span-6 space-y-6">
+                    {/* Viewpoint Cards side-by-side */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Pro Card */}
+                      <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs flex flex-col justify-between text-left relative overflow-hidden">
+                        <div className="space-y-3 mb-4">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-xl">🔵</span>
+                            <div>
+                              <h4 className="font-black text-xs text-slate-800">正方觀點：王博鈞</h4>
+                              <span className="text-[9px] text-slate-400 font-bold block">「幸福是生命唯一的終極指針」</span>
+                            </div>
+                          </div>
+                          <p className="text-[11px] text-[#5D4037] leading-relaxed font-bold bg-[#FAF5EC]/30 p-3 rounded-xl border border-[#F1E0CE]/30">
+                            「如果一個人取得了世俗成功，內心卻空虛無比、每天失眠，這有意義嗎？我們拼搏的所有事物，都是為了獲取內在的幸福。所以幸福才是目的，成功只是手段。」
+                          </p>
+                        </div>
+
+                        <button 
+                          onClick={() => handleVote('pro')}
+                          className={`w-full py-2.5 border-2 rounded-xl text-xs font-black transition-all cursor-pointer shadow-3xs flex items-center justify-center gap-1 active:scale-98 ${
+                            userVote === 'pro' 
+                              ? 'bg-blue-600 border-blue-600 text-white shadow-xs' 
+                              : 'border-blue-500 text-blue-500 hover:bg-blue-50'
+                          }`}
+                        >
+                          <span>支持 正方王博鈞</span>
+                        </button>
+                      </div>
+
+                      {/* Con Card */}
+                      <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs flex flex-col justify-between text-left relative overflow-hidden">
+                        <div className="space-y-3 mb-4">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-xl">🔴</span>
+                            <div>
+                              <h4 className="font-black text-xs text-slate-800">反方觀點：陳可華</h4>
+                              <span className="text-[9px] text-slate-400 font-bold block">「成功為幸福構築安全堡壘」</span>
+                            </div>
+                          </div>
+                          <p className="text-[11px] text-[#5D4037] leading-relaxed font-bold bg-[#FAF5EC]/30 p-3 rounded-xl border border-[#F1E0CE]/30">
+                            生命如果缺乏足夠的現實資源和耕耘成功，幸福往往只是脆弱的泡沫。在學業、事業上取得成功，能極大拓展我們的自由，讓我們能守護家人的幸福！
+                          </p>
+                        </div>
+
+                        <button 
+                          onClick={() => handleVote('con')}
+                          className={`w-full py-2.5 border-2 rounded-xl text-xs font-black transition-all cursor-pointer shadow-3xs flex items-center justify-center gap-1 active:scale-98 ${
+                            userVote === 'con' 
+                              ? 'bg-red-600 border-red-600 text-white shadow-xs' 
+                              : 'border-red-500 text-red-500 hover:bg-red-50'
+                          }`}
+                        >
+                          <span>支持 反方陳可華</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Chat Comments Box */}
+                    <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm space-y-4">
+                      <h3 className="text-xs font-black text-slate-500 border-b-2 border-[#F1E0CE]/60 pb-3 flex items-center gap-1">
+                        <span>🗣️</span>
+                        <span>觀戰大廳彈幕評論席</span>
+                      </h3>
+                      
+                      <form onSubmit={handleAddComment} className="flex gap-2 text-left">
+                        <input
+                          type="text"
+                          value={debateComment}
+                          onChange={(e) => setDebateComment(e.target.value)}
+                          placeholder="發表您的關鍵論點或反駁想法..."
+                          className="flex-1 px-3 py-2 border-2 border-[#F1E0CE] rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:border-blue-500 bg-[#FAF8F5]/30 focus:bg-white transition-all"
+                        />
+                        <button 
+                          type="submit"
+                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs rounded-xl shadow-xs flex items-center gap-1 shrink-0 cursor-pointer active:scale-98 transition-transform"
+                        >
+                          <MessageSquare className="w-3.5 h-3.5" />
+                          <span>發言</span>
+                        </button>
+                      </form>
+
+                      <div className="space-y-2 max-h-48 overflow-y-auto pr-1 text-left">
+                        {comments.map((c, idx) => (
+                          <div key={idx} className="bg-[#FCFAF7]/60 border border-[#EAD5C3]/40 p-2.5 rounded-xl text-xs font-black flex gap-2">
+                            <span className="shrink-0 text-xs">
+                              {c.side === 'pro' && '🔵'}
+                              {c.side === 'con' && '🔴'}
+                              {c.side === 'teacher' && '👩🏻‍🏫'}
+                              {c.side === 'spectator' && '💬'}
+                            </span>
+                            <div className="space-y-0.5">
+                              <span className="text-[9px] text-slate-400 font-bold block">{c.user}</span>
+                              <p className="text-[#5D4037] leading-normal">{c.text}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column (col-span-3): Character suggestion */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-lg shadow-sm">👩🏻</div>
+                        <div className="text-left leading-none">
+                          <h5 className="font-black text-xs text-slate-800">張曉萍的悄悄話</h5>
+                          <span className="text-[10px] text-slate-400">貼心好同學</span>
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                        「可華，思辨是通往真理的起點。當我們試著站在對方或完全不同的角度去思考『成功』與『幸福』時，就會發現生命比我們想像的還要多元、厚重，非常有意思喔！」
+                      </p>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             )}
@@ -1808,136 +2388,171 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {/* GAME VIEW 9: MOOD THERMOMETER */}
             {/* ------------------------------------------------------------------------------------------------- */}
+            {/* ------------------------------------------------------------------------------------------------- */}
+            {/* GAME VIEW 9: MOOD THERMOMETER */}
+            {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 9 && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Banner */}
-                  <div className="bg-gradient-to-r from-rose-500 to-pink-600 rounded-3xl p-6 text-white space-y-2 shadow-xs">
-                    <span className="text-xs font-black bg-white/20 px-3 py-1 rounded-full border border-white/20">09 心情溫度計</span>
-                    <h2 className="text-xl font-black">全班今日情感心情大打卡</h2>
-                    <p className="text-xs text-rose-50">拖動下方刻度，調節您今天的心情溫度（從冰冷低落到熱情超級開心），並寫下心情小札記吧！</p>
-                  </div>
-
-                  {/* Slider Card */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-6">
-                    <div className="text-center py-4 space-y-3">
-                      <div className="text-5xl animate-bounce">
-                        {moodEmojis[moodLevel - 1].emoji}
-                      </div>
-                      <h3 className={`text-base font-black ${moodEmojis[moodLevel - 1].color}`}>
-                        當前選定心情：{moodEmojis[moodLevel - 1].label}
-                      </h3>
-                    </div>
-
-                    {/* Thermometer Slider Interaction */}
-                    <div className="space-y-4 max-w-md mx-auto">
-                      <input
-                        type="range"
-                        min="1"
-                        max="6"
-                        step="1"
-                        value={moodLevel}
-                        onChange={(e) => setMoodLevel(parseInt(e.target.value))}
-                        className="w-full accent-rose-500 h-2 bg-rose-100 rounded-lg appearance-none cursor-pointer"
-                      />
-
-                      <div className="flex justify-between text-xs font-black text-slate-400">
-                        <span>😢 1.非常低落</span>
-                        <span>😐 3.普通</span>
-                        <span>🥳 6.超級開心</span>
-                      </div>
-                    </div>
-
-                    <div className="border-t border-slate-100 pt-4 space-y-3">
-                      <h4 className="text-xs font-black text-slate-500">✍️ 寫下我的今天心情札記（大廳匿名發布）</h4>
-                      <textarea
-                        value={moodNote}
-                        onChange={(e) => setMoodNote(e.target.value)}
-                        placeholder="今天雖然放學後練球有點累，但是和博鈞一起喝了冰可樂，覺得很充實..."
-                        className="w-full h-20 p-3 border-2 border-[#F1E0CE] rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:border-rose-500"
-                      />
-                      <div className="flex justify-end">
-                        <button
-                          onClick={handleSaveMood}
-                          className="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white font-black text-xs rounded-xl shadow-3xs flex items-center gap-1 cursor-pointer"
-                        >
-                          <Send className="w-4 h-4" />
-                          <span>儲存心情紀錄</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* History List */}
-                  {savedMoods.length > 0 && (
-                    <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-3">
-                      <h3 className="text-sm font-black text-slate-500">🌡️ 歷史心情紀錄表</h3>
-                      <div className="space-y-2">
-                        {savedMoods.map((m, idx) => (
-                          <div key={idx} className="bg-slate-50/50 border border-slate-100 p-2.5 rounded-xl flex items-center gap-3 text-xs font-black shadow-3xs">
-                            <span className="text-2xl">{moodEmojis[m.level - 1].emoji}</span>
-                            <div className="text-left">
-                              <span className="text-[9px] text-slate-400 font-bold block">{m.date} ‧ {moodEmojis[m.level - 1].label}</span>
-                              <p className="text-slate-600 leading-normal">{m.note}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+              <div id="game-view-mood" className="space-y-6">
+                {/* 1. Upper Banner */}
+                <div className="w-full bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
+                    <span>關卡 09 ‧ 心情溫度計</span>
+                  </span>
+                  <h2 className="text-2xl font-black">全班今日情感心情大打卡</h2>
+                  <p className="text-xs text-rose-50 font-bold max-w-xl">
+                    拖動下方刻度，調節您今天的心情溫度（從冰冷低落到熱情超級開心），並寫下心情小札記吧！
+                  </p>
                 </div>
 
-                <div className="space-y-6">
-                  {/* Recharts Pie Chart representing Class Mood stats */}
-                  <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-4">
-                    <span className="text-xs font-black text-slate-400 block">全班心情即時分佈比例</span>
-                    
-                    <div className="h-44 w-full relative">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                          <Pie
-                            data={[
-                              { name: '非常開心', value: 25 },
-                              { name: '開心愉悅', value: 30 },
-                              { name: '心情普通', value: 25 },
-                              { name: '低落', value: 20 }
-                            ]}
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={45}
-                            outerRadius={65}
-                            paddingAngle={5}
-                            dataKey="value"
-                          >
-                            <Cell fill="#f43f5e" /> {/* Rose */}
-                            <Cell fill="#fb923c" /> {/* Orange */}
-                            <Cell fill="#94a3b8" /> {/* Slate */}
-                            <Cell fill="#3b82f6" /> {/* Blue */}
-                          </Pie>
-                          <Tooltip />
-                        </PieChart>
-                      </ResponsiveContainer>
-                    </div>
+                {/* 2. Three-Column Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  
+                  {/* Left Column (col-span-3): Recharts Pie Chart representing Class Mood stats */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">📊</div>
+                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-4 flex items-center gap-1.5 uppercase">
+                        <span>📊</span>
+                        <span>全班心情即時分佈</span>
+                      </h4>
 
-                    <div className="grid grid-cols-2 gap-2 text-[10px] font-black">
-                      <div className="flex items-center gap-1.5 text-rose-500">
-                        <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
-                        <span>非常開心 (25%)</span>
+                      <div className="h-40 w-full relative">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <PieChart>
+                            <Pie
+                              data={[
+                                { name: '非常開心', value: 25 },
+                                { name: '開心愉悅', value: 30 },
+                                { name: '心情普通', value: 25 },
+                                { name: '低落', value: 20 }
+                              ]}
+                              cx="50%"
+                              cy="50%"
+                              innerRadius={35}
+                              outerRadius={55}
+                              paddingAngle={5}
+                              dataKey="value"
+                            >
+                              <Cell fill="#f43f5e" /> {/* Rose */}
+                              <Cell fill="#fb923c" /> {/* Orange */}
+                              <Cell fill="#94a3b8" /> {/* Slate */}
+                              <Cell fill="#3b82f6" /> {/* Blue */}
+                            </Pie>
+                            <Tooltip />
+                          </PieChart>
+                        </ResponsiveContainer>
                       </div>
-                      <div className="flex items-center gap-1.5 text-orange-500">
-                        <span className="w-2.5 h-2.5 rounded-full bg-orange-500" />
-                        <span>開心愉悅 (30%)</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-slate-500">
-                        <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
-                        <span>心情普通 (25%)</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-blue-500">
-                        <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-                        <span>低落 (20%)</span>
+
+                      <div className="space-y-1.5 text-[9px] font-black">
+                        <div className="flex items-center justify-between text-rose-500">
+                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-rose-500" />非常開心</span>
+                          <span>25%</span>
+                        </div>
+                        <div className="flex items-center justify-between text-orange-500">
+                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-orange-500" />開心愉悅</span>
+                          <span>30%</span>
+                        </div>
+                        <div className="flex items-center justify-between text-slate-500">
+                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-slate-400" />心情普通</span>
+                          <span>25%</span>
+                        </div>
+                        <div className="flex items-center justify-between text-blue-500">
+                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-500" />低落悶悶</span>
+                          <span>20%</span>
+                        </div>
                       </div>
                     </div>
                   </div>
+
+                  {/* Middle Column (col-span-6): Personal slider & History log */}
+                  <div className="lg:col-span-6 space-y-6">
+                    {/* Slider Card */}
+                    <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm space-y-6 text-center">
+                      <div className="py-2 space-y-2">
+                        <div className="text-5xl animate-bounce">
+                          {moodEmojis[moodLevel - 1].emoji}
+                        </div>
+                        <h3 className={`text-sm font-black ${moodEmojis[moodLevel - 1].color}`}>
+                          當前選定心情：{moodEmojis[moodLevel - 1].label}
+                        </h3>
+                      </div>
+
+                      {/* Slider Interaction */}
+                      <div className="space-y-4 max-w-md mx-auto text-left">
+                        <input
+                          type="range"
+                          min="1"
+                          max="6"
+                          step="1"
+                          value={moodLevel}
+                          onChange={(e) => setMoodLevel(parseInt(e.target.value))}
+                          className="w-full accent-rose-500 h-2 bg-rose-100 rounded-lg appearance-none cursor-pointer"
+                        />
+
+                        <div className="flex justify-between text-[10px] font-black text-slate-400">
+                          <span>😢 1.非常低落</span>
+                          <span>😐 3.普通</span>
+                          <span>🥳 6.超級開心</span>
+                        </div>
+                      </div>
+
+                      <div className="border-t-2 border-[#F1E0CE]/60 pt-4 space-y-3 text-left">
+                        <h4 className="text-xs font-black text-slate-500">✍️ 寫下我的今天心情札記（大廳匿名發布）</h4>
+                        <textarea
+                          value={moodNote}
+                          onChange={(e) => setMoodNote(e.target.value)}
+                          placeholder="今天放學後雖然練球有點累，但是和曉萍一起喝了冰涼的麥茶，覺得很充實..."
+                          className="w-full h-20 p-3 border-2 border-[#F1E0CE] rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:border-rose-500 bg-[#FAF8F5]/30 focus:bg-white resize-none transition-all"
+                        />
+                        <div className="flex justify-end">
+                          <button
+                            onClick={handleSaveMood}
+                            className="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white font-black text-xs rounded-xl shadow-xs flex items-center gap-1 cursor-pointer active:scale-98 transition-transform"
+                          >
+                            <Send className="w-3.5 h-3.5" />
+                            <span>儲存心情紀錄</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* History List */}
+                    {savedMoods.length > 0 && (
+                      <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm space-y-3 text-left">
+                        <h3 className="text-xs font-black text-slate-400 border-b border-slate-100 pb-2">🌡️ 我的歷史心情紀錄表</h3>
+                        <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                          {savedMoods.map((m, idx) => (
+                            <div key={idx} className="bg-[#FCFAF7] border border-[#EAD5C3]/40 p-2.5 rounded-xl flex items-center gap-3 text-xs font-black shadow-3xs">
+                              <span className="text-2xl shrink-0">{moodEmojis[m.level - 1].emoji}</span>
+                              <div className="text-left">
+                                <span className="text-[9px] text-slate-400 font-bold block">{m.date} ‧ {moodEmojis[m.level - 1].label}</span>
+                                <p className="text-[#5D4037] leading-normal">{m.note}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Right Column (col-span-3): Companion suggestion card */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <div className="w-9 h-9 rounded-full bg-rose-100 flex items-center justify-center text-lg shadow-sm">👦🏻</div>
+                        <div className="text-left leading-none">
+                          <h5 className="font-black text-xs text-slate-800">陳可華的小建議</h5>
+                          <span className="text-[10px] text-slate-400">同桌好夥伴</span>
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                        「曉萍，無論今天是雨天、陰天還是晴天，心情溫度計都只是記錄此時此刻的自己。溫柔地接納自己的每種情緒，不加評判地擁抱自己，就是送給心靈最棒的禮物喔！」
+                      </p>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             )}
@@ -1945,90 +2560,137 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {/* GAME VIEW 10: BADGE CHALLENGE */}
             {/* ------------------------------------------------------------------------------------------------- */}
+            {/* ------------------------------------------------------------------------------------------------- */}
+            {/* GAME VIEW 10: BADGE CHALLENGE */}
+            {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 10 && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Banner */}
-                  <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-3xl p-6 text-white space-y-2 shadow-xs">
-                    <span className="text-xs font-black bg-white/20 px-3 py-1 rounded-full border border-white/20">10 成長徽章挑戰賽</span>
-                    <h2 className="text-xl font-black">全班生命力成長挑战</h2>
-                    <p className="text-xs text-emerald-50">勾選下方您在生活或本週課堂中真實實踐完成的挑戰任務，一鍵解鎖並點亮屬於您的光榮班級徽章！</p>
-                  </div>
-
-                  {/* Tasks Checklist */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-4">
-                    <h3 className="text-sm font-black text-[#4A321F] border-b border-slate-100 pb-2">🎯 點亮我的成長軌跡（本週實踐任務）</h3>
-                    
-                    <div className="space-y-3">
-                      {badgeTasks.map(t => (
-                        <div 
-                          key={t.id}
-                          onClick={() => toggleBadgeTask(t.id)}
-                          className="bg-[#FCFAF6] border border-[#F1E0CE]/50 p-3 rounded-2xl flex items-center justify-between shadow-3xs cursor-pointer hover:border-emerald-500 hover:bg-emerald-50/10 transition-all group"
-                        >
-                          <div className="flex items-center gap-3 text-xs font-black text-slate-700">
-                            <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
-                              t.done 
-                                ? 'bg-emerald-600 border-emerald-600 text-white' 
-                                : 'border-slate-300 bg-white group-hover:border-emerald-500'
-                            }`}>
-                              {t.done && <Check className="w-3.5 h-3.5" />}
-                            </div>
-                            <span className={t.done ? 'line-through text-slate-400' : ''}>{t.text}</span>
-                          </div>
-
-                          <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg border ${
-                            t.done 
-                              ? 'bg-emerald-50 border-emerald-200 text-emerald-700' 
-                              : 'bg-white border-slate-200 text-slate-400'
-                          }`}>
-                            🏆 解鎖：{t.badge}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* My Badges Display */}
-                  <div className="bg-white border border-[#F1E0CE] rounded-3xl p-6 shadow-3xs space-y-4">
-                    <h3 className="text-sm font-black text-slate-400">🏅 我的班級勳章展示架</h3>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-2">
-                      {badgeTasks.map(t => (
-                        <div 
-                          key={t.id}
-                          className={`p-4 border rounded-2xl flex flex-col items-center text-center justify-between shadow-3xs transition-all ${
-                            t.done 
-                              ? 'bg-[#F0FDF4] border-emerald-300 text-emerald-800 scale-100 relative overflow-hidden' 
-                              : 'bg-slate-50 border-slate-200 text-slate-300 opacity-60 scale-98 select-none'
-                          }`}
-                        >
-                          {t.done && <div className="absolute -top-1 -right-1 text-sm bg-amber-400 text-white px-1.5 py-0.5 rounded-bl-xl shadow-3xs font-black">⭐</div>}
-                          <span className="text-3xl mb-1">{t.done ? '🎖️' : '🔒'}</span>
-                          <span className="text-xs font-black tracking-wide leading-tight">{t.badge}</span>
-                          <span className="text-[9px] font-bold text-slate-400 mt-1 leading-normal">
-                            {t.done ? '已點亮解鎖' : '未點亮'}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+              <div id="game-view-badge" className="space-y-6">
+                {/* 1. Upper Banner */}
+                <div className="w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-[#1976D2] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
+                    <span>關卡 10 ‧ 成長徽章挑戰賽</span>
+                  </span>
+                  <h2 className="text-2xl font-black">全班生命力成長挑戰</h2>
+                  <p className="text-xs text-emerald-50 font-bold max-w-xl">
+                    勾選下方您在生活或本週課堂中真實實踐完成的挑戰任務，一鍵解鎖並點亮屬於您的光榮班級徽章！
+                  </p>
                 </div>
 
-                <div className="space-y-6">
-                  {/* Achievement levels */}
-                  <div className="bg-[#FCFAF6] border border-[#F1E0CE] rounded-3xl p-5 shadow-3xs space-y-4">
-                    <span className="text-xs font-black text-slate-400 block">今日解鎖成就數</span>
-                    
-                    <div className="text-center space-y-2 py-2">
-                      <div className="text-3xl font-black text-emerald-600 font-mono">
-                        {unlockedBadgeCount} / 4
+                {/* 2. Three-Column Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  
+                  {/* Left Column (col-span-3): Achievement levels */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">🏆</div>
+                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-4 flex items-center gap-1.5 uppercase">
+                        <span>🏆</span>
+                        <span>我的今日解鎖進度</span>
+                      </h4>
+
+                      <div className="text-center space-y-3 py-4">
+                        <div className="text-4xl font-black text-emerald-600 font-mono">
+                          {unlockedBadgeCount} / 4
+                        </div>
+                        <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                          <div 
+                            className="h-full bg-emerald-500 transition-all duration-300" 
+                            style={{ width: `${(unlockedBadgeCount / 4) * 100}%` }} 
+                          />
+                        </div>
+                        <p className="text-[10px] text-slate-400 font-bold leading-relaxed">
+                          持續點亮更多實踐任務！導師會在學習後台同步看見您優異的生命行動力，並給予綜合點評加分！
+                        </p>
                       </div>
-                      <p className="text-[11px] text-slate-400 font-bold leading-normal">
-                        持續點亮更多任務，全班導師會在學習後台看見您優異的行動力並進行綜合點評給分！
+                    </div>
+                  </div>
+
+                  {/* Middle Column (col-span-6): Tasks Checklist and Badge display shelf */}
+                  <div className="lg:col-span-6 space-y-6">
+                    {/* Tasks Checklist */}
+                    <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm space-y-4 text-left">
+                      <h3 className="text-xs font-black text-slate-500 border-b-2 border-[#F1E0CE]/60 pb-3 flex items-center gap-1">
+                        <span>🎯</span>
+                        <span>點亮我的成長軌跡（本週實踐任務）</span>
+                      </h3>
+                      
+                      <div className="space-y-3">
+                        {badgeTasks.map(t => (
+                          <div 
+                            key={t.id}
+                            onClick={() => toggleBadgeTask(t.id)}
+                            className="bg-[#FCFAF7]/50 border-2 border-[#EAD5C3]/40 p-3 rounded-2xl flex items-center justify-between shadow-3xs cursor-pointer hover:border-emerald-500 hover:bg-emerald-50/10 transition-all group"
+                          >
+                            <div className="flex items-center gap-3 text-xs font-black text-slate-700">
+                              <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
+                                t.done 
+                                  ? 'bg-emerald-600 border-emerald-600 text-white shadow-3xs' 
+                                  : 'border-[#EAD5C3] bg-white group-hover:border-emerald-500'
+                              }`}>
+                                {t.done && <Check className="w-3.5 h-3.5" />}
+                              </div>
+                              <span className={t.done ? 'line-through text-slate-400 font-bold' : 'font-black'}>{t.text}</span>
+                            </div>
+
+                            <span className={`text-[9px] font-black px-2.5 py-1 rounded-lg border ${
+                              t.done 
+                                ? 'bg-emerald-50 border-emerald-200 text-emerald-700' 
+                                : 'bg-white border-slate-200 text-slate-400'
+                            }`}>
+                              🏆 解鎖：{t.badge}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* My Badges Display */}
+                    <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm space-y-4 text-left">
+                      <h3 className="text-xs font-black text-slate-500 border-b-2 border-[#F1E0CE]/60 pb-3 flex items-center gap-1">
+                        <span>🏅</span>
+                        <span>我的班級勳章展示架</span>
+                      </h3>
+
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-2">
+                        {badgeTasks.map(t => (
+                          <div 
+                            key={t.id}
+                            className={`p-4 border-2 rounded-2xl flex flex-col items-center text-center justify-between shadow-3xs transition-all relative ${
+                              t.done 
+                                ? 'bg-[#F0FDF4]/60 border-emerald-300 text-emerald-800 scale-100 overflow-hidden shadow-xs' 
+                                : 'bg-slate-50 border-slate-200 text-slate-300 opacity-60 scale-98 select-none'
+                            }`}
+                          >
+                            {t.done && <div className="absolute -top-1 -right-1 text-[8px] bg-amber-400 text-white px-1.5 py-0.5 rounded-bl-xl shadow-3xs font-black">⭐</div>}
+                            <span className="text-3xl mb-1.5">{t.done ? '🎖️' : '🔒'}</span>
+                            <span className="text-xs font-black tracking-wide leading-tight">{t.badge}</span>
+                            <span className="text-[9px] font-bold text-slate-400 mt-1.5 leading-normal">
+                              {t.done ? '已點亮解鎖' : '尚未解鎖'}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column (col-span-3): Instructor encouragement card */}
+                  <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center text-lg shadow-sm">👩🏻‍🏫</div>
+                        <div className="text-left leading-none">
+                          <h5 className="font-black text-xs text-slate-800">林美蘭導師的期許</h5>
+                          <span className="text-[10px] text-slate-400">生命教育指導老師</span>
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                        「同學們，每一個在展示架上亮起的勳章，都記錄了你們在真實生命旅程中朝向真善美邁出的一小步。生命教育不是硬邦邦的課本教條，而是此時此刻你們在日常生活中的勇敢實踐喔！」
                       </p>
                     </div>
                   </div>
+
                 </div>
               </div>
             )}

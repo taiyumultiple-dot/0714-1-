@@ -254,6 +254,15 @@ export default function HomeTab({
           <div className="flex items-center gap-3">
             {currentUser ? (
               <div className="flex items-center gap-3">
+                <button
+                  onClick={() => onNavigate('show_tour')}
+                  title="查看平台功能導覽"
+                  className="px-3.5 py-1.5 border border-[#E9D6BF] rounded-xl hover:bg-[#FAF5EC] text-[#B4570B] font-extrabold text-xs transition-all flex items-center gap-1.5 bg-white shadow-3xs cursor-pointer"
+                >
+                  <span>💡</span>
+                  <span>使用導覽</span>
+                </button>
+
                 <span className="text-xs font-bold text-[#7D6B5D] bg-[#FAF5EC] border border-[#F1E0CE] px-3.5 py-1.5 rounded-full flex items-center gap-1.5">
                   👤 {currentUser.name} ({currentUser.role === 'student' ? '學生' : '教師'})已登入
                 </span>
@@ -284,6 +293,15 @@ export default function HomeTab({
               </div>
             ) : (
               <>
+                <button
+                  onClick={() => onNavigate('show_tour')}
+                  title="查看平台功能導覽"
+                  className="px-3.5 py-1.5 border border-[#E9D6BF] rounded-xl hover:bg-[#FAF5EC] text-[#B4570B] font-extrabold text-xs transition-all flex items-center gap-1.5 bg-white shadow-3xs cursor-pointer"
+                >
+                  <span>💡</span>
+                  <span>使用導覽</span>
+                </button>
+
                 <button
                   onClick={() => onTriggerLogin && onTriggerLogin('student')}
                   className="px-4 py-2 border border-[#E65100]/60 hover:bg-[#FFFBF5] text-[#E65100] font-extrabold text-xs rounded-xl transition-all flex items-center gap-1.5 bg-white shadow-3xs"

@@ -35,6 +35,7 @@ import { ACHIEVEMENTS } from './achievements';
 import AuthScreen from './components/AuthScreen';
 import CharacterAvatarModal from './components/CharacterAvatarModal';
 import SafeImageAvatar from './components/SafeImageAvatar';
+import WelcomeTour from './components/WelcomeTour';
 import charKehuaImg from './assets/images/characters/char_kehua.jpg';
 import charBojunImg from './assets/images/characters/char_bojun.jpg';
 import charXiaowenImg from './assets/images/characters/char_xiaowen.jpg';
@@ -106,6 +107,7 @@ export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authModalTab, setAuthModalTab] = useState<'student_login' | 'teacher_login' | 'register'>('student_login');
+  const [showTour, setShowTour] = useState(false);
 
   // Fetch initial state from server on mount
   useEffect(() => {
@@ -273,6 +275,29 @@ export default function App() {
     }
   }, [currentUser]);
 
+  // Automated onboarding tour launcher
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    if (!currentUser) {
+      const seenGuest = localStorage.getItem('life_edu_seen_guest_tour');
+      if (seenGuest !== 'true') {
+        const timer = setTimeout(() => {
+          setShowTour(true);
+        }, 1200);
+        return () => clearTimeout(timer);
+      }
+    } else {
+      const seenUser = localStorage.getItem(`life_edu_seen_user_tour_${currentUser.id}`);
+      if (seenUser !== 'true') {
+        const timer = setTimeout(() => {
+          setShowTour(true);
+        }, 1200);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [isLoaded, currentUser]);
+
   const currentStudent = submissions.find(s => s.studentId === activeStudentId) || submissions[0];
 
   const handleSelectUnitFromHome = (unitId: string) => {
@@ -368,6 +393,10 @@ export default function App() {
   ];
 
   const handleTabSelection = (tabName: string) => {
+    if (tabName === 'show_tour') {
+      setShowTour(true);
+      return;
+    }
     if (!currentUser && ['課程地圖', '學習統計'].includes(tabName)) {
       setAuthModalTab('student_login');
       setShowAuthModal(true);
@@ -451,6 +480,16 @@ export default function App() {
                   </select>
                 </div>
               )}
+
+              {/* Tour Guide Button */}
+              <button
+                onClick={() => setShowTour(true)}
+                title="查看平台功能導覽"
+                className="flex items-center gap-1.5 px-3 py-1.5 border border-orange-200 hover:bg-orange-50 text-[#B4570B] rounded-full text-xs font-bold transition-all cursor-pointer bg-[#FFFBF5]"
+              >
+                <HelpCircle className="w-4 h-4 text-[#E0812A]" />
+                <span className="hidden sm:inline">平台導覽</span>
+              </button>
 
               {/* Active User Profile Button or Login Button */}
               {!currentUser ? (
@@ -761,6 +800,17 @@ export default function App() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* Interactive Walkthrough / Tour Guide */}
+      <WelcomeTour
+        currentUser={currentUser}
+        isOpen={showTour}
+        onClose={() => setShowTour(false)}
+        onStartLogin={(role) => {
+          setAuthModalTab(role === 'student' ? 'student_login' : 'teacher_login');
+          setShowAuthModal(true);
+        }}
+      />
 
     </div>
   );

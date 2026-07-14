@@ -841,8 +841,30 @@ export default function InteractiveQuestTab({
   const unlockedBadgeCount = badgeTasks.filter(t => t.done).length;
 
   return (
-    <div className="min-h-screen bg-[#FDF9F3] text-[#3E2723] font-sans pb-16 px-4 md:px-8 relative overflow-hidden">
-      
+    <div className="min-h-screen bg-[#FBF3E4] text-[#3E2723] font-sans pb-16 px-4 md:px-8 relative overflow-hidden">
+
+      {/* Corner floral decorations bleeding off the page edges (matches reference outer frame) */}
+      <div className="hidden md:block absolute -left-10 top-24 w-56 h-72 opacity-70 pointer-events-none select-none rotate-[8deg]" aria-hidden="true">
+        <svg viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 300C95 220 90 150 60 90C40 50 20 30 10 10" stroke="#B7C79A" strokeWidth="3" strokeLinecap="round" />
+          <ellipse cx="55" cy="95" rx="16" ry="8" fill="#C6D6A8" transform="rotate(-30 55 95)" />
+          <ellipse cx="35" cy="60" rx="16" ry="8" fill="#C6D6A8" transform="rotate(-50 35 60)" />
+          <ellipse cx="20" cy="25" rx="14" ry="7" fill="#C6D6A8" transform="rotate(-70 20 25)" />
+          <circle cx="70" cy="130" r="10" fill="#F3C1CE" />
+          <circle cx="45" cy="170" r="8" fill="#F6D3A8" />
+          <circle cx="80" cy="200" r="9" fill="#F3C1CE" />
+        </svg>
+      </div>
+      <div className="hidden md:block absolute -right-8 -bottom-6 w-48 h-56 opacity-60 pointer-events-none select-none -rotate-[10deg]" aria-hidden="true">
+        <svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 240C95 180 110 130 140 90C155 70 170 55 185 40" stroke="#B7C79A" strokeWidth="3" strokeLinecap="round" />
+          <ellipse cx="145" cy="95" rx="15" ry="7" fill="#C6D6A8" transform="rotate(35 145 95)" />
+          <ellipse cx="165" cy="65" rx="14" ry="7" fill="#C6D6A8" transform="rotate(55 165 65)" />
+          <circle cx="120" cy="140" r="9" fill="#F6D3A8" />
+          <circle cx="150" cy="170" r="10" fill="#F3C1CE" />
+        </svg>
+      </div>
+
       {/* Toast Alert */}
       <AnimatePresence>
         {toastMessage && (
@@ -858,7 +880,7 @@ export default function InteractiveQuestTab({
         )}
       </AnimatePresence>
 
-      <div className="max-w-7xl mx-auto pt-4 space-y-6">
+      <div className="max-w-7xl mx-auto pt-4 space-y-6 relative z-10">
         
         {/* LOBBY VIEW */}
         {activeGameId === null ? (

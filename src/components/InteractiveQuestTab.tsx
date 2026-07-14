@@ -1833,16 +1833,22 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 4 && (
               <div id="game-view-relationships" className="space-y-6">
-                {/* 1. Upper Banner */}
-                <div className="w-full bg-gradient-to-r from-[#6A1B9A] via-[#8E24AA] to-[#AB47BC] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
-                    <span>關卡 04 ‧ 人際關係連連看</span>
-                  </span>
-                  <h2 className="text-2xl font-black">建立本班溫暖支持網絡</h2>
-                  <p className="text-xs text-[#F3E5F5] font-bold max-w-xl">
-                    點擊第一個角色大頭貼，再點擊另一個角色大頭貼，即可拉出關係線建立彼此的陪伴與支持連結！
-                  </p>
+                {/* 1. Banner */}
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
+                  <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
+                  <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+                  <div className="flex items-center gap-5 z-10">
+                    <div className="w-16 h-16 rounded-full bg-[#E65100] text-white flex items-center justify-center text-2xl font-black font-mono shrink-0 shadow-md">04</div>
+                    <div className="space-y-1 text-left">
+                      <h2 className="text-2xl md:text-3xl font-black text-[#4A321F]">人際關係連連看</h2>
+                      <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">連線人物與關係，理解陪伴與支持。</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
+                    {[charKehuaImg, charXiaowenImg].map((src, i) => (
+                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 2 - i }} referrerPolicy="no-referrer" />
+                    ))}
+                  </div>
                 </div>
 
                 {/* 2. Three-Column Content Grid */}
@@ -1968,16 +1974,22 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 5 && (
               <div id="game-view-value-scales" className="space-y-6">
-                {/* 1. Upper Banner */}
-                <div className="w-full bg-gradient-to-r from-[#E65100] via-[#F57C00] to-[#FFB74D] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
-                    <span>關卡 05 ‧ 價值天平</span>
-                  </span>
-                  <h2 className="text-2xl font-black">核心生命價值天平</h2>
-                  <p className="text-xs text-orange-50 font-bold max-w-xl">
-                    點擊各項卡片旁的「上移」或「下移」，將您最看重、最守護的核心生命價值排在最頂端，看見您靈魂的側重！
-                  </p>
+                {/* 1. Banner */}
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
+                  <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
+                  <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+                  <div className="flex items-center gap-5 z-10">
+                    <div className="w-16 h-16 rounded-full bg-[#E65100] text-white flex items-center justify-center text-2xl font-black font-mono shrink-0 shadow-md">05</div>
+                    <div className="space-y-1 text-left">
+                      <h2 className="text-2xl md:text-3xl font-black text-[#4A321F]">價值天平排序戰</h2>
+                      <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">排序你的價值觀，認識重要的選擇。</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
+                    {[charXiaopingImg, charBojunImg, charDadImg, charGrandpaImg, charXiaowenImg].map((src, i) => (
+                      <img key={i} src={src} alt="" className="w-14 h-14 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 5 - i }} referrerPolicy="no-referrer" />
+                    ))}
+                  </div>
                 </div>
 
                 {/* 2. Three-Column Content Grid */}
@@ -2117,16 +2129,22 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 6 && (
               <div id="game-view-life-memory" className="space-y-6">
-                {/* 1. Upper Banner */}
-                <div className="w-full bg-gradient-to-r from-[#EC4899] via-[#F43F5E] to-[#FB7185] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
-                    <span>關卡 06 ‧ 生命故事翻翻卡</span>
-                  </span>
-                  <h2 className="text-2xl font-black">故事與價值的記憶對對碰</h2>
-                  <p className="text-xs text-rose-50 font-bold max-w-xl">
-                    翻轉兩張卡片，如果生命核心價值（例如「勇氣」）能與具體的生命情境故事完美呼應配對，即配對成功！
-                  </p>
+                {/* 1. Banner */}
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
+                  <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
+                  <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+                  <div className="flex items-center gap-5 z-10">
+                    <div className="w-16 h-16 rounded-full bg-[#E65100] text-white flex items-center justify-center text-2xl font-black font-mono shrink-0 shadow-md">06</div>
+                    <div className="space-y-1 text-left">
+                      <h2 className="text-2xl md:text-3xl font-black text-[#4A321F]">生命故事翻翻卡</h2>
+                      <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">翻開故事卡，配對對應的生命主題。</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
+                    {[charGrandpaImg, charBojunImg, charXiaopingImg, charXiaowenImg, charDadImg, charKehuaImg].map((src, i) => (
+                      <img key={i} src={src} alt="" className="w-12 h-12 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 6 - i }} referrerPolicy="no-referrer" />
+                    ))}
+                  </div>
                 </div>
 
                 {/* 2. Three-Column Content Grid */}
@@ -2255,16 +2273,22 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 7 && (
               <div id="game-view-gratitude-bubbles" className="space-y-6">
-                {/* 1. Upper Banner */}
-                <div className="w-full bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500 rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
-                    <span>關卡 07 ‧ 感恩泡泡站</span>
-                  </span>
-                  <h2 className="text-2xl font-black">班級溫馨感恩泡泡牆</h2>
-                  <p className="text-xs text-emerald-50 font-bold max-w-xl">
-                    寫下您對同學、家人或老師最誠摯的感謝，送出您的溫暖泡泡，讓全班大螢幕熱鬧起來！
-                  </p>
+                {/* 1. Banner */}
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
+                  <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
+                  <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+                  <div className="flex items-center gap-5 z-10">
+                    <div className="w-16 h-16 rounded-full bg-[#E65100] text-white flex items-center justify-center text-2xl font-black font-mono shrink-0 shadow-md">07</div>
+                    <div className="space-y-1 text-left">
+                      <h2 className="text-2xl md:text-3xl font-black text-[#4A321F]">感恩泡泡站</h2>
+                      <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">寫下感謝的話，讓溫暖在班上飄散。</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
+                    {[charXiaopingImg, charXiaowenImg, charGrandpaImg].map((src, i) => (
+                      <img key={i} src={src} alt="" className="w-14 h-14 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 3 - i }} referrerPolicy="no-referrer" />
+                    ))}
+                  </div>
                 </div>
 
                 {/* 2. Three-Column Content Grid */}
@@ -2433,16 +2457,22 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 8 && (
               <div id="game-view-debate" className="space-y-6">
-                {/* 1. Upper Banner */}
-                <div className="w-full bg-gradient-to-r from-[#1976D2] via-[#2196F3] to-[#64B5F6] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
-                    <span>關卡 08 ‧ 哲學辯論快攻</span>
-                  </span>
-                  <h2 className="text-2xl font-black">幸福比成功更重要嗎？</h2>
-                  <p className="text-xs text-blue-50 font-bold max-w-xl">
-                    全班生命哲思思想大碰撞！聽完正方與反方的核心理念後，投下您認同的一票，並在觀戰席中寫下想法吧！
-                  </p>
+                {/* 1. Banner */}
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
+                  <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
+                  <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+                  <div className="flex items-center gap-5 z-10">
+                    <div className="w-16 h-16 rounded-full bg-[#E65100] text-white flex items-center justify-center text-2xl font-black font-mono shrink-0 shadow-md">08</div>
+                    <div className="space-y-1 text-left">
+                      <h2 className="text-2xl md:text-3xl font-black text-[#4A321F]">哲學辯論快攻</h2>
+                      <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">用觀點與理由展開思辨挑戰。</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
+                    {[charKehuaImg, charXiaopingImg].map((src, i) => (
+                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 2 - i }} referrerPolicy="no-referrer" />
+                    ))}
+                  </div>
                 </div>
 
                 {/* 2. Three-Column Content Grid */}
@@ -2612,16 +2642,22 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 9 && (
               <div id="game-view-mood" className="space-y-6">
-                {/* 1. Upper Banner */}
-                <div className="w-full bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
-                    <span>關卡 09 ‧ 心情溫度計</span>
-                  </span>
-                  <h2 className="text-2xl font-black">全班今日情感心情大打卡</h2>
-                  <p className="text-xs text-rose-50 font-bold max-w-xl">
-                    拖動下方刻度，調節您今天的心情溫度（從冰冷低落到熱情超級開心），並寫下心情小札記吧！
-                  </p>
+                {/* 1. Banner */}
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
+                  <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
+                  <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+                  <div className="flex items-center gap-5 z-10">
+                    <div className="w-16 h-16 rounded-full bg-[#E65100] text-white flex items-center justify-center text-2xl font-black font-mono shrink-0 shadow-md">09</div>
+                    <div className="space-y-1 text-left">
+                      <h2 className="text-2xl md:text-3xl font-black text-[#4A321F]">心情溫度計</h2>
+                      <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">辨識今天的情緒，學習理解自己。</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
+                    {[charXiaopingImg, charXiaowenImg].map((src, i) => (
+                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 2 - i }} referrerPolicy="no-referrer" />
+                    ))}
+                  </div>
                 </div>
 
                 {/* 2. Three-Column Content Grid */}
@@ -2784,16 +2820,22 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 10 && (
               <div id="game-view-badge" className="space-y-6">
-                {/* 1. Upper Banner */}
-                <div className="w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-[#1976D2] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
-                    <span>關卡 10 ‧ 成長徽章挑戰賽</span>
-                  </span>
-                  <h2 className="text-2xl font-black">全班生命力成長挑戰</h2>
-                  <p className="text-xs text-emerald-50 font-bold max-w-xl">
-                    勾選下方您在生活或本週課堂中真實實踐完成的挑戰任務，一鍵解鎖並點亮屬於您的光榮班級徽章！
-                  </p>
+                {/* 1. Banner */}
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
+                  <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
+                  <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+                  <div className="flex items-center gap-5 z-10">
+                    <div className="w-16 h-16 rounded-full bg-[#E65100] text-white flex items-center justify-center text-2xl font-black font-mono shrink-0 shadow-md">10</div>
+                    <div className="space-y-1 text-left">
+                      <h2 className="text-2xl md:text-3xl font-black text-[#4A321F]">成長徽章挑戰賽</h2>
+                      <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">完成任務、收集徽章、看見自己的成長。</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
+                    {[charKehuaImg, charXiaopingImg].map((src, i) => (
+                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 2 - i }} referrerPolicy="no-referrer" />
+                    ))}
+                  </div>
                 </div>
 
                 {/* 2. Three-Column Content Grid */}

@@ -44,6 +44,8 @@ import charKehuaImg from '../assets/images/characters/char_kehua.jpg';
 import charBojunImg from '../assets/images/characters/char_bojun.jpg';
 import charXiaowenImg from '../assets/images/characters/char_xiaowen.jpg';
 import charXiaopingImg from '../assets/images/characters/char_xiaoping.jpg';
+import charDadImg from '../assets/images/characters/char_dad.jpg';
+import charGrandpaImg from '../assets/images/characters/char_grandpa.jpg';
 import storyHeroPair from '../assets/images/characters/story_hero_pair.png';
 
 interface InteractiveQuestTabProps {
@@ -352,39 +354,101 @@ export default function InteractiveQuestTab({
   };
 
   // ----------------------------------------------------
-  // GAME STATE 1: MBTI QUIZ
+  // GAME STATE 1: MBTI QUIZ (12 questions, 4 options each, 4 axes)
   // ----------------------------------------------------
+  const [mbtiStarted, setMbtiStarted] = useState(false);
   const [mbtiStep, setMbtiStep] = useState(0);
   const [mbtiAnswers, setMbtiAnswers] = useState<Record<number, string>>({});
+
+  const MBTI_OPTION_COLORS = ['bg-sky-500', 'bg-emerald-500', 'bg-orange-500', 'bg-violet-500'];
+
   const mbtiQuestions = [
-    {
-      q: '當你在學校感到壓力很大時，你通常會？',
-      options: [
-        { label: '找朋友出去聚餐、聊天，暢所欲言', val: 'E', desc: '外向 (E)' },
-        { label: '自己待在房間看書、聽音樂，靜靜沉澱', val: 'I', desc: '內向 (I)' }
-      ]
-    },
-    {
-      q: '在思考生命意義或未來理想時，你比較相信？',
-      options: [
-        { label: '現實世界與具體經驗，把握當下的實踐', val: 'S', desc: '感覺 (S)' },
-        { label: '內心的直覺、哲學思索與未來無限可能性', val: 'N', desc: '直覺 (N)' }
-      ]
-    },
-    {
-      q: '當好朋友遇到重大挫折向你哭訴時，你的第一反應通常是？',
-      options: [
-        { label: '幫他理性客觀地分析問題，尋求具體方案', val: 'T', desc: '思考 (T)' },
-        { label: '感同身受他的痛苦，先擁抱並支持他的情緒', val: 'F', desc: '情感 (F)' }
-      ]
-    },
-    {
-      q: '在規劃暑假或週末的生活作息時，你習慣？',
-      options: [
-        { label: '制定詳細的時間表，按部就班安心執行', val: 'J', desc: '判斷 (J)' },
-        { label: '不預作太多束縛，隨遇而安、享受彈性', val: 'P', desc: '知覺 (P)' }
-      ]
-    }
+    { axis: 'EI', q: '參加聚會時，你會比較傾向於？', options: [
+      { label: '主動與不同的人聊天，認識新朋友', val: 'E' },
+      { label: '和熟悉的朋友待在一起，聊天比較自在', val: 'I' },
+      { label: '觀察環境與氣氛，先想清楚再決定要說什麼', val: 'I' },
+      { label: '專注於自己感興趣的事，與他人互動較少', val: 'I' },
+    ]},
+    { axis: 'EI', q: '課堂分組討論時，你通常會？', options: [
+      { label: '率先開口，帶動大家一起發想', val: 'E' },
+      { label: '先聽完大家的意見，再表達自己的想法', val: 'I' },
+      { label: '負責整理紀錄，安靜地把內容寫下來', val: 'I' },
+      { label: '喜歡跟少數幾個熟識的同學一起討論', val: 'E' },
+    ]},
+    { axis: 'EI', q: '放學後，最能讓你放鬆充電的方式是？', options: [
+      { label: '跟一群朋友出去走走、聊天到很晚', val: 'E' },
+      { label: '一個人在房間看書、聽音樂', val: 'I' },
+      { label: '打電動或做自己喜歡的興趣', val: 'I' },
+      { label: '約一兩個知心好友聊心事', val: 'E' },
+    ]},
+    { axis: 'SN', q: '在思考生命意義或未來理想時，你比較相信？', options: [
+      { label: '現實世界與具體經驗，把握當下的實踐', val: 'S' },
+      { label: '內心的直覺、哲學思索與未來的可能性', val: 'N' },
+      { label: '從過去經驗歸納出的實用做法', val: 'S' },
+      { label: '天馬行空的想像與新奇的點子', val: 'N' },
+    ]},
+    { axis: 'SN', q: '老師交代一份報告時，你會先？', options: [
+      { label: '照範例格式，一步步照著做最安心', val: 'S' },
+      { label: '想像各種不同的呈現方式再動手', val: 'N' },
+      { label: '確認清楚每個細節與規定', val: 'S' },
+      { label: '先抓大方向，細節之後再補齊', val: 'N' },
+    ]},
+    { axis: 'SN', q: '你比較容易被什麼樣的故事打動？', options: [
+      { label: '真實發生、貼近生活的故事', val: 'S' },
+      { label: '充滿想像、隱喻深刻的故事', val: 'N' },
+      { label: '有具體數據與細節佐證的故事', val: 'S' },
+      { label: '探索未知、打破框架的故事', val: 'N' },
+    ]},
+    { axis: 'TF', q: '當好朋友遇到重大挫折向你哭訴時，你的第一反應是？', options: [
+      { label: '幫他理性客觀地分析問題，尋求具體方案', val: 'T' },
+      { label: '感同身受他的痛苦，先擁抱並支持他的情緒', val: 'F' },
+      { label: '陪他一起想解決辦法，同時也聽他抒發', val: 'F' },
+      { label: '直接指出問題根源，希望他盡快好起來', val: 'T' },
+    ]},
+    { axis: 'TF', q: '做決定時，你比較重視？', options: [
+      { label: '邏輯是否合理、是否公平一致', val: 'T' },
+      { label: '會不會傷害到重視的人的感受', val: 'F' },
+      { label: '客觀的利弊分析', val: 'T' },
+      { label: '大家的和諧與感受', val: 'F' },
+    ]},
+    { axis: 'TF', q: '同學做錯事被老師誤會時，你會？', options: [
+      { label: '就事論事，先釐清事實再說', val: 'T' },
+      { label: '先安慰同學的情緒，再一起想辦法', val: 'F' },
+      { label: '幫忙分析整件事的來龍去脈', val: 'T' },
+      { label: '同理他當下的委屈與難過', val: 'F' },
+    ]},
+    { axis: 'JP', q: '在規劃暑假或週末的生活作息時，你習慣？', options: [
+      { label: '制定詳細的時間表，按部就班安心執行', val: 'J' },
+      { label: '不預作太多束縛，隨遇而安、享受彈性', val: 'P' },
+      { label: '至少先訂出大原則再視情況調整', val: 'J' },
+      { label: '走到哪算到哪，臨時決定最有趣', val: 'P' },
+    ]},
+    { axis: 'JP', q: '報告截止日前，你通常？', options: [
+      { label: '提早規劃進度，避免臨時趕工', val: 'J' },
+      { label: '靈感來了才動手，效率反而更好', val: 'P' },
+      { label: '列好清單，一項一項打勾完成', val: 'J' },
+      { label: '保留彈性，看心情調整順序', val: 'P' },
+    ]},
+    { axis: 'JP', q: '面對突發的行程改變，你的反應是？', options: [
+      { label: '有點不安，希望盡快恢復原計畫', val: 'J' },
+      { label: '覺得新鮮，順勢調整就好', val: 'P' },
+      { label: '重新排一次時間表才安心', val: 'J' },
+      { label: '正好換個方式，隨機應變', val: 'P' },
+    ]},
+  ];
+
+  const MBTI_GROUP_STYLES: Record<string, string> = {
+    emerald: 'bg-emerald-50 border-emerald-200 text-emerald-700',
+    violet: 'bg-violet-50 border-violet-200 text-violet-700',
+    sky: 'bg-sky-50 border-sky-200 text-sky-700',
+    orange: 'bg-orange-50 border-orange-200 text-orange-700',
+  };
+
+  const MBTI_GROUPS = [
+    { name: '外交家', color: 'emerald', desc: '溫暖友善，重視和諧與人際關係，擁有理想與同理心。', types: 'ENFJ · ENFP · INFJ · INFP' },
+    { name: '分析家', color: 'violet', desc: '理性思考，喜歡探索真理，追求知識與創新。', types: 'INTJ · INTP · ENTJ · ENTP' },
+    { name: '守護者', color: 'sky', desc: '可靠負責，注重秩序與規則，樂於保護他人。', types: 'ISTJ · ISFJ · ESTJ · ESFJ' },
+    { name: '探險家', color: 'orange', desc: '熱愛自由，勇於嘗試新事物，活在當下、行動力強。', types: 'ISTP · ISFP · ESTP · ESFP' },
   ];
 
   const handleMbtiAnswer = (val: string) => {
@@ -398,16 +462,26 @@ export default function InteractiveQuestTab({
     }
   };
 
+  const mbtiAxisPercent = (axis: string, letterA: string) => {
+    let countA = 0, countB = 0;
+    mbtiQuestions.forEach((q, i) => {
+      if (q.axis !== axis) return;
+      const ans = mbtiAnswers[i];
+      if (ans === letterA) countA++;
+      else if (ans) countB++;
+    });
+    const total = countA + countB;
+    if (total === 0) return 50;
+    return Math.round((countA / total) * 100);
+  };
+
   const getMbtiResult = () => {
-    let result = '';
-    result += mbtiAnswers[0] || 'I';
-    result += mbtiAnswers[1] || 'N';
-    result += mbtiAnswers[2] || 'F';
-    result += mbtiAnswers[3] || 'P';
-    return result;
+    const pick = (axis: string, a: string, b: string) => (mbtiAxisPercent(axis, a) >= 50 ? a : b);
+    return pick('EI', 'E', 'I') + pick('SN', 'S', 'N') + pick('TF', 'T', 'F') + pick('JP', 'J', 'P');
   };
 
   const resetMbti = () => {
+    setMbtiStarted(false);
     setMbtiStep(0);
     setMbtiAnswers({});
   };
@@ -1206,164 +1280,166 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 1 && (
               <div id="game-view-mbti" className="space-y-6">
-                {/* 1. Upper Banner */}
-                <div className="w-full bg-gradient-to-r from-[#FF9800] via-[#E65100] to-[#FF5722] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
-                  <div className="absolute -bottom-6 left-1/4 text-6xl opacity-10 pointer-events-none select-none">✨</div>
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
-                    <span>關卡 01 ‧ 心理測驗</span>
-                  </span>
-                  <h2 className="text-2xl font-black">16 型人格生命探索測驗</h2>
-                  <p className="text-xs text-[#FFF3E0] font-bold max-w-xl">
-                    回答 4 道核心情境題，發掘您的性格傾向，看見自己對生命的認知視角與潛在價值觀！
-                  </p>
+                {/* 1. Banner */}
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
+                  <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
+                  <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+                  <div className="flex items-center gap-5 z-10">
+                    <div className="w-16 h-16 rounded-full bg-[#E65100] text-white flex items-center justify-center text-2xl font-black font-mono shrink-0 shadow-md">01</div>
+                    <div className="space-y-1 text-left">
+                      <h2 className="text-2xl md:text-3xl font-black text-[#4A321F]">心理測驗 MBTI</h2>
+                      <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">探索你的性格類型，了解自己與他人。</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
+                    {[charXiaopingImg, charKehuaImg, charXiaowenImg, charBojunImg].map((src, i) => (
+                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 4 - i }} referrerPolicy="no-referrer" />
+                    ))}
+                  </div>
                 </div>
 
-                {/* 2. Three-Column Content Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                  
-                  {/* Left Column (col-span-3): Progress and Task Cards */}
-                  <div className="lg:col-span-3 space-y-4">
-                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
-                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">📊</div>
-                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-3.5 flex items-center gap-1.5 uppercase">
-                        <span>📊</span>
-                        <span>人格傾向分佈度</span>
-                      </h4>
+                {!mbtiStarted ? (
+                  /* ---------- LANDING SUB-VIEW ---------- */
+                  <div className="space-y-6">
+                    <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm space-y-4 text-left">
+                      <h3 className="font-black text-[#4A321F] text-sm flex items-center gap-2">
+                        <span>⭐</span><span>認識 16 種性格類型</span>
+                      </h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {MBTI_GROUPS.map((g) => (
+                          <div key={g.name} className={`p-4 rounded-2xl border-2 ${MBTI_GROUP_STYLES[g.color]}`}>
+                            <h4 className="font-black text-sm mb-1.5">{g.name}</h4>
+                            <p className="text-[11px] font-bold leading-relaxed opacity-90 mb-2.5">{g.desc}</p>
+                            <p className="text-[10px] font-black font-mono opacity-80">{g.types}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
-                      <div className="space-y-4 text-xs font-black">
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-[11px] text-[#7D6B5D]">
-                            <span>外向 (E)</span>
-                            <span>內向 (I)</span>
-                          </div>
-                          <div className="w-full h-3 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden flex p-0.5">
-                            <div className="bg-orange-500 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[0] === 'E' ? '75%' : '25%' }} />
-                            <div className="bg-indigo-400 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[0] === 'E' ? '25%' : '75%' }} />
-                          </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+                      <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 flex items-start gap-3 text-left shadow-xs">
+                        <img src={charDadImg} alt="可華爸爸" className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-sm shrink-0" referrerPolicy="no-referrer" />
+                        <div>
+                          <h5 className="font-black text-xs text-slate-800 mb-1">可華爸爸的小叮嚀</h5>
+                          <p className="text-[11px] text-slate-500 font-bold leading-relaxed">每一種性格都有獨特的價值，了解自己，才能更自在地發揮優勢，與他人相互欣賞。</p>
                         </div>
+                      </div>
 
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-[11px] text-[#7D6B5D]">
-                            <span>感覺 (S)</span>
-                            <span>直覺 (N)</span>
-                          </div>
-                          <div className="w-full h-3 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden flex p-0.5">
-                            <div className="bg-orange-500 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[1] === 'S' ? '70%' : '30%' }} />
-                            <div className="bg-indigo-400 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[1] === 'S' ? '30%' : '70%' }} />
-                          </div>
-                        </div>
+                      <button
+                        onClick={() => setMbtiStarted(true)}
+                        className="bg-[#E65100] hover:bg-[#D84315] text-white rounded-3xl p-6 flex flex-col items-center justify-center gap-2 shadow-md transition-all cursor-pointer active:scale-98"
+                      >
+                        <span className="flex items-center gap-2 text-base font-black"><Gamepad2 className="w-5 h-5" /> 開始作答</span>
+                        <span className="text-[11px] font-bold text-orange-100">準備好了嗎？讓我們一起探索真實的你！</span>
+                      </button>
 
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-[11px] text-[#7D6B5D]">
-                            <span>思考 (T)</span>
-                            <span>情感 (F)</span>
-                          </div>
-                          <div className="w-full h-3 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden flex p-0.5">
-                            <div className="bg-orange-500 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[2] === 'T' ? '65%' : '35%' }} />
-                            <div className="bg-indigo-400 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[2] === 'T' ? '35%' : '65%' }} />
-                          </div>
-                        </div>
-
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-[11px] text-[#7D6B5D]">
-                            <span>判斷 (J)</span>
-                            <span>感知 (P)</span>
-                          </div>
-                          <div className="w-full h-3 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden flex p-0.5">
-                            <div className="bg-orange-500 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[3] === 'J' ? '60%' : '40%' }} />
-                            <div className="bg-indigo-400 rounded-full transition-all duration-500" style={{ width: mbtiAnswers[3] === 'J' ? '40%' : '60%' }} />
-                          </div>
+                      <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 flex items-start gap-3 text-left shadow-xs">
+                        <img src={charGrandpaImg} alt="可華爺爺" className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-sm shrink-0" referrerPolicy="no-referrer" />
+                        <div>
+                          <h5 className="font-black text-xs text-slate-800 mb-1">可華爺爺的鼓勵</h5>
+                          <p className="text-[11px] text-slate-500 font-bold leading-relaxed">人生是一場美麗的旅程，認識自己，你會發現更想成為那個自己。</p>
                         </div>
                       </div>
                     </div>
                   </div>
+                ) : mbtiStep < mbtiQuestions.length ? (
+                  /* ---------- QUIZ SUB-VIEW ---------- */
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-                  {/* Middle Column (col-span-6): Interactive Question / Result Area */}
-                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
-                    {mbtiStep < mbtiQuestions.length ? (
-                      <div className="space-y-6">
-                        <div className="flex justify-between items-center border-b-2 border-[#F1E0CE]/60 pb-3">
-                          <span className="text-xs font-black text-slate-500">第 {mbtiStep + 1} 題 / 共 4 題</span>
-                          <span className="text-xs font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full">依直覺作答</span>
-                        </div>
-
-                        <div className="space-y-4 text-left">
-                          <h3 className="text-base font-black text-[#4A321F] leading-relaxed">
-                            {mbtiQuestions[mbtiStep].q}
-                          </h3>
-
-                          <div className="space-y-3 pt-2">
-                            {mbtiQuestions[mbtiStep].options.map((opt, idx) => (
-                              <button
-                                key={idx}
-                                onClick={() => handleMbtiAnswer(opt.val)}
-                                className="w-full text-left p-4 rounded-2xl border-2 border-[#F1E0CE] hover:border-[#E65100] hover:bg-orange-50/50 transition-all shadow-xs cursor-pointer flex justify-between items-center group active:scale-98"
-                              >
-                                <span className="text-xs font-black text-[#4A321F] group-hover:text-[#E65100]">
-                                  {opt.label}
-                                </span>
-                                <span className="text-[10px] font-black text-slate-400 bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-lg group-hover:bg-[#FFEEDD] group-hover:text-[#E65100] font-mono">
-                                  {opt.desc}
-                                </span>
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="space-y-6 text-center py-6">
-                        <div className="inline-flex p-4 bg-orange-100 rounded-full text-[#E65100] animate-bounce">
-                          <Award className="w-12 h-12" />
-                        </div>
-                        <div className="space-y-2">
-                          <div className="text-xs font-black text-slate-400 uppercase tracking-widest">您的生命性格指標</div>
-                          <h3 className="text-3xl font-black text-[#E65100] tracking-wider font-mono">
-                            {getMbtiResult()}
-                          </h3>
-                          <div className="text-sm font-black text-slate-700">
-                            {getMbtiResult() === 'INFP' && '✨ 溫柔守護者 ‧ 尋求生命和諧與理想主義 ✨'}
-                            {getMbtiResult() === 'ENFP' && '✨ 追夢冒險家 ‧ 充滿創意的生命旅人 ✨'}
-                            {getMbtiResult() === 'INFJ' && '✨ 心靈引路人 ‧ 探尋深層生命意義者 ✨'}
-                            {getMbtiResult() === 'ENFJ' && '✨ 溫暖領導者 ‧ 關懷全班同樂核心 ✨'}
-                            {getMbtiResult() !== 'INFP' && getMbtiResult() !== 'ENFP' && getMbtiResult() !== 'INFJ' && getMbtiResult() !== 'ENFJ' && '✨ 智慧思考家 ‧ 理性探求生命軌跡 ✨'}
-                          </div>
-                        </div>
-
-                        <p className="text-xs text-slate-500 leading-relaxed max-w-md mx-auto font-bold bg-[#FAF5EC]/60 p-4 rounded-xl border border-[#F1E0CE]/60 text-left">
-                          這代表你格外在乎生命的內在連結。你相信生命具有無限可能，不甘於平庸，且願意給予身邊每個人溫柔的包容！
-                        </p>
-
-                        <div className="flex gap-3 justify-center pt-4">
-                          <button
-                            onClick={resetMbti}
-                            className="px-6 py-2 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl hover:bg-orange-50 transition-all cursor-pointer shadow-xs active:scale-98"
+                    {/* Left: Progress donut + tips */}
+                    <div className="lg:col-span-3 space-y-4">
+                      <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left">
+                        <h4 className="font-black text-[#4A321F] text-xs pb-2 mb-3.5 flex items-center gap-1.5">
+                          <TrendingUp className="w-3.5 h-3.5 text-[#E65100]" /><span>測驗進度</span>
+                        </h4>
+                        <div className="flex items-center gap-3">
+                          <div
+                            className="w-16 h-16 rounded-full shrink-0 flex items-center justify-center"
+                            style={{ background: `conic-gradient(#E65100 ${(Object.keys(mbtiAnswers).length / mbtiQuestions.length) * 100}%, #EAD5C3 0)` }}
                           >
-                            重做測驗
-                          </button>
+                            <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[11px] font-black text-[#4A321F]">
+                              {Object.keys(mbtiAnswers).length}/{mbtiQuestions.length}
+                            </div>
+                          </div>
+                          <p className="text-[11px] font-bold text-slate-500 leading-relaxed">繼續作答，探索最真實的自己！</p>
                         </div>
                       </div>
-                    )}
-                  </div>
+                      <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left space-y-2">
+                        <h4 className="font-black text-[#4A321F] text-xs flex items-center gap-1.5">💡 測驗小提醒</h4>
+                        <ul className="text-[11px] font-bold text-slate-500 leading-relaxed space-y-1 list-disc list-inside">
+                          <li>依直覺作答，不用想太久</li>
+                          <li>沒有對錯，誠實最重要</li>
+                          <li>約需 8-10 分鐘完成測驗</li>
+                        </ul>
+                      </div>
+                    </div>
 
-                  {/* Right Column (col-span-3): Results / Tips / Encouragement Cards */}
-                  <div className="lg:col-span-3 space-y-4">
-                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
-                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">🌿</div>
-                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
-                        <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-lg shadow-sm">👨🏻</div>
-                        <div className="text-left leading-none">
-                          <h5 className="font-black text-xs text-slate-800">可華爸爸的小叮嚀</h5>
-                          <span className="text-[10px] text-slate-400">生命諮商導師</span>
-                        </div>
+                    {/* Middle: Question */}
+                    <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm text-left">
+                      <div className="flex justify-between items-center border-b-2 border-[#F1E0CE]/60 pb-3 mb-4">
+                        <span className="text-xs font-black text-slate-500 bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-lg">第 {mbtiStep + 1} 題 / 共 {mbtiQuestions.length} 題</span>
                       </div>
-                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
-                        「小博，MBTI性格測驗沒有好與壞之分。它只是幫助你明白自己習慣用什麼眼光看生命、用什麼模式與世界交流。多去欣賞班上跟你性格截然不同的同學！」
-                      </p>
+                      <h3 className="text-base font-black text-[#4A321F] leading-relaxed mb-4">{mbtiQuestions[mbtiStep].q}</h3>
+                      <div className="space-y-3">
+                        {mbtiQuestions[mbtiStep].options.map((opt, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => handleMbtiAnswer(opt.val)}
+                            className="w-full text-left p-3.5 rounded-2xl border-2 border-[#F1E0CE] hover:border-[#E65100] hover:bg-orange-50/50 transition-all shadow-xs cursor-pointer flex items-center gap-3 group active:scale-98"
+                          >
+                            <span className={`w-7 h-7 rounded-full ${MBTI_OPTION_COLORS[idx]} text-white text-xs font-black flex items-center justify-center shrink-0`}>
+                              {String.fromCharCode(65 + idx)}
+                            </span>
+                            <span className="text-xs font-black text-[#4A321F] group-hover:text-[#E65100]">{opt.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Right: Tendency bars */}
+                    <div className="lg:col-span-3 bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left space-y-4">
+                      <h4 className="font-black text-[#4A321F] text-xs flex items-center gap-1.5">🎁 你的傾向</h4>
+                      {[
+                        { axis: 'EI', a: 'E', b: 'I', la: '外向', lb: '內向' },
+                        { axis: 'SN', a: 'S', b: 'N', la: '感覺', lb: '直覺' },
+                        { axis: 'TF', a: 'T', b: 'F', la: '思考', lb: '情感' },
+                        { axis: 'JP', a: 'J', b: 'P', la: '判斷', lb: '知覺' },
+                      ].map((row) => (
+                        <div key={row.axis} className="space-y-1">
+                          <div className="flex justify-between text-[11px] font-black text-[#7D6B5D]">
+                            <span>{row.la} {row.a}</span>
+                            <span>{row.lb} {row.b}</span>
+                          </div>
+                          <div className="w-full h-2.5 bg-white border border-[#EAD5C3] rounded-full overflow-hidden flex">
+                            <div className="bg-[#E65100] transition-all duration-500" style={{ width: `${mbtiAxisPercent(row.axis, row.a)}%` }} />
+                            <div className="bg-slate-300 transition-all duration-500" style={{ width: `${100 - mbtiAxisPercent(row.axis, row.a)}%` }} />
+                          </div>
+                        </div>
+                      ))}
+                      <p className="text-[10px] font-bold text-[#B4570B] pt-1">✨ 完成更多題目，結果會更準確喔！</p>
                     </div>
                   </div>
-
-                </div>
+                ) : (
+                  /* ---------- RESULT SUB-VIEW ---------- */
+                  <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-8 shadow-sm text-center space-y-5">
+                    <div className="inline-flex p-4 bg-orange-100 rounded-full text-[#E65100]">
+                      <Award className="w-12 h-12" />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="text-xs font-black text-slate-400 uppercase tracking-widest">您的生命性格指標</div>
+                      <h3 className="text-3xl font-black text-[#E65100] tracking-wider font-mono">{getMbtiResult()}</h3>
+                    </div>
+                    <p className="text-xs text-slate-500 leading-relaxed max-w-md mx-auto font-bold bg-[#FAF5EC]/60 p-4 rounded-xl border border-[#F1E0CE]/60 text-left">
+                      這代表你格外在乎生命的內在連結。你相信生命具有無限可能，不甘於平庸，且願意給予身邊每個人溫柔的包容！
+                    </p>
+                    <button
+                      onClick={resetMbti}
+                      className="px-6 py-2 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl hover:bg-orange-50 transition-all cursor-pointer shadow-xs active:scale-98"
+                    >
+                      重做測驗
+                    </button>
+                  </div>
+                )}
               </div>
             )}
 

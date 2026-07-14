@@ -72,8 +72,8 @@ const GAMES = [
     title: '生命拼圖地圖',
     description: '將生命的五大單元拼湊出完整的地圖。',
     emoji: '🧩',
-    color: 'bg-[#F2F8FF] border-[#CCE1FB] text-[#1D4ED8]',
-    iconColor: 'text-[#1D4ED8]',
+    color: 'bg-[#F5FBF5] border-[#CDE7CD] text-[#2E7D32]',
+    iconColor: 'text-[#2E7D32]',
     number: '02'
   },
   {
@@ -81,8 +81,8 @@ const GAMES = [
     title: '情境選擇大冒險',
     description: '面對生活中的道德情境，做出你的抉擇。',
     emoji: '🧭',
-    color: 'bg-[#F5FBF5] border-[#CDE7CD] text-[#2E7D32]',
-    iconColor: 'text-[#2E7D32]',
+    color: 'bg-[#F2F8FF] border-[#CCE1FB] text-[#1D4ED8]',
+    iconColor: 'text-[#1D4ED8]',
     number: '03'
   },
   {
@@ -117,8 +117,8 @@ const GAMES = [
     title: '感恩泡泡站',
     description: '寫下感恩的話，讓班級充滿溫馨的感謝泡泡。',
     emoji: '🧼',
-    color: 'bg-[#F0FDF4] border-[#BBF7D0] text-[#166534]',
-    iconColor: 'text-[#166534]',
+    color: 'bg-[#F0FDFA] border-[#99F6E4] text-[#0F766E]',
+    iconColor: 'text-[#0F766E]',
     number: '07'
   },
   {
@@ -144,8 +144,8 @@ const GAMES = [
     title: '成長徽章挑戰賽',
     description: '完成生命挑戰，收集並解鎖榮譽班級徽章。',
     emoji: '🏆',
-    color: 'bg-[#F9FDF9] border-[#D1EED1] text-[#1B5E20]',
-    iconColor: 'text-[#1B5E20]',
+    color: 'bg-[#FFFBEB] border-[#FDE68A] text-[#B45309]',
+    iconColor: 'text-[#B45309]',
     number: '10'
   }
 ];
@@ -167,9 +167,9 @@ const renderGameIllustration = (gameId: number) => {
       );
     case 2: // Life Puzzle Map
       return (
-        <div className="w-full h-full bg-[#F2F8FF] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#CCE1FB] relative overflow-hidden select-none">
+        <div className="w-full h-full bg-[#F5FBF5] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#CDE7CD] relative overflow-hidden select-none">
           <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
-            <path d="M6 18C6 11.3726 11.3726 6 18 6H30C36.6274 6 42 11.3726 42 18V30C42 36.6274 36.6274 42 30 42H18C11.3726 42 6 36.6274 6 30V18Z" fill="#E0F2FE" stroke="#3B82F6" strokeWidth="1.5" />
+            <path d="M6 18C6 11.3726 11.3726 6 18 6H30C36.6274 6 42 11.3726 42 18V30C42 36.6274 36.6274 42 30 42H18C11.3726 42 6 36.6274 6 30V18Z" fill="#E8F5E9" stroke="#2E7D32" strokeWidth="1.5" />
             <path d="M12 18C16 16 18 22 22 20C26 18 28 24 32 22C36 20 36 24 36 26" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
             <path d="M24 6C24 16 20 22 26 30C32 38 28 42 28 42" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="1 2" />
             <circle cx="16" cy="14" r="3" fill="#22C55E" />
@@ -179,13 +179,13 @@ const renderGameIllustration = (gameId: number) => {
       );
     case 3: // Scenario Adventure
       return (
-        <div className="w-full h-full bg-[#F5FBF5] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#CDE7CD] relative overflow-hidden select-none">
+        <div className="w-full h-full bg-[#F2F8FF] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#CCE1FB] relative overflow-hidden select-none">
           <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
-            <path d="M24 42V26M24 26L12 14M24 26L36 14" stroke="#2E7D32" strokeWidth="2" strokeLinecap="round" />
-            <circle cx="24" cy="16" r="5" fill="#E8F5E9" stroke="#2E7D32" strokeWidth="1.5" />
-            <text x="21" y="20" className="text-[10px] font-black fill-[#2E7D32]" style={{ fontFamily: 'monospace' }}>?</text>
-            <circle cx="21" cy="33" r="1.5" fill="#81C784" />
-            <circle cx="21" cy="38" r="1.5" fill="#81C784" />
+            <path d="M24 42V26M24 26L12 14M24 26L36 14" stroke="#1D4ED8" strokeWidth="2" strokeLinecap="round" />
+            <circle cx="24" cy="16" r="5" fill="#E0F2FE" stroke="#1D4ED8" strokeWidth="1.5" />
+            <text x="21" y="20" className="text-[10px] font-black fill-[#1D4ED8]" style={{ fontFamily: 'monospace' }}>?</text>
+            <circle cx="21" cy="33" r="1.5" fill="#60A5FA" />
+            <circle cx="21" cy="38" r="1.5" fill="#60A5FA" />
           </svg>
         </div>
       );
@@ -244,7 +244,7 @@ const renderGameIllustration = (gameId: number) => {
       );
     case 7: // Gratitude Bubbles
       return (
-        <div className="w-full h-full bg-[#F0FDF4] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#BBF7D0] relative overflow-hidden select-none">
+        <div className="w-full h-full bg-[#F0FDFA] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#99F6E4] relative overflow-hidden select-none">
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="absolute w-6 h-6 rounded-full border border-sky-400/40 bg-sky-200/10 top-2 left-2 flex items-center justify-center">
               <div className="w-2 h-2 rounded-full bg-white/60 -mt-2 -ml-2" />
@@ -293,7 +293,7 @@ const renderGameIllustration = (gameId: number) => {
       );
     case 10: // Badge Challenge
       return (
-        <div className="w-full h-full bg-[#F9FDF9] rounded-xl flex flex-col items-center justify-center p-1 border border-[#D1EED1] relative overflow-hidden select-none">
+        <div className="w-full h-full bg-[#FFFBEB] rounded-xl flex flex-col items-center justify-center p-1 border border-[#FDE68A] relative overflow-hidden select-none">
           <div className="grid grid-cols-3 gap-0.5">
             {['🏅', '🎖️', '⭐', '🏆', '💎', '👑'].map((emoji, index) => (
               <div key={index} className="w-3.5 h-3.5 rounded-md bg-amber-50 border border-amber-200 flex items-center justify-center text-[8px]">

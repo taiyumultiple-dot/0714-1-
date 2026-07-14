@@ -1902,7 +1902,14 @@ export default function InteractiveQuestTab({
 
                     {/* Nodes grid */}
                     <div className="grid grid-cols-3 gap-3 max-w-md mx-auto py-2">
-                      {['陳可華', '王博鈞', '張曉萍', '王小文', '可華爸爸', '可華爺爺'].map(node => (
+                      {[
+                        { name: '陳可華', img: charKehuaImg },
+                        { name: '王博鈞', img: charBojunImg },
+                        { name: '張曉萍', img: charXiaopingImg },
+                        { name: '王小文', img: charXiaowenImg },
+                        { name: '可華爸爸', img: charDadImg },
+                        { name: '可華爺爺', img: charGrandpaImg },
+                      ].map(({ name: node, img }) => (
                         <div 
                           key={node}
                           onClick={() => handleNodeClick(node)}
@@ -1912,15 +1919,8 @@ export default function InteractiveQuestTab({
                               : 'border-dashed border-[#F1E0CE] bg-[#FCFAF6] hover:bg-purple-50/20 hover:border-purple-400 hover:scale-102'
                           }`}
                         >
-                          <span className="text-2xl">
-                            {node === '陳可華' && '👦🏻'}
-                            {node === '王博鈞' && '🏀'}
-                            {node === '張曉萍' && '👩🏻'}
-                            {node === '王小文' && '👧🏻'}
-                            {node === '可華爸爸' && '👨🏻'}
-                            {node === '可華爺爺' && '👵🏻'}
-                          </span>
-                          <span className="text-[11px] font-black text-[#4A321F] mt-1">{node}</span>
+                          <img src={img} alt={node} className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-xs" referrerPolicy="no-referrer" />
+                          <span className="text-[11px] font-black text-[#4A321F] mt-1.5">{node}</span>
                         </div>
                       ))}
                     </div>
@@ -1950,7 +1950,7 @@ export default function InteractiveQuestTab({
                     <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
                       <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
                       <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
-                        <div className="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-lg shadow-sm">👧🏻</div>
+                        <img src={charXiaowenImg} alt="王小文" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">王小文的悄悄話</h5>
                           <span className="text-[10px] text-slate-400">暖心好朋友</span>
@@ -2105,7 +2105,7 @@ export default function InteractiveQuestTab({
                     <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
                       <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">🌿</div>
                       <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
-                        <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-lg shadow-sm">👨🏻</div>
+                        <img src={charDadImg} alt="可華爸爸" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">可華爸爸的引導</h5>
                           <span className="text-[10px] text-slate-400">生命諮商導師</span>
@@ -2249,7 +2249,7 @@ export default function InteractiveQuestTab({
                     <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
                       <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
                       <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
-                        <div className="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-lg shadow-sm">👩🏻</div>
+                        <img src={charXiaopingImg} alt="張曉萍" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">張曉萍的小提醒</h5>
                           <span className="text-[10px] text-slate-400">貼心好同學</span>
@@ -2436,7 +2436,7 @@ export default function InteractiveQuestTab({
                     <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
                       <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
                       <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
-                        <div className="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-lg shadow-sm">👩🏻</div>
+                        <img src={charXiaopingImg} alt="張曉萍" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">張曉萍的小提醒</h5>
                           <span className="text-[10px] text-slate-400">貼心好同學</span>
@@ -2618,7 +2618,7 @@ export default function InteractiveQuestTab({
                     <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
                       <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
                       <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
-                        <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-lg shadow-sm">👩🏻</div>
+                        <img src={charXiaopingImg} alt="張曉萍" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">張曉萍的悄悄話</h5>
                           <span className="text-[10px] text-slate-400">貼心好同學</span>
@@ -2796,7 +2796,7 @@ export default function InteractiveQuestTab({
                     <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
                       <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
                       <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
-                        <div className="w-9 h-9 rounded-full bg-rose-100 flex items-center justify-center text-lg shadow-sm">👦🏻</div>
+                        <img src={charKehuaImg} alt="陳可華" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">陳可華的小建議</h5>
                           <span className="text-[10px] text-slate-400">同桌好夥伴</span>

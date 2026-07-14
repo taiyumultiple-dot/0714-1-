@@ -422,16 +422,9 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-4 lg:px-6 h-16 flex items-center justify-between">
             
             {/* Brand Logo & Title */}
-            <div className="flex items-center gap-3 cursor-pointer select-none" onClick={() => handleTabSelection('首頁')}>
-              <svg className="w-10 h-10 shrink-0" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 5L63 37L95 50L63 63L50 95L37 63L5 50L37 37Z" fill="url(#logoGrad)" stroke="#EA9A3E" strokeWidth="3" strokeLinejoin="round"/>
-                <path d="M50 22L58 42L80 50L58 58L50 78L42 58L20 50L42 42Z" fill="#ffffff" />
-                <defs>
-                  <linearGradient id="logoGrad" x1="0" y1="0" x2="100" y2="100">
-                    <stop offset="0%" stopColor="#F5A94E" />
-                    <stop offset="100%" stopColor="#E0812A" />
-                  </linearGradient>
-                </defs>
+            <div className="flex items-center gap-2.5 cursor-pointer select-none" onClick={() => handleTabSelection('首頁')}>
+              <svg className="w-8 h-8 shrink-0" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 3C50 3 53 38 62 47C71 56 97 50 97 50C97 50 71 56 62 62 53 68 50 97 50 97 50 97 47 68 38 62 29 56 3 50 3 50 3 50 29 56 38 47 47 38 50 3 50 3Z" fill="#E0812A"/>
               </svg>
               <div>
                 <h1 className="text-lg font-extrabold text-[#4A321F] tracking-tight leading-none mb-0.5">
@@ -444,17 +437,17 @@ export default function App() {
             </div>
 
             {/* Nav Links */}
-            <nav className="hidden lg:flex items-center gap-1.5">
+            <nav className="hidden lg:flex items-center gap-6">
               {navItems.map((item) => {
                 const isActive = activeTab === item.name;
                 return (
                   <button
                     key={item.name}
                     onClick={() => handleTabSelection(item.name)}
-                    className={`relative px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    className={`relative pb-1 text-sm font-bold transition-all flex items-center gap-1.5 border-b-2 ${
                       isActive 
-                        ? 'text-[#B4570B] bg-[#FFF1E0]' 
-                        : 'text-slate-600 hover:text-[#B4570B] hover:bg-slate-50'
+                        ? 'text-[#E0812A] border-[#E0812A]' 
+                        : 'text-slate-500 border-transparent hover:text-[#E0812A]'
                     }`}
                   >
                     <item.icon className={`w-4 h-4 ${isActive ? 'text-[#E0812A]' : 'text-slate-400'}`} />
@@ -466,6 +459,14 @@ export default function App() {
 
             {/* Right Section: Search & User Profile */}
             <div className="flex items-center gap-4">
+
+              {/* Search Icon */}
+              <button
+                title="搜尋"
+                className="p-2 rounded-full text-slate-400 hover:text-[#E0812A] hover:bg-orange-50 transition-all cursor-pointer"
+              >
+                <Search className="w-4.5 h-4.5" />
+              </button>
               
               {/* Teacher's Student Workspace Selector Dropdown */}
               {currentUser?.role === 'teacher' && (
@@ -528,6 +529,7 @@ export default function App() {
                     className="border border-white/40 bg-white"
                   />
                   <span>{currentUser.name} {currentUser.role === 'student' ? '已登入' : '教師端'}</span>
+                  <ChevronDown className="w-3.5 h-3.5 opacity-80" />
                 </div>
               )}
 

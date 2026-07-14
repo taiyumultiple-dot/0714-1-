@@ -318,6 +318,26 @@ export default function InteractiveQuestTab({
   const [activeGameId, setActiveGameId] = useState<number | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  // QR Code auto-refresh: regenerates the class join code every 90s for security
+  const QR_REFRESH_SECONDS = 90;
+  const [qrSecondsLeft, setQrSecondsLeft] = useState(QR_REFRESH_SECONDS);
+  const [qrVersion, setQrVersion] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setQrSecondsLeft((prev) => {
+        if (prev <= 1) {
+          setQrVersion((v) => v + 1);
+          return QR_REFRESH_SECONDS;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const qrProgressPercent = ((QR_REFRESH_SECONDS - qrSecondsLeft) / QR_REFRESH_SECONDS) * 100;
+
   // Link copy simulation
   const [copiedLink, setCopiedLink] = useState(false);
   const handleCopyLink = () => {
@@ -838,20 +858,42 @@ export default function InteractiveQuestTab({
                       </div>
 
                       {/* Horizontal layout card */}
-                      <div className="flex items-center gap-4 bg-white border border-[#EAD5C3]/60 p-4 rounded-2xl shadow-3xs">
-                        {/* QR Code Box */}
-                        <div className="w-24 h-24 shrink-0 bg-[#FFFDF9] border-2 border-[#FAD8C1] rounded-xl p-1.5 flex flex-col items-center justify-center relative shadow-inner group">
-                          {/* Fake QR code blocks */}
-                          <div className="w-full h-full bg-[radial-gradient(#4A321F_2.5px,transparent_2.5px)] [background-size:6px_6px] opacity-90" />
-                          <div className="absolute top-2 left-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
-                          <div className="absolute top-2 right-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
-                          <div className="absolute bottom-2 left-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
-                          
-                          <div className="absolute w-4 h-4 bg-[#FFEAD5] border-2 border-[#E65100] rounded-full flex items-center justify-center shadow-xs">
-                            <span className="text-[8px]">📙</span>
+                      <div className="flex items-center gap-4 bg-white border border-[#EAD5C3]/60 p-4 pb-5 rounded-2xl shadow-3xs">
+                        {/* QR Code Box with auto-refresh countdown ring */}
+                        <div className="relative w-24 h-24 shrink-0">
+                          {/* Countdown ring */}
+                          <svg className="absolute inset-0 w-24 h-24 -rotate-90 pointer-events-none" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="46" fill="none" stroke="#FCE1D1" strokeWidth="4" />
+                            <circle
+                              cx="50" cy="50" r="46" fill="none" stroke="#E65100" strokeWidth="4"
+                              strokeDasharray={2 * Math.PI * 46}
+                              strokeDashoffset={2 * Math.PI * 46 * (1 - qrProgressPercent / 100)}
+                              strokeLinecap="round"
+                              style={{ transition: 'stroke-dashoffset 1s linear' }}
+                            />
+                          </svg>
+                          <div key={qrVersion} className="absolute inset-1.5 bg-[#FFFDF9] border-2 border-[#FAD8C1] rounded-xl p-1.5 flex flex-col items-center justify-center overflow-hidden group">
+                            {/* Fake QR code blocks - re-seeded on each refresh */}
+                            <div
+                              className="w-full h-full opacity-90"
+                              style={{
+                                backgroundImage: 'radial-gradient(#4A321F 2.5px, transparent 2.5px)',
+                                backgroundSize: '6px 6px',
+                                backgroundPosition: `${(qrVersion * 3) % 6}px ${(qrVersion * 2) % 6}px`
+                              }}
+                            />
+                            <div className="absolute top-2 left-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
+                            <div className="absolute top-2 right-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
+                            <div className="absolute bottom-2 left-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
+                            <div className="absolute w-4 h-4 bg-[#FFEAD5] border-2 border-[#E65100] rounded-full flex items-center justify-center shadow-xs">
+                              <span className="text-[8px]">📙</span>
+                            </div>
                           </div>
-                          
-                          <div className="absolute left-0 right-0 h-0.5 bg-[#E65100] opacity-80 shadow-[0_0_8px_#E65100] top-1/2 animate-bounce" />
+                          {/* Seconds-left badge */}
+                          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#E65100] text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-xs whitespace-nowrap flex items-center gap-1">
+                            <RefreshCw className="w-2.5 h-2.5" />
+                            <span>{qrSecondsLeft}s 後更新</span>
+                          </div>
                         </div>
 
                         {/* Class Info */}

@@ -308,6 +308,53 @@ const renderGameIllustration = (gameId: number) => {
   }
 };
 
+const PUZZLE_THEMES = [
+  { key: '哲學思考', emoji: '🧠', desc: '思考生命的意義，探索世界與自我。', color: 'sky' },
+  { key: '人學探索', emoji: '🧑', desc: '認識自己與他人，建立良好關係。', color: 'green' },
+  { key: '終極關懷', emoji: '💜', desc: '關懷生命的價值，尊重與珍惜生命。', color: 'violet' },
+  { key: '價值思辨', emoji: '⚖️', desc: '思辨價值觀，做出負責任的選擇。', color: 'amber' },
+  { key: '靈性修養', emoji: '🌸', desc: '培養內在修養，追求心靈的成長。', color: 'rose' },
+];
+const PUZZLE_STYLES: Record<string, string> = {
+  sky: 'bg-sky-50 border-sky-300 text-sky-700',
+  green: 'bg-emerald-50 border-emerald-300 text-emerald-700',
+  violet: 'bg-violet-50 border-violet-300 text-violet-700',
+  amber: 'bg-amber-50 border-amber-300 text-amber-700',
+  rose: 'bg-rose-50 border-rose-300 text-rose-700',
+};
+
+const PuzzleZone: React.FC<{
+  themeKey: string;
+  placed: boolean;
+  onDropTheme: (theme: string) => void;
+  tall?: boolean;
+}> = ({ themeKey, placed, onDropTheme, tall }) => {
+  const theme = PUZZLE_THEMES.find((t) => t.key === themeKey)!;
+  const [isOver, setIsOver] = useState(false);
+  return (
+    <div
+      onDragOver={(e) => { e.preventDefault(); setIsOver(true); }}
+      onDragLeave={() => setIsOver(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setIsOver(false);
+        const dropped = e.dataTransfer.getData('text/plain');
+        if (dropped === themeKey) onDropTheme(themeKey);
+      }}
+      className={`rounded-2xl border-2 flex flex-col items-center justify-center gap-1 transition-all ${tall ? 'h-20' : 'h-24'} ${
+        placed
+          ? `${PUZZLE_STYLES[theme.color]} shadow-sm`
+          : isOver
+            ? 'bg-orange-50 border-[#E65100] border-dashed'
+            : 'bg-[#FAF6F0]/50 border-dashed border-[#F1E0CE] text-slate-300'
+      }`}
+    >
+      <span className="text-xl">{placed ? theme.emoji : '➕'}</span>
+      <span className={`text-xs font-black ${placed ? '' : 'text-slate-400'}`}>{themeKey}</span>
+    </div>
+  );
+};
+
 export default function InteractiveQuestTab({
   currentStudent,
   onSaveQuest,
@@ -517,24 +564,65 @@ export default function InteractiveQuestTab({
   const [adventurePoints, setAdventurePoints] = useState({ 同理: 10, 責任: 10, 勇氣: 10 });
   const adventureScenarios = [
     {
+      title: '校園小衝突',
+      story: '下課時，博鈞不小心撞倒了小文正在整理的書本，兩人因此起了口角，周圍同學都圍過來看熱鬧。此時你會？',
+      options: [
+        { text: '上前打圓場，請兩人先冷靜下來再說。', points: { 責任: 6, 同理: 6, 勇氣: 5 } },
+        { text: '幫忙把散落的書撿起來，緩和現場氣氛。', points: { 責任: 4, 同理: 8, 勇氣: 2 } },
+        { text: '站在旁邊看，等吵完再決定要不要幫忙。', points: { 責任: -2, 同理: -2, 勇氣: -3 } },
+        { text: '去找老師來處理這件事。', points: { 責任: 8, 同理: 2, 勇氣: 4 } },
+      ],
+    },
+    {
+      title: '朋友被誤會時',
+      story: '小文在美術課時不小心打翻了顏料，老師以為是曉萍弄髒了桌子，語氣有點嚴厲。曉萍急著解釋，但大家似乎都沒有聽到她說的話。此時你會？',
+      options: [
+        { text: '立刻替曉萍解釋，告訴大家真相。', points: { 責任: 8, 同理: 6, 勇氣: 7 } },
+        { text: '默默觀察，等別人發現真相。', points: { 責任: -3, 同理: -1, 勇氣: -4 } },
+        { text: '安慰曉萍，並和她一起想辦法。', points: { 責任: 4, 同理: 8, 勇氣: 3 } },
+        { text: '不關我的事，先離開現場。', points: { 責任: -5, 同理: -5, 勇氣: -5 } },
+      ],
+    },
+    {
       title: '考試作弊的誘惑',
       story: '快段考了，隔壁的好友博鈞因為練球沒時間複習，偷偷把英文單字卡夾在筆袋下。你看見了，而且他向你投來求助的眼神。此時你會？',
       options: [
         { text: '假裝沒看見，專心寫自己的考卷。', points: { 責任: 5, 同理: 0, 勇氣: 0 } },
-        { text: '以嚴厲眼神制止他，並在考後主動約他一起溫習。', points: { 責任: 8, 同理: 6, 勇氣: 8 } },
+        { text: '以嚴肅眼神制止他，並在考後主動約他一起溫習。', points: { 責任: 8, 同理: 6, 勇氣: 8 } },
         { text: '偷偷在草稿紙上寫下提示傳給他，幫他度過難關。', points: { 責任: -5, 同理: 8, 勇氣: 2 } },
-        { text: '在考後私下告訴老師，請老師適當關照博鈞。', points: { 責任: 10, 同理: 3, 勇氣: 6 } }
-      ]
+        { text: '在考後私下告訴老師，請老師適當關照博鈞。', points: { 責任: 10, 同理: 3, 勇氣: 6 } },
+      ],
     },
     {
-      title: '被同學排擠的情境',
+      title: '被排擠時的心情',
       story: '班上的小文因為性格內向、不擅言詞，分組時大家都不想跟他一組。小文一個人默默站在教室角落，看起來非常失落。此時你會？',
       options: [
         { text: '主動走過去邀請小文加入我們小組。', points: { 同理: 10, 勇氣: 8, 責任: 5 } },
         { text: '跟組員討論看看，看大家願不願意接納他。', points: { 同理: 6, 勇氣: 3, 責任: 4 } },
-        { text: '裝作很忙不關我的事，畢竟我也怕得罪其他人。', points: { 同理: -4, 勇氣: -2, 責任: 0 } }
-      ]
-    }
+        { text: '裝作很忙不關我的事，畢竟我也怕得罪其他人。', points: { 同理: -4, 勇氣: -2, 責任: 0 } },
+        { text: '私下傳訊息鼓勵小文，讓他知道有人在乎他。', points: { 同理: 8, 勇氣: 4, 責任: 3 } },
+      ],
+    },
+    {
+      title: '拾到錢包時',
+      story: '放學路上，你在樓梯間撿到一個錢包，裡面有現金跟一張學生證，是隔壁班同學的。四下無人，只有你知道這件事。此時你會？',
+      options: [
+        { text: '立刻拿去交給學務處，請他們幫忙聯絡失主。', points: { 責任: 10, 同理: 6, 勇氣: 5 } },
+        { text: '直接聯絡學生證上的同學，親自歸還。', points: { 責任: 8, 同理: 8, 勇氣: 6 } },
+        { text: '猶豫了一下，但最後還是決定上交。', points: { 責任: 6, 同理: 4, 勇氣: 3 } },
+        { text: '想著反正沒人看到，把現金留下來。', points: { 責任: -10, 同理: -5, 勇氣: -5 } },
+      ],
+    },
+    {
+      title: '家庭意見不一致',
+      story: '爸爸希望你選擇比較穩定的科系，將來有份不錯的工作；但你對繪畫和設計很有熱情，夢想是成為插畫家，這條路比較不確定。此時你會？',
+      options: [
+        { text: '好好跟爸爸溝通，說明自己的想法與規劃。', points: { 責任: 8, 同理: 6, 勇氣: 8 } },
+        { text: '先聽爸爸的建議，之後再慢慢調整方向。', points: { 責任: 6, 同理: 5, 勇氣: 3 } },
+        { text: '嘗試找到兩者兼顧的方式，例如雙主修。', points: { 責任: 7, 同理: 6, 勇氣: 6 } },
+        { text: '不想溝通，直接照自己的想法做決定。', points: { 責任: -3, 同理: -4, 勇氣: 7 } },
+      ],
+    },
   ];
 
   const handleAdventureChoice = (points: Record<string, number>) => {
@@ -843,8 +931,8 @@ export default function InteractiveQuestTab({
   return (
     <div className="min-h-screen bg-[#FBF3E4] text-[#3E2723] font-sans pb-16 px-4 md:px-8 relative overflow-hidden">
 
-      {/* Corner floral decorations bleeding off the page edges (matches reference outer frame) */}
-      <div className="hidden md:block absolute -left-10 top-24 w-56 h-72 opacity-70 pointer-events-none select-none rotate-[8deg]" aria-hidden="true">
+      {/* Corner floral decorations (kept inside bounds so the wrapper's overflow-hidden doesn't clip them) */}
+      <div className="hidden md:block absolute left-1 top-20 w-48 h-64 opacity-70 pointer-events-none select-none rotate-[8deg] z-0" aria-hidden="true">
         <svg viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M100 300C95 220 90 150 60 90C40 50 20 30 10 10" stroke="#B7C79A" strokeWidth="3" strokeLinecap="round" />
           <ellipse cx="55" cy="95" rx="16" ry="8" fill="#C6D6A8" transform="rotate(-30 55 95)" />
@@ -855,7 +943,7 @@ export default function InteractiveQuestTab({
           <circle cx="80" cy="200" r="9" fill="#F3C1CE" />
         </svg>
       </div>
-      <div className="hidden md:block absolute -right-8 -bottom-6 w-48 h-56 opacity-60 pointer-events-none select-none -rotate-[10deg]" aria-hidden="true">
+      <div className="hidden md:block absolute right-1 bottom-1 w-44 h-52 opacity-60 pointer-events-none select-none -rotate-[10deg] z-0" aria-hidden="true">
         <svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M100 240C95 180 110 130 140 90C155 70 170 55 185 40" stroke="#B7C79A" strokeWidth="3" strokeLinecap="round" />
           <ellipse cx="145" cy="95" rx="15" ry="7" fill="#C6D6A8" transform="rotate(35 145 95)" />
@@ -1470,124 +1558,120 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 2 && (
               <div id="game-view-puzzle" className="space-y-6">
-                {/* 1. Upper Banner */}
-                <div className="w-full bg-gradient-to-r from-[#1E88E5] via-[#3F51B5] to-[#5C6BC0] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
-                    <span>關卡 02 ‧ 生命拼圖地圖</span>
-                  </span>
-                  <h2 className="text-2xl font-black">五大單元生命拼圖</h2>
-                  <p className="text-xs text-[#E8EAF6] font-bold max-w-xl">
-                    點擊各單元版塊將其拼入拼圖地圖中，點亮完整人生，拼湊出我們班專屬的生命樣貌！
-                  </p>
+                {/* 1. Banner */}
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
+                  <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
+                  <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+                  <div className="flex items-center gap-5 z-10">
+                    <div className="w-16 h-16 rounded-full bg-[#E65100] text-white flex items-center justify-center text-2xl font-black font-mono shrink-0 shadow-md">02</div>
+                    <div className="space-y-1 text-left">
+                      <h2 className="text-2xl md:text-3xl font-black text-[#4A321F]">生命拼圖地圖</h2>
+                      <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">拼出生命教育地圖，認識課本五大主題。</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
+                    {[charKehuaImg, charXiaopingImg, charBojunImg, charXiaowenImg, charDadImg].map((src, i) => (
+                      <img key={i} src={src} alt="" className="w-14 h-14 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 5 - i }} referrerPolicy="no-referrer" />
+                    ))}
+                  </div>
                 </div>
 
                 {/* 2. Three-Column Content Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                  
-                  {/* Left Column (col-span-3): Progress and Checklist */}
+
+                  {/* Left: Draggable pieces list */}
                   <div className="lg:col-span-3 space-y-4">
-                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
-                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">🧩</div>
-                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-3.5 flex items-center gap-1.5 uppercase">
-                        <span>🧩</span>
-                        <span>拼圖完成進度</span>
-                      </h4>
-
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                          <span className="text-2xl font-black text-[#E65100] font-mono">
-                            {Object.values(puzzlePlaced).filter(Boolean).length} / 5
-                          </span>
-                          <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
-                            {Math.round((Object.values(puzzlePlaced).filter(Boolean).length / 5) * 100)}% 已點亮
-                          </span>
-                        </div>
-                        
-                        <div className="w-full h-3 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden p-0.5">
-                          <div 
-                            className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all duration-300"
-                            style={{ width: `${(Object.values(puzzlePlaced).filter(Boolean).length / 5) * 100}%` }}
-                          />
-                        </div>
-
-                        {/* List of puzzle elements */}
-                        <div className="space-y-2 pt-2 border-t border-[#EAD5C3]/60">
-                          {Object.entries(puzzlePlaced).map(([key, placed]) => (
-                            <div key={key} className="flex items-center justify-between text-xs font-black text-[#7D6B5D]">
-                              <span>{key}</span>
-                              <span className={`px-2 py-0.5 rounded-md text-[10px] ${
-                                placed ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'
-                              }`}>
-                                {placed ? '已拼入' : '待拼入'}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Middle Column (col-span-6): Interactive Puzzle Board Canvas */}
-                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
-                    <div className="text-center mb-4">
-                      <h3 className="text-xs font-black text-slate-500">✨ 班級生命地圖拼湊區 ✨</h3>
-                    </div>
-
-                    <div className="relative w-full max-w-lg mx-auto aspect-[4/3] border-4 border-[#FCD2B5] rounded-2xl bg-[#FFFDF9] overflow-hidden shadow-inner flex items-center justify-center p-4">
-                      <div className="grid grid-cols-3 gap-3 w-full h-full">
-                        {Object.entries(puzzlePlaced).map(([key, placed]) => (
-                          <div 
-                            key={key}
-                            onClick={() => handlePlacePuzzle(key)}
-                            className={`border-2 rounded-xl flex flex-col items-center justify-center p-3 text-center transition-all cursor-pointer select-none ${
-                              placed 
-                                ? 'bg-gradient-to-br from-orange-50 to-amber-100 border-[#FF9800] text-[#E65100] scale-98 shadow-sm font-black' 
-                                : 'bg-[#FAF6F0]/40 border-dashed border-[#F1E0CE] text-slate-300 hover:bg-[#FAF6F0] hover:scale-102 hover:border-[#E65100]'
-                            }`}
+                    <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left">
+                      <h4 className="font-black text-[#4A321F] text-xs pb-2 mb-3 flex items-center gap-1.5">📌 <span>可拖曳拼圖</span></h4>
+                      <p className="text-[10px] font-bold text-slate-400 mb-3">將左側拼圖拖曳到地圖上對應的位置！</p>
+                      <div className="space-y-2.5">
+                        {PUZZLE_THEMES.map((t) => (
+                          <div
+                            key={t.key}
+                            draggable={!puzzlePlaced[t.key]}
+                            onDragStart={(e) => e.dataTransfer.setData('text/plain', t.key)}
+                            className={`flex items-center gap-2.5 p-2.5 rounded-xl border-2 ${PUZZLE_STYLES[t.color]} ${puzzlePlaced[t.key] ? 'opacity-30 cursor-not-allowed' : 'cursor-grab active:cursor-grabbing'}`}
                           >
-                            <span className="text-2xl mb-1">{placed ? '🏆' : '➕'}</span>
-                            <span className="text-xs font-black tracking-wide leading-tight">{key}</span>
-                            <span className="text-[10px] font-bold text-slate-400 mt-1">
-                              {placed ? '已置入' : '點擊拼入'}
-                            </span>
+                            <span className="text-lg shrink-0">{t.emoji}</span>
+                            <div className="text-left leading-tight">
+                              <div className="text-xs font-black">{t.key}</div>
+                              <div className="text-[10px] font-bold opacity-80">{t.desc}</div>
+                            </div>
                           </div>
                         ))}
-                        {/* Complete life indicator */}
-                        <div className="border-2 border-dashed border-[#F1E0CE] bg-[#FAF6F0]/20 rounded-xl flex flex-col items-center justify-center text-slate-400 font-black text-[10px] p-2 leading-tight">
-                          <span>🧭</span>
-                          <span className="mt-1">完整生命</span>
-                        </div>
                       </div>
-                    </div>
-
-                    <div className="flex gap-3 justify-center mt-6">
-                      <button
-                        onClick={resetPuzzle}
-                        className="px-6 py-2 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl hover:bg-orange-50 transition-all cursor-pointer shadow-xs active:scale-98"
-                      >
-                        重置地圖
-                      </button>
                     </div>
                   </div>
 
-                  {/* Right Column (col-span-3): Grandpa's Encouragement */}
+                  {/* Middle: Puzzle board */}
+                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
+                    <div className="grid grid-cols-2 gap-2 mb-2">
+                      {['哲學思考', '人學探索'].map((key) => (
+                        <PuzzleZone key={key} themeKey={key} placed={puzzlePlaced[key]} onDropTheme={handlePlacePuzzle} />
+                      ))}
+                    </div>
+                    <div className="mb-2">
+                      <PuzzleZone themeKey="終極關懷" placed={puzzlePlaced['終極關懷']} onDropTheme={handlePlacePuzzle} tall />
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {['價值思辨', '靈性修養'].map((key) => (
+                        <PuzzleZone key={key} themeKey={key} placed={puzzlePlaced[key]} onDropTheme={handlePlacePuzzle} />
+                      ))}
+                    </div>
+                    <p className="text-center text-[11px] font-bold text-slate-400 mt-4">🖐️ 拖曳左側拼圖到對應位置，完成五大主題地圖！</p>
+                  </div>
+
+                  {/* Right: Progress + dad tip */}
                   <div className="lg:col-span-3 space-y-4">
-                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
-                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">🌿</div>
-                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
-                        <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-lg shadow-sm">👵🏻</div>
-                        <div className="text-left leading-none">
-                          <h5 className="font-black text-xs text-slate-800">可華爺爺的鼓勵</h5>
-                          <span className="text-[10px] text-slate-400">生命智者</span>
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left">
+                      <h4 className="font-black text-[#4A321F] text-xs pb-2 mb-3 flex items-center gap-1.5">🧩 <span>拼圖完成度</span></h4>
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="w-16 h-16 rounded-full shrink-0 flex items-center justify-center"
+                          style={{ background: `conic-gradient(#E65100 ${(Object.values(puzzlePlaced).filter(Boolean).length / 5) * 100}%, #EAD5C3 0)` }}
+                        >
+                          <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[11px] font-black text-[#4A321F]">
+                            {Object.values(puzzlePlaced).filter(Boolean).length}/5
+                          </div>
                         </div>
+                        <p className="text-[11px] font-bold text-slate-500 leading-relaxed">
+                          已完成 <b className="text-[#E65100]">{Object.values(puzzlePlaced).filter(Boolean).length}</b> 個主題，
+                          再完成 {5 - Object.values(puzzlePlaced).filter(Boolean).length} 個即可解鎖獎勵！
+                        </p>
+                      </div>
+                    </div>
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left">
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <img src={charDadImg} alt="可華爸爸" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
+                        <h5 className="font-black text-xs text-slate-800">可華爸爸的小提醒</h5>
                       </div>
                       <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
-                        「小博，生命並不是一天拼出來的。哲學思考是火，引領我們看清路；人學探索是眼，幫我們看見人的多元。把這五個單元慢慢嵌入你心裡，你便有了完整生命的能量！」
+                        生命是一幅拼圖，每個主題都是重要的一塊，用心學習，就能拼出屬於你的生命地圖！
                       </p>
                     </div>
                   </div>
+                </div>
 
+                {/* 3. Completed themes + actions */}
+                <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm">
+                  <h4 className="font-black text-[#4A321F] text-xs mb-3 flex items-center gap-1.5">🏅 <span>已完成的主題</span></h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-4">
+                    {PUZZLE_THEMES.map((t) => (
+                      <div key={t.key} className={`rounded-xl border-2 p-3 text-center ${puzzlePlaced[t.key] ? PUZZLE_STYLES[t.color] : 'bg-slate-50 border-slate-200 text-slate-300'}`}>
+                        <div className="text-xs font-black">{t.key}</div>
+                        <div className="text-[10px] font-bold mt-1">{puzzlePlaced[t.key] ? '已完成' : '尚未完成'}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-3 justify-end">
+                    <button onClick={resetPuzzle} className="px-5 py-2 border-2 border-[#F1E0CE] text-slate-500 font-black text-xs rounded-xl hover:bg-slate-50 transition-all cursor-pointer">重置拼圖</button>
+                    <button
+                      onClick={() => showToast(Object.values(puzzlePlaced).every(Boolean) ? '🎉 恭喜完成生命拼圖地圖！' : '⚠️ 還有拼圖尚未完成喔！')}
+                      className="px-6 py-2 bg-[#E65100] hover:bg-[#D84315] text-white font-black text-xs rounded-xl shadow-sm transition-all cursor-pointer active:scale-98"
+                    >
+                      完成送出
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -1597,89 +1681,73 @@ export default function InteractiveQuestTab({
             {/* ------------------------------------------------------------------------------------------------- */}
             {activeGameId === 3 && (
               <div id="game-view-adventure" className="space-y-6">
-                {/* 1. Upper Banner */}
-                <div className="w-full bg-gradient-to-r from-[#2E7D32] via-[#4CAF50] to-[#8BC34A] rounded-3xl p-6 text-white space-y-2 shadow-md relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0,transparent_70%)] pointer-events-none" />
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black bg-white/20 border border-white/30 px-3 py-1 rounded-full uppercase tracking-widest">
-                    <span>關卡 03 ‧ 情境抉擇</span>
-                  </span>
-                  <h2 className="text-2xl font-black">情境抉擇 ‧ 生命智慧拉鋸戰</h2>
-                  <p className="text-xs text-[#E8F5E9] font-bold max-w-xl">
-                    遭遇道德或生活兩難情境時，您的選擇將會塑建您最核心的生命價值點數！
-                  </p>
+                {/* 1. Banner */}
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
+                  <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
+                  <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+                  <div className="flex items-center gap-5 z-10">
+                    <div className="w-16 h-16 rounded-full bg-[#E65100] text-white flex items-center justify-center text-2xl font-black font-mono shrink-0 shadow-md">03</div>
+                    <div className="space-y-1 text-left">
+                      <h2 className="text-2xl md:text-3xl font-black text-[#4A321F]">情境選擇大冒險</h2>
+                      <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">面對生活情境做出選擇，看你的價值觀會帶你走向哪裡？</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
+                    {[charKehuaImg, charXiaowenImg].map((src, i) => (
+                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 2 - i }} referrerPolicy="no-referrer" />
+                    ))}
+                  </div>
                 </div>
 
                 {/* 2. Three-Column Content Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                  
-                  {/* Left Column (col-span-3): Points Display */}
+
+                  {/* Left: Progress checklist */}
                   <div className="lg:col-span-3 space-y-4">
-                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
-                      <div className="absolute -top-10 -left-10 text-4xl opacity-5 pointer-events-none">🛡️</div>
-                      <h4 className="font-black text-[#4A321F] text-xs border-b border-[#EAD5C3] pb-2 mb-3.5 flex items-center gap-1.5 uppercase">
-                        <span>🛡️</span>
-                        <span>冒險價值指標</span>
-                      </h4>
-
-                      <div className="space-y-4 font-black text-xs text-[#7D6B5D]">
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-[11px]">
-                            <span>❤️ 同理心</span>
-                            <span className="text-[#2E7D32]">{adventurePoints.同理} pts</span>
+                    <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left">
+                      <h4 className="font-black text-[#4A321F] text-xs pb-2 mb-3 flex items-center gap-1.5">🗺️ <span>冒險進度</span></h4>
+                      <div className="text-2xl font-black text-[#E65100] font-mono mb-1">
+                        {Math.min(adventureStage, adventureScenarios.length)} / {adventureScenarios.length} <span className="text-xs text-slate-400 font-bold">已完成的關卡</span>
+                      </div>
+                      <div className="w-full h-2.5 bg-white border border-[#EAD5C3] rounded-full overflow-hidden mb-4">
+                        <div className="h-full bg-[#E65100] transition-all" style={{ width: `${(Math.min(adventureStage, adventureScenarios.length) / adventureScenarios.length) * 100}%` }} />
+                      </div>
+                      <div className="space-y-2">
+                        {adventureScenarios.map((s, i) => (
+                          <div key={s.title} className="flex items-center gap-2 text-[11px] font-black">
+                            <span className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-[10px] ${
+                              i < adventureStage ? 'bg-emerald-500 text-white' : i === adventureStage ? 'bg-[#E65100] text-white' : 'bg-slate-200 text-slate-400'
+                            }`}>
+                              {i < adventureStage ? '✓' : i + 1}
+                            </span>
+                            <span className={i < adventureStage ? 'text-emerald-700' : i === adventureStage ? 'text-[#E65100]' : 'text-slate-300'}>{s.title}</span>
                           </div>
-                          <div className="w-full h-2.5 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden p-0.5">
-                            <div className="h-full bg-emerald-500 rounded-full transition-all" style={{ width: `${Math.min(100, adventurePoints.同理 * 15)}%` }} />
-                          </div>
-                        </div>
-
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-[11px]">
-                            <span>🛡️ 誠信責任</span>
-                            <span className="text-blue-600">{adventurePoints.責任} pts</span>
-                          </div>
-                          <div className="w-full h-2.5 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden p-0.5">
-                            <div className="h-full bg-blue-500 rounded-full transition-all" style={{ width: `${Math.min(100, adventurePoints.責任 * 15)}%` }} />
-                          </div>
-                        </div>
-
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-[11px]">
-                            <span>🔥 道德勇氣</span>
-                            <span className="text-amber-600">{adventurePoints.勇氣} pts</span>
-                          </div>
-                          <div className="w-full h-2.5 bg-white/80 border border-[#EAD5C3] rounded-full overflow-hidden p-0.5">
-                            <div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${Math.min(100, adventurePoints.勇氣 * 15)}%` }} />
-                          </div>
-                        </div>
+                        ))}
                       </div>
                     </div>
                   </div>
 
-                  {/* Middle Column (col-span-6): Interactive Scenario Board */}
-                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
+                  {/* Middle: Scenario story + choices */}
+                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm text-left">
                     {adventureStage < adventureScenarios.length ? (
-                      <div className="space-y-6">
-                        <div className="flex justify-between items-center border-b-2 border-[#F1E0CE]/60 pb-3">
-                          <span className="text-xs font-black text-slate-500">冒險關卡：{adventureScenarios[adventureStage].title}</span>
-                          <span className="text-xs font-black text-emerald-600 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">抉擇關卡 {adventureStage + 1} / 3</span>
+                      <div className="space-y-4">
+                        <h3 className="text-sm font-black text-[#4A321F] flex items-center gap-1.5">📖 <span>情境故事</span></h3>
+                        <div className="bg-[#FAF8F5] border border-[#EAD5C3] rounded-2xl p-4">
+                          <p className="text-xs font-black text-[#4A321F] mb-2">{adventureScenarios[adventureStage].title}</p>
+                          <p className="text-xs font-bold text-[#7D5C43] leading-relaxed">{adventureScenarios[adventureStage].story}</p>
                         </div>
-
-                        <div className="space-y-4 text-left">
-                          <p className="text-xs font-bold text-[#4A321F] bg-[#FAF8F5] p-4 rounded-2xl leading-relaxed border border-[#EAD5C3] shadow-inner">
-                            {adventureScenarios[adventureStage].story}
-                          </p>
-
-                          <div className="space-y-3 pt-2">
-                            {adventureScenarios[adventureStage].options.map((opt, idx) => (
-                              <button
-                                key={idx}
-                                onClick={() => handleAdventureChoice(opt.points)}
-                                className="w-full text-left p-4 rounded-2xl border-2 border-[#F1E0CE] hover:border-[#E65100] hover:bg-orange-50/50 transition-all shadow-xs cursor-pointer active:scale-98 font-bold text-xs text-[#4A321F]"
-                              >
-                                {opt.text}
-                              </button>
-                            ))}
-                          </div>
+                        <p className="text-[11px] font-black text-slate-400">請選擇你會怎麼做：</p>
+                        <div className="space-y-2.5">
+                          {adventureScenarios[adventureStage].options.map((opt, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => handleAdventureChoice(opt.points)}
+                              className="w-full text-left p-3.5 rounded-2xl border-2 border-[#F1E0CE] hover:border-[#E65100] hover:bg-orange-50/50 transition-all shadow-xs cursor-pointer active:scale-98 flex items-center gap-3"
+                            >
+                              <span className="w-6 h-6 rounded-full bg-[#E65100] text-white text-xs font-black flex items-center justify-center shrink-0">{idx + 1}</span>
+                              <span className="font-bold text-xs text-[#4A321F]">{opt.text}</span>
+                            </button>
+                          ))}
                         </div>
                       </div>
                     ) : (
@@ -1687,55 +1755,72 @@ export default function InteractiveQuestTab({
                         <div className="inline-flex p-4 bg-emerald-100 rounded-full text-[#1B5E20] animate-bounce">
                           <Compass className="w-12 h-12" />
                         </div>
-                        <div className="space-y-2">
-                          <h3 className="text-xl font-black text-[#1B5E20]">✨ 冒險成功！您的生命人格雷達 ✨</h3>
-                          <p className="text-xs text-slate-400">在這次情境考驗中，您展現出極具特色的價值特質！</p>
-                        </div>
-
+                        <h3 className="text-xl font-black text-[#1B5E20]">✨ 冒險成功！你的生命抉擇成果 ✨</h3>
                         <div className="grid grid-cols-3 gap-3 max-w-sm mx-auto">
                           <div className="bg-[#F0FDF4] border border-emerald-200 rounded-2xl p-3 text-center">
-                            <span className="text-xs font-black text-slate-400 block">同理心</span>
+                            <span className="text-xs font-black text-slate-400 block">同理</span>
                             <span className="text-xl font-black text-emerald-600 font-mono">{adventurePoints.同理}</span>
                           </div>
                           <div className="bg-[#EFF6FF] border border-blue-200 rounded-2xl p-3 text-center">
-                            <span className="text-xs font-black text-slate-400 block">誠信責任</span>
+                            <span className="text-xs font-black text-slate-400 block">責任</span>
                             <span className="text-xl font-black text-blue-600 font-mono">{adventurePoints.責任}</span>
                           </div>
                           <div className="bg-[#FFFDF2] border border-amber-200 rounded-2xl p-3 text-center">
-                            <span className="text-xs font-black text-slate-400 block">道德勇氣</span>
+                            <span className="text-xs font-black text-slate-400 block">勇氣</span>
                             <span className="text-xl font-black text-amber-600 font-mono">{adventurePoints.勇氣}</span>
                           </div>
                         </div>
-
-                        <div className="flex gap-3 justify-center pt-4">
-                          <button
-                            onClick={resetAdventure}
-                            className="px-6 py-2 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl hover:bg-orange-50 transition-all cursor-pointer shadow-xs active:scale-98"
-                          >
-                            重來一次
-                          </button>
-                        </div>
+                        <button
+                          onClick={resetAdventure}
+                          className="px-6 py-2 border-2 border-[#E65100] text-[#E65100] font-black text-xs rounded-xl hover:bg-orange-50 transition-all cursor-pointer shadow-xs active:scale-98"
+                        >
+                          重來一次
+                        </button>
                       </div>
                     )}
                   </div>
 
-                  {/* Right Column (col-span-3): Character Card */}
+                  {/* Right: Value points */}
                   <div className="lg:col-span-3 space-y-4">
-                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
-                      <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">🌸</div>
-                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
-                        <div className="w-9 h-9 rounded-full bg-rose-100 flex items-center justify-center text-lg shadow-sm">👩🏻</div>
-                        <div className="text-left leading-none">
-                          <h5 className="font-black text-xs text-slate-800">張曉萍的小提醒</h5>
-                          <span className="text-[10px] text-slate-400">貼心好同學</span>
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left">
+                      <h4 className="font-black text-[#4A321F] text-xs pb-2 mb-3 flex items-center gap-1.5">🏅 <span>價值點數</span></h4>
+                      <p className="text-[10px] font-bold text-slate-400 mb-3">做出有價值的選擇，累積點數！</p>
+                      <div className="space-y-2.5">
+                        <div className="flex items-center justify-between bg-white border border-rose-200 rounded-xl px-3.5 py-2.5">
+                          <span className="text-xs font-black text-rose-600 flex items-center gap-1.5">❤️ 同理</span>
+                          <span className="text-sm font-black text-rose-600 font-mono">{adventurePoints.同理} 點</span>
+                        </div>
+                        <div className="flex items-center justify-between bg-white border border-emerald-200 rounded-xl px-3.5 py-2.5">
+                          <span className="text-xs font-black text-emerald-700 flex items-center gap-1.5">🛡️ 責任</span>
+                          <span className="text-sm font-black text-emerald-700 font-mono">{adventurePoints.責任} 點</span>
+                        </div>
+                        <div className="flex items-center justify-between bg-white border border-amber-200 rounded-xl px-3.5 py-2.5">
+                          <span className="text-xs font-black text-amber-700 flex items-center gap-1.5">⭐ 勇氣</span>
+                          <span className="text-sm font-black text-amber-700 font-mono">{adventurePoints.勇氣} 點</span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
-                        「可華，在這個道德兩難的生命大冒險裡，無論做出什麼選擇都考驗著我們的心靈指南針。別害怕，跟著你心底最真誠的同理心和正義感去探索吧！」
-                      </p>
                     </div>
                   </div>
+                </div>
 
+                {/* 3. Adventure map stepper */}
+                <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm">
+                  <h4 className="font-black text-[#4A321F] text-xs mb-4 flex items-center gap-1.5">🗺️ <span>冒險地圖</span></h4>
+                  <div className="flex items-center justify-between gap-2 overflow-x-auto pb-1">
+                    {adventureScenarios.map((s, i) => (
+                      <React.Fragment key={s.title}>
+                        <div className="flex flex-col items-center gap-1.5 shrink-0">
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-xs ${
+                            i < adventureStage ? 'bg-emerald-500 text-white' : i === adventureStage ? 'bg-[#E65100] text-white' : 'bg-slate-200 text-slate-400'
+                          }`}>
+                            {i < adventureStage ? '✓' : i > adventureStage ? '🔒' : i + 1}
+                          </div>
+                          <span className="text-[10px] font-black text-slate-500 text-center max-w-[64px] leading-tight">{s.title}</span>
+                        </div>
+                        {i < adventureScenarios.length - 1 && <div className="flex-1 h-0.5 bg-[#EAD5C3] min-w-[16px]" />}
+                      </React.Fragment>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}

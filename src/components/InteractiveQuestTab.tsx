@@ -976,13 +976,7 @@ export default function InteractiveQuestTab({
                       >
                         <div className="space-y-3">
                           <div className="flex justify-between items-center">
-                            <span className={`text-[10px] font-black font-mono px-2 py-0.5 rounded-md border ${
-                              game.id === 2 
-                                ? 'bg-emerald-50 border-emerald-200 text-emerald-600'
-                                : game.id === 7
-                                  ? 'bg-sky-50 border-sky-200 text-sky-600'
-                                  : 'bg-orange-50 border-[#FCE1CE] text-[#E65100]'
-                            }`}>
+                            <span className={`text-[10px] font-black font-mono px-2 py-0.5 rounded-md border ${game.color}`}>
                               {game.number}
                             </span>
                           </div>

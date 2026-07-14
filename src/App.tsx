@@ -310,6 +310,13 @@ export default function App() {
   const handleLoginSuccess = (user: UserProfile) => {
     setCurrentUser(user);
     setActiveTab('首頁');
+
+    // First-time login: auto-show the guided tour once per account
+    const seenKey = `life_edu_tour_seen_${user.id}`;
+    if (!safeStorage.getItem(seenKey)) {
+      safeStorage.setItem(seenKey, '1');
+      setShowTour(true);
+    }
   };
 
   const handleRegisterUser = (user: UserProfile) => {

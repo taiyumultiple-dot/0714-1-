@@ -198,7 +198,7 @@ export default function AuthScreen({
           />
           <div className="absolute -bottom-2 -left-2 bg-[#FFF9F2] text-[#B4570B] text-sm font-black px-4 py-2.5 rounded-xl border-2 border-[#E9D6BF] shadow-lg whitespace-nowrap flex items-center gap-1.5">
             <span className="text-lg">🤵🏻</span>
-            <span>林老師 (課堂引導)</span>
+            <span>可華爸爸 (陪伴引導)</span>
           </div>
         </motion.div>
       </div>
@@ -220,17 +220,17 @@ export default function AuthScreen({
         {/* Brand Header */}
         <div className="p-8 text-center border-b-2 border-[#F1E0CE]/60 bg-gradient-to-b from-[#FFFDF9] to-transparent relative">
           <div className="flex justify-center mb-4">
-            <div className="relative p-3 bg-orange-50 rounded-2xl border-2 border-orange-200 animate-bounce-slow">
-              <Sparkles className="w-8 h-8 text-[#E65100]" />
-            </div>
+            <svg className="w-10 h-10" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 3C50 3 53 38 62 47C71 56 97 50 97 50C97 50 71 56 62 62 53 68 50 97 50 97 50 97 47 68 38 62 29 56 3 50 3 50 3 50 29 56 38 47 47 38 50 3 50 3Z" fill="#E0812A"/>
+            </svg>
           </div>
           {/* Main Title - MUCH BIGGER AND CHUNKY */}
           <h2 className="text-2xl font-black text-[#3E2723] tracking-tight mb-2">
-            泰宇生命教育互動學習平台
+            泰宇生命教育互動探索站
           </h2>
           {/* Secondary description - legible and clean */}
           <p className="text-xs font-black text-orange-700/80 tracking-widest uppercase font-mono">
-            ✨ 開啟生命深度探險，寫下專屬你的思辨軌跡 ✨
+            Life Education Portal · Authenticate
           </p>
         </div>
 
@@ -248,7 +248,7 @@ export default function AuthScreen({
             }`}
           >
             <User className="w-5 h-5" />
-            學生登入入口
+            學生登入區
           </button>
           
           <button
@@ -263,7 +263,7 @@ export default function AuthScreen({
             }`}
           >
             <GraduationCap className="w-5 h-5" />
-            教師登入入口
+            教師登入區
           </button>
 
           <button
@@ -278,7 +278,7 @@ export default function AuthScreen({
             }`}
           >
             <UserPlus className="w-5 h-5" />
-            註冊新帳號
+            註冊帳號
           </button>
         </div>
 

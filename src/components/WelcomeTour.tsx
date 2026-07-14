@@ -20,7 +20,9 @@ import {
   CheckCircle,
   HelpCircle,
   Target,
-  MessageSquare
+  MessageSquare,
+  Gamepad2,
+  QrCode
 } from 'lucide-react';
 import { UserProfile } from '../types';
 
@@ -121,6 +123,32 @@ export default function WelcomeTour({
               </div>
             ))}
           </div>
+        </div>
+      )
+    },
+    {
+      title: '互動遊戲 ‧ 班級同樂大廳',
+      subtitle: '10 款生命教育主題小遊戲，課堂立即開玩',
+      description: '「互動遊戲」分頁準備了 10 款主題遊戲：心理測驗 MBTI、生命拼圖地圖、情境選擇大冒險、人際關係連連看、價值天平排序戰、生命故事翻翻卡、感恩泡泡站、哲學辯論快攻、心情溫度計、成長徽章挑戰賽。老師掃描班級 QR Code 讓學生加入，就能一起同步進行課堂遊戲！',
+      badge: '互動遊戲',
+      badgeBg: 'bg-orange-50',
+      badgeText: 'text-orange-600 border-orange-200',
+      icon: Gamepad2,
+      iconColor: 'text-orange-500',
+      graphic: (
+        <div className="w-full h-44 bg-white rounded-2xl border-2 border-slate-100 p-4 flex flex-col justify-between">
+          <div className="flex items-center justify-between border-b-2 border-slate-50 pb-2">
+            <span className="text-xs font-bold text-slate-500 flex items-center gap-1.5"><QrCode className="w-3.5 h-3.5" /> 班級代碼 4A28</span>
+            <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full">已加入 32/40</span>
+          </div>
+          <div className="grid grid-cols-5 gap-1.5 py-2">
+            {['MBTI', '🧩', '🧭', '🕸️', '⚖️', '🎴', '🧼', '🗣️', '🌡️', '🏆'].map((label, idx) => (
+              <div key={idx} className="aspect-square rounded-lg bg-orange-50 border border-orange-100 flex items-center justify-center text-[10px] font-black text-orange-600">
+                {idx < 9 ? label : label}
+              </div>
+            ))}
+          </div>
+          <p className="text-[11px] font-bold text-slate-400 text-center">共 10 款課堂專用互動遊戲</p>
         </div>
       )
     },
@@ -244,6 +272,31 @@ export default function WelcomeTour({
             </div>
             <span className="text-orange-600 font-black">下一頁 →</span>
           </div>
+        </div>
+      )
+    },
+    {
+      title: '互動遊戲 ‧ 班級同樂大廳',
+      subtitle: '10 款主題遊戲，隨時開玩、隨時複習',
+      description: '點選導覽列的「互動遊戲」，就能進入班級同樂大廳。裡面有 10 款生命教育主題遊戲，涵蓋性格測驗、情境抉擇、人際關係、價值排序、記憶配對、感恩留言、哲學辯論、心情紀錄與成長徽章，每一款都能單獨遊玩，也能跟全班同步進行！',
+      badge: '互動遊戲',
+      badgeBg: 'bg-orange-50',
+      badgeText: 'text-orange-600 border-orange-200',
+      icon: Gamepad2,
+      iconColor: 'text-orange-500',
+      graphic: (
+        <div className="w-full h-44 bg-white rounded-2xl border-2 border-slate-100 p-4 flex flex-col justify-between">
+          <div className="flex items-center justify-between border-b-2 border-slate-50 pb-2">
+            <span className="text-xs font-bold text-slate-500">課堂專用互動遊戲（共 10 款）</span>
+          </div>
+          <div className="grid grid-cols-5 gap-1.5 py-2">
+            {['MBTI', '🧩', '🧭', '🕸️', '⚖️', '🎴', '🧼', '🗣️', '🌡️', '🏆'].map((label, idx) => (
+              <div key={idx} className="aspect-square rounded-lg bg-orange-50 border border-orange-100 flex items-center justify-center text-[10px] font-black text-orange-600">
+                {label}
+              </div>
+            ))}
+          </div>
+          <p className="text-[11px] font-bold text-slate-400 text-center">點擊任一款「進入遊戲」即可開始</p>
         </div>
       )
     },

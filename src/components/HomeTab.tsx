@@ -330,7 +330,7 @@ export default function HomeTab({
           <img 
             src={heroCharacters} 
             alt="生命教育互動學習平台 － 選擇單元，進入學習單並開始作答" 
-            className="w-full h-auto object-cover object-center max-h-[320px] md:max-h-[380px] w-full block transition-transform duration-500 group-hover:scale-[1.01]"
+            className="w-full h-auto object-contain object-center block transition-transform duration-500 group-hover:scale-[1.01]"
             referrerPolicy="no-referrer"
           />
           {/* Subtle elegant glassmorphism overlay label */}

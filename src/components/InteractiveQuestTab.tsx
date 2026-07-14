@@ -155,7 +155,7 @@ const renderGameIllustration = (gameId: number) => {
     case 1: // MBTI
       return (
         <div className="w-full h-full bg-[#FFF9F2] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#F1E0CE] relative overflow-hidden select-none">
-          <span className="text-[8px] font-black text-[#C48C46] tracking-wider mb-1">MBTI</span>
+          <span className="text-[12px] font-black text-[#C48C46] tracking-wider mb-1">MBTI</span>
           <svg className="w-8 h-8" viewBox="0 0 40 40" fill="none">
             {/* Brain outline */}
             <path d="M12 25C10 25 8 23 8 20C8 17 10 15 12 15C12 13 14 11 17 11C20 11 21 13 22 14C23 13 24 11 27 11C30 11 32 13 32 15C34 15 36 17 36 20C36 23 34 25 32 25" stroke="#C48C46" strokeWidth="1.5" strokeLinecap="round" />
@@ -183,7 +183,7 @@ const renderGameIllustration = (gameId: number) => {
           <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
             <path d="M24 42V26M24 26L12 14M24 26L36 14" stroke="#1D4ED8" strokeWidth="2" strokeLinecap="round" />
             <circle cx="24" cy="16" r="5" fill="#E0F2FE" stroke="#1D4ED8" strokeWidth="1.5" />
-            <text x="21" y="20" className="text-[10px] font-black fill-[#1D4ED8]" style={{ fontFamily: 'monospace' }}>?</text>
+            <text x="21" y="20" className="text-[12px] font-black fill-[#1D4ED8]" style={{ fontFamily: 'monospace' }}>?</text>
             <circle cx="21" cy="33" r="1.5" fill="#60A5FA" />
             <circle cx="21" cy="38" r="1.5" fill="#60A5FA" />
           </svg>
@@ -204,19 +204,19 @@ const renderGameIllustration = (gameId: number) => {
             </div>
             <div className="flex flex-col items-center scale-75 z-10">
               <img src={charXiaopingImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
-              <span className="text-[6px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">同學</span>
+              <span className="text-[10.5px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">同學</span>
             </div>
             <div className="flex flex-col items-center scale-75 z-10">
               <img src={charBojunImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
-              <span className="text-[6px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">朋友</span>
+              <span className="text-[10.5px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">朋友</span>
             </div>
             <div className="flex flex-col items-center scale-75 z-10">
               <img src={charXiaowenImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
-              <span className="text-[6px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">家人</span>
+              <span className="text-[10.5px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">家人</span>
             </div>
             <div className="flex flex-col items-center scale-75 z-10">
               <img src={charKehuaImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
-              <span className="text-[6px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">我</span>
+              <span className="text-[10.5px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">我</span>
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@ const renderGameIllustration = (gameId: number) => {
               <div className="w-1.5 h-1.5 rounded-full bg-white/60 -mt-1.5 -ml-1.5" />
             </div>
             <div className="absolute w-8 h-8 rounded-full border border-emerald-400/40 bg-emerald-200/20 top-3 right-3 flex items-center justify-center">
-              <span className="text-[8px]">💖</span>
+              <span className="text-[12px]">💖</span>
             </div>
           </div>
         </div>
@@ -264,12 +264,12 @@ const renderGameIllustration = (gameId: number) => {
           <div className="flex items-center justify-around w-full h-full relative">
             <div className="flex flex-col items-center scale-75">
               <img src={charKehuaImg} className="w-4 h-4 rounded-full border border-sky-500 object-cover bg-white" />
-              <span className="text-[6px] font-black text-sky-800 scale-90 mt-0.5">可華</span>
+              <span className="text-[10.5px] font-black text-sky-800 scale-90 mt-0.5">可華</span>
             </div>
-            <div className="text-[7px] font-black text-orange-600 bg-orange-50 border border-orange-200 px-1 py-0.5 rounded-md scale-90 z-10">VS</div>
+            <div className="text-[10.5px] font-black text-orange-600 bg-orange-50 border border-orange-200 px-1 py-0.5 rounded-md scale-90 z-10">VS</div>
             <div className="flex flex-col items-center scale-75">
               <img src={charXiaopingImg} className="w-4 h-4 rounded-full border border-pink-500 object-cover bg-white" />
-              <span className="text-[6px] font-black text-pink-800 scale-90 mt-0.5">曉萍</span>
+              <span className="text-[10.5px] font-black text-pink-800 scale-90 mt-0.5">曉萍</span>
             </div>
           </div>
         </div>
@@ -282,7 +282,7 @@ const renderGameIllustration = (gameId: number) => {
               <div className="w-full bg-gradient-to-t from-rose-500 to-amber-400 rounded-full" style={{ height: '70%' }} />
               <div className="absolute -bottom-1 -left-0.5 w-3 h-3 bg-rose-500 rounded-full border border-rose-600" />
             </div>
-            <div className="flex flex-col text-[7px] leading-tight text-left text-slate-400">
+            <div className="flex flex-col text-[10.5px] leading-tight text-left text-slate-400">
               <span>🥵 100℃</span>
               <span>😊 70℃</span>
               <span>😐 37℃</span>
@@ -296,7 +296,7 @@ const renderGameIllustration = (gameId: number) => {
         <div className="w-full h-full bg-[#FFFBEB] rounded-xl flex flex-col items-center justify-center p-1 border border-[#FDE68A] relative overflow-hidden select-none">
           <div className="grid grid-cols-3 gap-0.5">
             {['🏅', '🎖️', '⭐', '🏆', '💎', '👑'].map((emoji, index) => (
-              <div key={index} className="w-3.5 h-3.5 rounded-md bg-amber-50 border border-amber-200 flex items-center justify-center text-[8px]">
+              <div key={index} className="w-3.5 h-3.5 rounded-md bg-amber-50 border border-amber-200 flex items-center justify-center text-[12px]">
                 {emoji}
               </div>
             ))}
@@ -1014,7 +1014,7 @@ export default function InteractiveQuestTab({
                   />
                   {/* Tiny captions */}
                   <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-amber-50/90 border border-[#F3C29F] py-1 px-3 rounded-full shadow-xs flex items-center gap-1.5 whitespace-nowrap">
-                    <span className="text-[10px] font-black text-[#8D6E63]">張曉萍 ＆ 陳可華</span>
+                    <span className="text-[12px] font-black text-[#8D6E63]">張曉萍 ＆ 陳可華</span>
                   </div>
                 </div>
               </div>
@@ -1070,11 +1070,11 @@ export default function InteractiveQuestTab({
                             <div className="absolute top-2 right-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
                             <div className="absolute bottom-2 left-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
                             <div className="absolute w-4 h-4 bg-[#FFEAD5] border-2 border-[#E65100] rounded-full flex items-center justify-center shadow-xs">
-                              <span className="text-[8px]">📙</span>
+                              <span className="text-[12px]">📙</span>
                             </div>
                           </div>
                           {/* Seconds-left badge */}
-                          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#E65100] text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-xs whitespace-nowrap flex items-center gap-1">
+                          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#E65100] text-white text-[10.5px] font-black px-2 py-0.5 rounded-full shadow-xs whitespace-nowrap flex items-center gap-1">
                             <RefreshCw className="w-2.5 h-2.5" />
                             <span>{qrSecondsLeft}s 後更新</span>
                           </div>
@@ -1082,10 +1082,10 @@ export default function InteractiveQuestTab({
 
                         {/* Class Info */}
                         <div className="space-y-1.5 flex-1 text-left">
-                          <span className="text-[10px] font-black text-slate-400 block uppercase">班級代碼</span>
+                          <span className="text-[12px] font-black text-slate-400 block uppercase">班級代碼</span>
                           <span className="text-2xl font-black text-[#E65100] tracking-widest font-mono bg-[#FFF8F2] py-0.5 px-2.5 rounded-lg border border-[#FCD2B5] inline-block">4A28</span>
                           
-                          <div className="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 inline-flex items-center gap-1.5 mt-1">
+                          <div className="text-[12px] font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 inline-flex items-center gap-1.5 mt-1">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                             <span>已加入 32 / 40 人</span>
                           </div>
@@ -1128,7 +1128,7 @@ export default function InteractiveQuestTab({
 
                       {/* Game mode selectors */}
                       <div className="space-y-1.5">
-                        <label className="text-[11px] font-black text-slate-400 block text-left uppercase">🎮 遊戲模式</label>
+                        <label className="text-[12.5px] font-black text-slate-400 block text-left uppercase">🎮 遊戲模式</label>
                         <div className="grid grid-cols-3 gap-1.5 bg-white p-1 rounded-xl border border-[#EAD5C3]/40 shadow-3xs">
                           <button className="py-1 px-2.5 bg-[#FFF0E0] border border-[#F3C29F] rounded-lg text-xs font-black text-[#D84315] flex items-center justify-center gap-1 shadow-3xs">
                             <span>👤 個人作答</span>
@@ -1144,7 +1144,7 @@ export default function InteractiveQuestTab({
 
                       {/* Class teams setup with portraits */}
                       <div className="space-y-1.5">
-                        <label className="text-[11px] font-black text-slate-400 block text-left uppercase">👥 參賽小隊設定 (共 4 隊)</label>
+                        <label className="text-[12.5px] font-black text-slate-400 block text-left uppercase">👥 參賽小隊設定 (共 4 隊)</label>
                         <div className="grid grid-cols-2 gap-2">
                           {/* Team 1: 張曉萍 */}
                           <div className="bg-white border border-[#F0E2D5] p-1.5 rounded-xl flex items-center justify-between gap-2 shadow-3xs hover:border-[#F3C29F] transition-colors">
@@ -1152,7 +1152,7 @@ export default function InteractiveQuestTab({
                               <img src={charXiaopingImg} className="w-6 h-6 rounded-full border border-pink-200 object-cover" />
                               <span className="text-xs font-black text-slate-800">張曉萍隊</span>
                             </div>
-                            <span className="text-[10px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                            <span className="text-[12px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
                           </div>
                           
                           {/* Team 2: 王博鈞 */}
@@ -1161,7 +1161,7 @@ export default function InteractiveQuestTab({
                               <img src={charBojunImg} className="w-6 h-6 rounded-full border border-blue-200 object-cover" />
                               <span className="text-xs font-black text-slate-800">王博鈞隊</span>
                             </div>
-                            <span className="text-[10px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                            <span className="text-[12px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
                           </div>
 
                           {/* Team 3: 陳可華 */}
@@ -1170,7 +1170,7 @@ export default function InteractiveQuestTab({
                               <img src={charKehuaImg} className="w-6 h-6 rounded-full border border-sky-200 object-cover" />
                               <span className="text-xs font-black text-slate-800">陳可華隊</span>
                             </div>
-                            <span className="text-[10px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                            <span className="text-[12px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
                           </div>
 
                           {/* Team 4: 王小文 */}
@@ -1179,7 +1179,7 @@ export default function InteractiveQuestTab({
                               <img src={charXiaowenImg} className="w-6 h-6 rounded-full border border-purple-200 object-cover" />
                               <span className="text-xs font-black text-slate-800">王小文隊</span>
                             </div>
-                            <span className="text-[10px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                            <span className="text-[12px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
                           </div>
                         </div>
                       </div>
@@ -1202,7 +1202,7 @@ export default function InteractiveQuestTab({
                       >
                         <div className="space-y-3">
                           <div className="flex justify-between items-center">
-                            <span className={`text-[10px] font-black font-mono px-2 py-0.5 rounded-md border ${game.color}`}>
+                            <span className={`text-[12px] font-black font-mono px-2 py-0.5 rounded-md border ${game.color}`}>
                               {game.number}
                             </span>
                           </div>
@@ -1216,7 +1216,7 @@ export default function InteractiveQuestTab({
                             <h4 className="font-black text-xs text-[#4A321F] group-hover:text-[#E65100] transition-colors leading-tight line-clamp-1">
                               {game.title}
                             </h4>
-                            <p className="text-[10px] text-slate-400 font-bold leading-normal line-clamp-2">
+                            <p className="text-[12px] text-slate-400 font-bold leading-normal line-clamp-2">
                               {game.description}
                             </p>
                           </div>
@@ -1227,7 +1227,7 @@ export default function InteractiveQuestTab({
                             setActiveGameId(game.id);
                             showToast(`🎮 歡迎進入：${game.title}！`);
                           }}
-                          className="w-full mt-2.5 py-1.5 bg-white hover:bg-orange-50 border-2 border-[#EAD5C3] group-hover:border-[#E65100] rounded-xl text-[10px] font-black text-[#4A321F] group-hover:text-[#E65100] transition-all shadow-3xs flex items-center justify-center gap-0.5 cursor-pointer"
+                          className="w-full mt-2.5 py-1.5 bg-white hover:bg-orange-50 border-2 border-[#EAD5C3] group-hover:border-[#E65100] rounded-xl text-[12px] font-black text-[#4A321F] group-hover:text-[#E65100] transition-all shadow-3xs flex items-center justify-center gap-0.5 cursor-pointer"
                         >
                           <span>進入遊戲</span>
                           <ChevronRight className="w-3 h-3" />
@@ -1247,7 +1247,7 @@ export default function InteractiveQuestTab({
                     <span className="font-black text-[#4A321F] text-sm">投影模式設定</span>
                     {/* Toggle switch simulation */}
                     <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">已開啟</span>
+                      <span className="text-[12px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">已開啟</span>
                       <div className="w-9 h-5 bg-emerald-500 rounded-full p-0.5 cursor-pointer flex justify-end shadow-inner">
                         <div className="w-4 h-4 bg-white rounded-full shadow-xs" />
                       </div>
@@ -1256,11 +1256,11 @@ export default function InteractiveQuestTab({
 
                   <div className="space-y-3.5 text-xs font-extrabold text-[#7D5C43] leading-relaxed text-left">
                     <div className="flex justify-between items-center bg-white border border-[#F0E2D5] p-2.5 rounded-xl shadow-3xs">
-                      <span className="text-slate-400 text-[11px]">隨機出題模式:</span>
+                      <span className="text-slate-400 text-[12.5px]">隨機出題模式:</span>
                       <span className="font-black text-[#E65100]">開啟 (不重覆)</span>
                     </div>
                     <div className="flex justify-between items-center bg-white border border-[#F0E2D5] p-2.5 rounded-xl shadow-3xs">
-                      <span className="text-slate-400 text-[11px]">單題答題計時:</span>
+                      <span className="text-slate-400 text-[12.5px]">單題答題計時:</span>
                       <span className="font-black text-[#E65100]">30 秒 / 題</span>
                     </div>
                   </div>
@@ -1280,42 +1280,42 @@ export default function InteractiveQuestTab({
                     <div className="absolute left-1.5 top-2 bottom-2 w-0.5 border-l-2 border-dashed border-[#F3C29F]" />
                     
                     <div className="relative">
-                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[8px] text-white font-black">1</div>
+                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">1</div>
                       <div className="leading-tight">
                         <div className="text-xs font-black text-[#4A321F]">Step 1 老師選擇遊戲</div>
-                        <p className="text-[10px] text-slate-400 font-bold leading-normal mt-0.5">點選下方 10 款互動遊戲之一，按「進入遊戲」</p>
+                        <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">點選下方 10 款互動遊戲之一，按「進入遊戲」</p>
                       </div>
                     </div>
 
                     <div className="relative">
-                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[8px] text-white font-black">2</div>
+                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">2</div>
                       <div className="leading-tight">
                         <div className="text-xs font-black text-[#4A321F]">Step 2 學生掃描 QR Code</div>
-                        <p className="text-[10px] text-slate-400 font-bold leading-normal mt-0.5">學生開啟手機鏡頭，掃描 left 側班級大 QR Code</p>
+                        <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">學生開啟手機鏡頭，掃描 left 側班級大 QR Code</p>
                       </div>
                     </div>
 
                     <div className="relative">
-                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[8px] text-white font-black">3</div>
+                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">3</div>
                       <div className="leading-tight">
                         <div className="text-xs font-black text-[#4A321F]">Step 3 學生進入遊戲</div>
-                        <p className="text-[10px] text-slate-400 font-bold leading-normal mt-0.5">學生輸入座號姓名，一秒登入班級同樂大廳</p>
+                        <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">學生輸入座號姓名，一秒登入班級同樂大廳</p>
                       </div>
                     </div>
 
                     <div className="relative">
-                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[8px] text-white font-black">4</div>
+                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">4</div>
                       <div className="leading-tight">
                         <div className="text-xs font-black text-[#4A321F]">Step 4 全班即時作答／小組比賽</div>
-                        <p className="text-[10px] text-slate-400 font-bold leading-normal mt-0.5">手機端與課堂大投影同步作答，累積生命點數</p>
+                        <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">手機端與課堂大投影同步作答，累積生命點數</p>
                       </div>
                     </div>
 
                     <div className="relative">
-                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[8px] text-white font-black">5</div>
+                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">5</div>
                       <div className="leading-tight">
                         <div className="text-xs font-black text-[#4A321F]">Step 5 顯示結果與總結</div>
-                        <p className="text-[10px] text-slate-400 font-bold leading-normal mt-0.5">大螢幕秀出全班答題分佈，老師進行一鍵點評</p>
+                        <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">大螢幕秀出全班答題分佈，老師進行一鍵點評</p>
                       </div>
                     </div>
                   </div>
@@ -1331,7 +1331,7 @@ export default function InteractiveQuestTab({
                 <div className="p-2.5 bg-orange-50 border border-[#FCD2B5] rounded-xl text-[#E65100] text-xl shadow-xs">💡</div>
                 <div className="space-y-1 text-left">
                   <h5 className="font-black text-sm text-[#4A321F]">使用建議</h5>
-                  <p className="text-[11px] text-slate-400 font-bold leading-relaxed">
+                  <p className="text-[12.5px] text-slate-400 font-bold leading-relaxed">
                     活絡氣氛、提升專注力，讓每一堂課都充滿參與感。
                   </p>
                 </div>
@@ -1343,7 +1343,7 @@ export default function InteractiveQuestTab({
                 <div className="p-2.5 bg-orange-50 border border-[#FCD2B5] rounded-xl text-[#E65100] text-xl shadow-xs">📖</div>
                 <div className="space-y-1 text-left">
                   <h5 className="font-black text-sm text-[#4A321F]">課中互動</h5>
-                  <p className="text-[11px] text-slate-400 font-bold leading-relaxed">
+                  <p className="text-[12.5px] text-slate-400 font-bold leading-relaxed">
                     搭配課程內容，強化理解與思考，讓學生主動參與學習。
                   </p>
                 </div>
@@ -1355,7 +1355,7 @@ export default function InteractiveQuestTab({
                 <div className="p-2.5 bg-orange-50 border border-[#FCD2B5] rounded-xl text-[#E65100] text-xl shadow-xs">📊</div>
                 <div className="space-y-1 text-left">
                   <h5 className="font-black text-sm text-[#4A321F]">課後複習</h5>
-                  <p className="text-[11px] text-slate-400 font-bold leading-relaxed">
+                  <p className="text-[12.5px] text-slate-400 font-bold leading-relaxed">
                     筆記學習重點，檢視學習成果，培養自我反思能力。
                   </p>
                 </div>
@@ -1419,8 +1419,8 @@ export default function InteractiveQuestTab({
                         {MBTI_GROUPS.map((g) => (
                           <div key={g.name} className={`p-4 rounded-2xl border-2 ${MBTI_GROUP_STYLES[g.color]}`}>
                             <h4 className="font-black text-sm mb-1.5">{g.name}</h4>
-                            <p className="text-[11px] font-bold leading-relaxed opacity-90 mb-2.5">{g.desc}</p>
-                            <p className="text-[10px] font-black font-mono opacity-80">{g.types}</p>
+                            <p className="text-[12.5px] font-bold leading-relaxed opacity-90 mb-2.5">{g.desc}</p>
+                            <p className="text-[12px] font-black font-mono opacity-80">{g.types}</p>
                           </div>
                         ))}
                       </div>
@@ -1431,7 +1431,7 @@ export default function InteractiveQuestTab({
                         <img src={charDadImg} alt="可華爸爸" className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-sm shrink-0" referrerPolicy="no-referrer" />
                         <div>
                           <h5 className="font-black text-xs text-slate-800 mb-1">可華爸爸的小叮嚀</h5>
-                          <p className="text-[11px] text-slate-500 font-bold leading-relaxed">每一種性格都有獨特的價值，了解自己，才能更自在地發揮優勢，與他人相互欣賞。</p>
+                          <p className="text-[12.5px] text-slate-500 font-bold leading-relaxed">每一種性格都有獨特的價值，了解自己，才能更自在地發揮優勢，與他人相互欣賞。</p>
                         </div>
                       </div>
 
@@ -1440,14 +1440,14 @@ export default function InteractiveQuestTab({
                         className="bg-[#E65100] hover:bg-[#D84315] text-white rounded-3xl p-6 flex flex-col items-center justify-center gap-2 shadow-md transition-all cursor-pointer active:scale-98"
                       >
                         <span className="flex items-center gap-2 text-base font-black"><Gamepad2 className="w-5 h-5" /> 開始作答</span>
-                        <span className="text-[11px] font-bold text-orange-100">準備好了嗎？讓我們一起探索真實的你！</span>
+                        <span className="text-[12.5px] font-bold text-orange-100">準備好了嗎？讓我們一起探索真實的你！</span>
                       </button>
 
                       <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 flex items-start gap-3 text-left shadow-xs">
                         <img src={charGrandpaImg} alt="可華爺爺" className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-sm shrink-0" referrerPolicy="no-referrer" />
                         <div>
                           <h5 className="font-black text-xs text-slate-800 mb-1">可華爺爺的鼓勵</h5>
-                          <p className="text-[11px] text-slate-500 font-bold leading-relaxed">人生是一場美麗的旅程，認識自己，你會發現更想成為那個自己。</p>
+                          <p className="text-[12.5px] text-slate-500 font-bold leading-relaxed">人生是一場美麗的旅程，認識自己，你會發現更想成為那個自己。</p>
                         </div>
                       </div>
                     </div>
@@ -1467,16 +1467,16 @@ export default function InteractiveQuestTab({
                             className="w-16 h-16 rounded-full shrink-0 flex items-center justify-center"
                             style={{ background: `conic-gradient(#E65100 ${(Object.keys(mbtiAnswers).length / mbtiQuestions.length) * 100}%, #EAD5C3 0)` }}
                           >
-                            <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[11px] font-black text-[#4A321F]">
+                            <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[12.5px] font-black text-[#4A321F]">
                               {Object.keys(mbtiAnswers).length}/{mbtiQuestions.length}
                             </div>
                           </div>
-                          <p className="text-[11px] font-bold text-slate-500 leading-relaxed">繼續作答，探索最真實的自己！</p>
+                          <p className="text-[12.5px] font-bold text-slate-500 leading-relaxed">繼續作答，探索最真實的自己！</p>
                         </div>
                       </div>
                       <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left space-y-2">
                         <h4 className="font-black text-[#4A321F] text-xs flex items-center gap-1.5">💡 測驗小提醒</h4>
-                        <ul className="text-[11px] font-bold text-slate-500 leading-relaxed space-y-1 list-disc list-inside">
+                        <ul className="text-[12.5px] font-bold text-slate-500 leading-relaxed space-y-1 list-disc list-inside">
                           <li>依直覺作答，不用想太久</li>
                           <li>沒有對錯，誠實最重要</li>
                           <li>約需 8-10 分鐘完成測驗</li>
@@ -1516,7 +1516,7 @@ export default function InteractiveQuestTab({
                         { axis: 'JP', a: 'J', b: 'P', la: '判斷', lb: '知覺' },
                       ].map((row) => (
                         <div key={row.axis} className="space-y-1">
-                          <div className="flex justify-between text-[11px] font-black text-[#7D6B5D]">
+                          <div className="flex justify-between text-[12.5px] font-black text-[#7D6B5D]">
                             <span>{row.la} {row.a}</span>
                             <span>{row.lb} {row.b}</span>
                           </div>
@@ -1526,7 +1526,7 @@ export default function InteractiveQuestTab({
                           </div>
                         </div>
                       ))}
-                      <p className="text-[10px] font-bold text-[#B4570B] pt-1">✨ 完成更多題目，結果會更準確喔！</p>
+                      <p className="text-[12px] font-bold text-[#B4570B] pt-1">✨ 完成更多題目，結果會更準確喔！</p>
                     </div>
                   </div>
                 ) : (
@@ -1583,7 +1583,7 @@ export default function InteractiveQuestTab({
                   <div className="lg:col-span-3 space-y-4">
                     <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left">
                       <h4 className="font-black text-[#4A321F] text-xs pb-2 mb-3 flex items-center gap-1.5">📌 <span>可拖曳拼圖</span></h4>
-                      <p className="text-[10px] font-bold text-slate-400 mb-3">將左側拼圖拖曳到地圖上對應的位置！</p>
+                      <p className="text-[12px] font-bold text-slate-400 mb-3">將左側拼圖拖曳到地圖上對應的位置！</p>
                       <div className="space-y-2.5">
                         {PUZZLE_THEMES.map((t) => (
                           <div
@@ -1595,7 +1595,7 @@ export default function InteractiveQuestTab({
                             <span className="text-lg shrink-0">{t.emoji}</span>
                             <div className="text-left leading-tight">
                               <div className="text-xs font-black">{t.key}</div>
-                              <div className="text-[10px] font-bold opacity-80">{t.desc}</div>
+                              <div className="text-[12px] font-bold opacity-80">{t.desc}</div>
                             </div>
                           </div>
                         ))}
@@ -1618,7 +1618,7 @@ export default function InteractiveQuestTab({
                         <PuzzleZone key={key} themeKey={key} placed={puzzlePlaced[key]} onDropTheme={handlePlacePuzzle} />
                       ))}
                     </div>
-                    <p className="text-center text-[11px] font-bold text-slate-400 mt-4">🖐️ 拖曳左側拼圖到對應位置，完成五大主題地圖！</p>
+                    <p className="text-center text-[12.5px] font-bold text-slate-400 mt-4">🖐️ 拖曳左側拼圖到對應位置，完成五大主題地圖！</p>
                   </div>
 
                   {/* Right: Progress + dad tip */}
@@ -1630,11 +1630,11 @@ export default function InteractiveQuestTab({
                           className="w-16 h-16 rounded-full shrink-0 flex items-center justify-center"
                           style={{ background: `conic-gradient(#E65100 ${(Object.values(puzzlePlaced).filter(Boolean).length / 5) * 100}%, #EAD5C3 0)` }}
                         >
-                          <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[11px] font-black text-[#4A321F]">
+                          <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[12.5px] font-black text-[#4A321F]">
                             {Object.values(puzzlePlaced).filter(Boolean).length}/5
                           </div>
                         </div>
-                        <p className="text-[11px] font-bold text-slate-500 leading-relaxed">
+                        <p className="text-[12.5px] font-bold text-slate-500 leading-relaxed">
                           已完成 <b className="text-[#E65100]">{Object.values(puzzlePlaced).filter(Boolean).length}</b> 個主題，
                           再完成 {5 - Object.values(puzzlePlaced).filter(Boolean).length} 個即可解鎖獎勵！
                         </p>
@@ -1645,7 +1645,7 @@ export default function InteractiveQuestTab({
                         <img src={charDadImg} alt="可華爸爸" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <h5 className="font-black text-xs text-slate-800">可華爸爸的小提醒</h5>
                       </div>
-                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                      <p className="text-[12.5px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
                         生命是一幅拼圖，每個主題都是重要的一塊，用心學習，就能拼出屬於你的生命地圖！
                       </p>
                     </div>
@@ -1659,7 +1659,7 @@ export default function InteractiveQuestTab({
                     {PUZZLE_THEMES.map((t) => (
                       <div key={t.key} className={`rounded-xl border-2 p-3 text-center ${puzzlePlaced[t.key] ? PUZZLE_STYLES[t.color] : 'bg-slate-50 border-slate-200 text-slate-300'}`}>
                         <div className="text-xs font-black">{t.key}</div>
-                        <div className="text-[10px] font-bold mt-1">{puzzlePlaced[t.key] ? '已完成' : '尚未完成'}</div>
+                        <div className="text-[12px] font-bold mt-1">{puzzlePlaced[t.key] ? '已完成' : '尚未完成'}</div>
                       </div>
                     ))}
                   </div>
@@ -1714,8 +1714,8 @@ export default function InteractiveQuestTab({
                       </div>
                       <div className="space-y-2">
                         {adventureScenarios.map((s, i) => (
-                          <div key={s.title} className="flex items-center gap-2 text-[11px] font-black">
-                            <span className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-[10px] ${
+                          <div key={s.title} className="flex items-center gap-2 text-[12.5px] font-black">
+                            <span className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-[12px] ${
                               i < adventureStage ? 'bg-emerald-500 text-white' : i === adventureStage ? 'bg-[#E65100] text-white' : 'bg-slate-200 text-slate-400'
                             }`}>
                               {i < adventureStage ? '✓' : i + 1}
@@ -1736,7 +1736,7 @@ export default function InteractiveQuestTab({
                           <p className="text-xs font-black text-[#4A321F] mb-2">{adventureScenarios[adventureStage].title}</p>
                           <p className="text-xs font-bold text-[#7D5C43] leading-relaxed">{adventureScenarios[adventureStage].story}</p>
                         </div>
-                        <p className="text-[11px] font-black text-slate-400">請選擇你會怎麼做：</p>
+                        <p className="text-[12.5px] font-black text-slate-400">請選擇你會怎麼做：</p>
                         <div className="space-y-2.5">
                           {adventureScenarios[adventureStage].options.map((opt, idx) => (
                             <button
@@ -1784,7 +1784,7 @@ export default function InteractiveQuestTab({
                   <div className="lg:col-span-3 space-y-4">
                     <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left">
                       <h4 className="font-black text-[#4A321F] text-xs pb-2 mb-3 flex items-center gap-1.5">🏅 <span>價值點數</span></h4>
-                      <p className="text-[10px] font-bold text-slate-400 mb-3">做出有價值的選擇，累積點數！</p>
+                      <p className="text-[12px] font-bold text-slate-400 mb-3">做出有價值的選擇，累積點數！</p>
                       <div className="space-y-2.5">
                         <div className="flex items-center justify-between bg-white border border-rose-200 rounded-xl px-3.5 py-2.5">
                           <span className="text-xs font-black text-rose-600 flex items-center gap-1.5">❤️ 同理</span>
@@ -1815,7 +1815,7 @@ export default function InteractiveQuestTab({
                           }`}>
                             {i < adventureStage ? '✓' : i > adventureStage ? '🔒' : i + 1}
                           </div>
-                          <span className="text-[10px] font-black text-slate-500 text-center max-w-[64px] leading-tight">{s.title}</span>
+                          <span className="text-[12px] font-black text-slate-500 text-center max-w-[64px] leading-tight">{s.title}</span>
                         </div>
                         {i < adventureScenarios.length - 1 && <div className="flex-1 h-0.5 bg-[#EAD5C3] min-w-[16px]" />}
                       </React.Fragment>
@@ -1865,7 +1865,7 @@ export default function InteractiveQuestTab({
 
                       <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
                         {connections.length === 0 ? (
-                          <p className="text-[10px] text-slate-400 font-bold py-4 text-center">暫無關係連結，快在右側點擊兩個角色建立紅線吧！</p>
+                          <p className="text-[12px] text-slate-400 font-bold py-4 text-center">暫無關係連結，快在右側點擊兩個角色建立紅線吧！</p>
                         ) : (
                           connections.map((c, idx) => (
                             <div key={idx} className="bg-white border border-[#EAD5C3] p-2 rounded-xl flex justify-between items-center shadow-xs text-xs font-bold text-[#4A321F]">
@@ -1873,7 +1873,7 @@ export default function InteractiveQuestTab({
                                 <span className="truncate max-w-[50px]">{c.from}</span>
                                 <span className="text-[#E65100]">↔️</span>
                                 <span className="truncate max-w-[50px]">{c.to}</span>
-                                <span className="bg-indigo-50 text-indigo-600 border border-indigo-100 px-1.5 py-0.5 rounded-md text-[9px] ml-1 shrink-0">
+                                <span className="bg-indigo-50 text-indigo-600 border border-indigo-100 px-1.5 py-0.5 rounded-md text-[10.5px] ml-1 shrink-0">
                                   {c.rel}
                                 </span>
                               </div>
@@ -1895,7 +1895,7 @@ export default function InteractiveQuestTab({
                   <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
                     <div className="text-center mb-4 space-y-1">
                       <h3 className="text-xs font-black text-slate-500">💖 關係連線互動大畫布 💖</h3>
-                      <p className="text-[10px] text-slate-400 font-bold">
+                      <p className="text-[12px] text-slate-400 font-bold">
                         目前已點選角色：{selectedNode ? <span className="text-purple-600 font-black bg-purple-50 px-2 py-0.5 rounded border border-purple-100">{selectedNode}</span> : <span className="text-slate-400">請先點選下方第一個角色</span>}
                       </p>
                     </div>
@@ -1920,7 +1920,7 @@ export default function InteractiveQuestTab({
                           }`}
                         >
                           <img src={img} alt={node} className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-xs" referrerPolicy="no-referrer" />
-                          <span className="text-[11px] font-black text-[#4A321F] mt-1.5">{node}</span>
+                          <span className="text-[12.5px] font-black text-[#4A321F] mt-1.5">{node}</span>
                         </div>
                       ))}
                     </div>
@@ -1953,10 +1953,10 @@ export default function InteractiveQuestTab({
                         <img src={charXiaowenImg} alt="王小文" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">王小文的悄悄話</h5>
-                          <span className="text-[10px] text-slate-400">暖心好朋友</span>
+                          <span className="text-[12px] text-slate-400">暖心好朋友</span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                      <p className="text-[12.5px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
                         「可華，我們在世界上都不是一座孤島。看著你拉出的這條關係連結網，我才明白原來我們身邊隨時都包圍著這麼多默默支持我們的人，心裡好溫暖喔！」
                       </p>
                     </div>
@@ -2005,7 +2005,7 @@ export default function InteractiveQuestTab({
                       </h4>
 
                       <div className="w-full text-center space-y-3">
-                        <div className="text-[11px] font-black text-slate-400">當前天平狀態</div>
+                        <div className="text-[12.5px] font-black text-slate-400">當前天平狀態</div>
                         <div className="text-xs font-black text-[#E65100] bg-orange-50 px-2.5 py-1.5 rounded-lg border border-orange-200 leading-tight">
                           首要核心：{valuesList[0]}
                         </div>
@@ -2018,10 +2018,10 @@ export default function InteractiveQuestTab({
                           className="w-44 h-3 bg-[#8D6E63] rounded-full flex justify-between px-2 transition-transform duration-500 relative"
                           style={{ transform: `rotate(${tiltValue}deg)` }}
                         >
-                          <div className="w-7 h-7 rounded-full bg-amber-400 border-2 border-[#5D4037] shadow-sm flex items-center justify-center text-[9px] font-black -mt-2 truncate text-slate-800">
+                          <div className="w-7 h-7 rounded-full bg-amber-400 border-2 border-[#5D4037] shadow-sm flex items-center justify-center text-[10.5px] font-black -mt-2 truncate text-slate-800">
                             {valuesList[0]?.slice(0, 2)}
                           </div>
-                          <div className="w-7 h-7 rounded-full bg-slate-300 border-2 border-[#5D4037] shadow-sm flex items-center justify-center text-[9px] font-black -mt-2 truncate text-slate-500">
+                          <div className="w-7 h-7 rounded-full bg-slate-300 border-2 border-[#5D4037] shadow-sm flex items-center justify-center text-[10.5px] font-black -mt-2 truncate text-slate-500">
                             {valuesList[valuesList.length - 1]?.slice(0, 2)}
                           </div>
                         </div>
@@ -2030,7 +2030,7 @@ export default function InteractiveQuestTab({
                         <div className="w-16 h-2 bg-[#4E342E] rounded-t-md" />
                       </div>
 
-                      <p className="text-[9px] text-[#7D6B5D] font-bold text-center leading-relaxed">
+                      <p className="text-[10.5px] text-[#7D6B5D] font-bold text-center leading-relaxed">
                         天平將隨著您最看重（卡片首位）與最輕忽的價值自動產生傾斜。
                       </p>
                     </div>
@@ -2049,7 +2049,7 @@ export default function InteractiveQuestTab({
                             className="bg-[#FCFAF7] border-2 border-[#F1E0CE]/50 px-4 py-2.5 rounded-xl flex items-center justify-between shadow-xs text-xs font-black text-[#4A321F] hover:border-[#E65100]/60 transition-colors"
                           >
                             <div className="flex items-center gap-2">
-                              <span className="w-5 h-5 rounded bg-[#E65100]/10 text-[#E65100] flex items-center justify-center font-black text-[10px]">
+                              <span className="w-5 h-5 rounded bg-[#E65100]/10 text-[#E65100] flex items-center justify-center font-black text-[12px]">
                                 {idx + 1}
                               </span>
                               <span>{val}</span>
@@ -2059,14 +2059,14 @@ export default function InteractiveQuestTab({
                               <button 
                                 onClick={() => moveValue(idx, 'up')}
                                 disabled={idx === 0}
-                                className="p-1 px-2 border-2 border-slate-200 hover:border-orange-300 rounded-lg bg-white disabled:opacity-30 cursor-pointer text-[10px] hover:bg-orange-50 active:scale-95 transition-all font-black"
+                                className="p-1 px-2 border-2 border-slate-200 hover:border-orange-300 rounded-lg bg-white disabled:opacity-30 cursor-pointer text-[12px] hover:bg-orange-50 active:scale-95 transition-all font-black"
                               >
                                 ⬆️
                               </button>
                               <button 
                                 onClick={() => moveValue(idx, 'down')}
                                 disabled={idx === valuesList.length - 1}
-                                className="p-1 px-2 border-2 border-slate-200 hover:border-orange-300 rounded-lg bg-white disabled:opacity-30 cursor-pointer text-[10px] hover:bg-orange-50 active:scale-95 transition-all font-black"
+                                className="p-1 px-2 border-2 border-slate-200 hover:border-orange-300 rounded-lg bg-white disabled:opacity-30 cursor-pointer text-[12px] hover:bg-orange-50 active:scale-95 transition-all font-black"
                               >
                                 ⬇️
                               </button>
@@ -2108,10 +2108,10 @@ export default function InteractiveQuestTab({
                         <img src={charDadImg} alt="可華爸爸" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">可華爸爸的引導</h5>
-                          <span className="text-[10px] text-slate-400">生命諮商導師</span>
+                          <span className="text-[12px] text-slate-400">生命諮商導師</span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                      <p className="text-[12.5px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
                         「小博，在『自由』與『責任』之間，我們每個人都在尋求一種平衡。自由給予我們飛翔的羽翼，而責任則是拉住風箏的那根線。想一想，若一味追求其中一個，生命會面臨什麼樣的失衡呢？」
                       </p>
                     </div>
@@ -2159,7 +2159,7 @@ export default function InteractiveQuestTab({
                         <span>生命價值配對指南</span>
                       </h4>
 
-                      <ul className="text-[11px] text-[#7D6B5D] font-bold space-y-2.5 leading-relaxed">
+                      <ul className="text-[12.5px] text-[#7D6B5D] font-bold space-y-2.5 leading-relaxed">
                         <li className="flex items-start gap-1">
                           <span className="text-[#E65100]">🎯</span>
                           <span><b>勇氣</b> ↔ 面對困難仍然堅定前行</span>
@@ -2222,7 +2222,7 @@ export default function InteractiveQuestTab({
                           <div 
                             key={card.id}
                             onClick={() => handleCardClick(card.id)}
-                            className={`aspect-square rounded-2xl flex items-center justify-center text-center p-2 border-2 text-[11px] font-black transition-all cursor-pointer select-none ${
+                            className={`aspect-square rounded-2xl flex items-center justify-center text-center p-2 border-2 text-[12.5px] font-black transition-all cursor-pointer select-none ${
                               card.isMatched 
                                 ? 'bg-emerald-50/70 border-emerald-300 text-emerald-800 scale-95 shadow-inner' 
                                 : card.isFlipped 
@@ -2235,7 +2235,7 @@ export default function InteractiveQuestTab({
                             ) : (
                               <div className="flex flex-col items-center">
                                 <span className="text-lg">⭐</span>
-                                <span className="text-[9px] text-slate-400 font-bold mt-1">點擊翻轉</span>
+                                <span className="text-[10.5px] text-slate-400 font-bold mt-1">點擊翻轉</span>
                               </div>
                             )}
                           </div>
@@ -2252,10 +2252,10 @@ export default function InteractiveQuestTab({
                         <img src={charXiaopingImg} alt="張曉萍" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">張曉萍的小提醒</h5>
-                          <span className="text-[10px] text-slate-400">貼心好同學</span>
+                          <span className="text-[12px] text-slate-400">貼心好同學</span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                      <p className="text-[12.5px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
                         「可華，在記憶卡片的翻轉中，你是不是也發現生命情境故事與內在核心價值，其實是緊密呼應、互相陪伴的呢？靜下心來，你一定能完全配對成功的！」
                       </p>
                     </div>
@@ -2313,12 +2313,12 @@ export default function InteractiveQuestTab({
                             style={{ width: `${warmthIndex}%` }} 
                           />
                         </div>
-                        <p className="text-[10px] text-slate-400 font-bold leading-relaxed">
+                        <p className="text-[12px] text-slate-400 font-bold leading-relaxed">
                           每發送一顆泡泡，班級感恩指數就會上升 2℃！大家攜手共創班級大愛，點亮我們的幸福世界！
                         </p>
                       </div>
 
-                      <div className="mt-4 pt-3 border-t border-[#EAD5C3]/60 flex items-center justify-between text-[11px] font-black text-slate-500">
+                      <div className="mt-4 pt-3 border-t border-[#EAD5C3]/60 flex items-center justify-between text-[12.5px] font-black text-slate-500">
                         <span>已發送泡泡總數</span>
                         <span className="text-xs text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-100">{bubbles.length} 個</span>
                       </div>
@@ -2344,7 +2344,7 @@ export default function InteractiveQuestTab({
                             maxLength={120}
                             className="w-full px-4 py-3 border-2 border-[#F1E0CE] rounded-2xl text-xs font-bold text-slate-700 focus:outline-none focus:border-emerald-500 bg-[#FAF8F5]/30 focus:bg-white transition-all resize-none leading-relaxed"
                           />
-                          <div className="text-right text-[10px] text-slate-400 font-bold mt-1">
+                          <div className="text-right text-[12px] text-slate-400 font-bold mt-1">
                             最多 120 字（當前：{gratitudeMsg.length} 字）
                           </div>
                         </div>
@@ -2352,7 +2352,7 @@ export default function InteractiveQuestTab({
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                           {/* Color Picker & Anon Toggle */}
                           <div className="space-y-2 text-left">
-                            <span className="text-[10px] text-slate-400 font-black block">選擇泡泡背景色：</span>
+                            <span className="text-[12px] text-slate-400 font-black block">選擇泡泡背景色：</span>
                             <div className="flex items-center gap-2">
                               {[
                                 { color: '#FED7AA', label: '暖橘' },
@@ -2418,12 +2418,12 @@ export default function InteractiveQuestTab({
                             className="p-4 rounded-3xl shadow-xs border-2 border-white text-left space-y-2 transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
                           >
                             <div className="absolute top-0 right-0 w-12 h-12 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.25)_0,transparent_60%)] pointer-events-none rounded-full" />
-                            <p className="text-[11px] font-black text-slate-800 leading-relaxed">
+                            <p className="text-[12.5px] font-black text-slate-800 leading-relaxed">
                               「{b.text}」
                             </p>
-                            <div className="flex justify-between items-center text-[9px] font-bold text-slate-500 pt-1 border-t border-black/5">
+                            <div className="flex justify-between items-center text-[10.5px] font-bold text-slate-500 pt-1 border-t border-black/5">
                               <span>來自：{b.sender}</span>
-                              <span className="text-[8px] tracking-wide uppercase px-1.5 py-0.5 bg-white/40 rounded-md border border-white/20">🎈 溫暖升空</span>
+                              <span className="text-[12px] tracking-wide uppercase px-1.5 py-0.5 bg-white/40 rounded-md border border-white/20">🎈 溫暖升空</span>
                             </div>
                           </div>
                         ))}
@@ -2439,10 +2439,10 @@ export default function InteractiveQuestTab({
                         <img src={charXiaopingImg} alt="張曉萍" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">張曉萍的小提醒</h5>
-                          <span className="text-[10px] text-slate-400">貼心好同學</span>
+                          <span className="text-[12px] text-slate-400">貼心好同學</span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                      <p className="text-[12.5px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
                         「可華，在感恩泡泡升空的那一刻，我深深感覺到心靈被溫柔地包裹。學會看見別人的好、心存感激，就像是在黑夜裡點亮一盞盞明亮的小橘燈。這就是生命教育裡最美的『同理與感恩』喔！」
                       </p>
                     </div>
@@ -2489,7 +2489,7 @@ export default function InteractiveQuestTab({
 
                       <div className="space-y-4 text-xs font-black">
                         <div className="space-y-1">
-                          <div className="flex justify-between text-[11px] text-blue-600">
+                          <div className="flex justify-between text-[12.5px] text-blue-600">
                             <span>🔵 正方：王博鈞</span>
                             <span>{debateVotes.pro} 票 ({(debateVotes.pro / Math.max(1, debateVotes.pro + debateVotes.con) * 100).toFixed(0)}%)</span>
                           </div>
@@ -2499,7 +2499,7 @@ export default function InteractiveQuestTab({
                         </div>
 
                         <div className="space-y-1">
-                          <div className="flex justify-between text-[11px] text-red-600">
+                          <div className="flex justify-between text-[12.5px] text-red-600">
                             <span>🔴 反方：陳可華</span>
                             <span>{debateVotes.con} 票 ({(debateVotes.con / Math.max(1, debateVotes.pro + debateVotes.con) * 100).toFixed(0)}%)</span>
                           </div>
@@ -2522,10 +2522,10 @@ export default function InteractiveQuestTab({
                             <span className="text-xl">🔵</span>
                             <div>
                               <h4 className="font-black text-xs text-slate-800">正方觀點：王博鈞</h4>
-                              <span className="text-[9px] text-slate-400 font-bold block">「幸福是生命唯一的終極指針」</span>
+                              <span className="text-[10.5px] text-slate-400 font-bold block">「幸福是生命唯一的終極指針」</span>
                             </div>
                           </div>
-                          <p className="text-[11px] text-[#5D4037] leading-relaxed font-bold bg-[#FAF5EC]/30 p-3 rounded-xl border border-[#F1E0CE]/30">
+                          <p className="text-[12.5px] text-[#5D4037] leading-relaxed font-bold bg-[#FAF5EC]/30 p-3 rounded-xl border border-[#F1E0CE]/30">
                             「如果一個人取得了世俗成功，內心卻空虛無比、每天失眠，這有意義嗎？我們拼搏的所有事物，都是為了獲取內在的幸福。所以幸福才是目的，成功只是手段。」
                           </p>
                         </div>
@@ -2549,10 +2549,10 @@ export default function InteractiveQuestTab({
                             <span className="text-xl">🔴</span>
                             <div>
                               <h4 className="font-black text-xs text-slate-800">反方觀點：陳可華</h4>
-                              <span className="text-[9px] text-slate-400 font-bold block">「成功為幸福構築安全堡壘」</span>
+                              <span className="text-[10.5px] text-slate-400 font-bold block">「成功為幸福構築安全堡壘」</span>
                             </div>
                           </div>
-                          <p className="text-[11px] text-[#5D4037] leading-relaxed font-bold bg-[#FAF5EC]/30 p-3 rounded-xl border border-[#F1E0CE]/30">
+                          <p className="text-[12.5px] text-[#5D4037] leading-relaxed font-bold bg-[#FAF5EC]/30 p-3 rounded-xl border border-[#F1E0CE]/30">
                             生命如果缺乏足夠的現實資源和耕耘成功，幸福往往只是脆弱的泡沫。在學業、事業上取得成功，能極大拓展我們的自由，讓我們能守護家人的幸福！
                           </p>
                         </div>
@@ -2604,7 +2604,7 @@ export default function InteractiveQuestTab({
                               {c.side === 'spectator' && '💬'}
                             </span>
                             <div className="space-y-0.5">
-                              <span className="text-[9px] text-slate-400 font-bold block">{c.user}</span>
+                              <span className="text-[10.5px] text-slate-400 font-bold block">{c.user}</span>
                               <p className="text-[#5D4037] leading-normal">{c.text}</p>
                             </div>
                           </div>
@@ -2621,10 +2621,10 @@ export default function InteractiveQuestTab({
                         <img src={charXiaopingImg} alt="張曉萍" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">張曉萍的悄悄話</h5>
-                          <span className="text-[10px] text-slate-400">貼心好同學</span>
+                          <span className="text-[12px] text-slate-400">貼心好同學</span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                      <p className="text-[12.5px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
                         「可華，思辨是通往真理的起點。當我們試著站在對方或完全不同的角度去思考『成功』與『幸福』時，就會發現生命比我們想像的還要多元、厚重，非常有意思喔！」
                       </p>
                     </div>
@@ -2699,7 +2699,7 @@ export default function InteractiveQuestTab({
                         </ResponsiveContainer>
                       </div>
 
-                      <div className="space-y-1.5 text-[9px] font-black">
+                      <div className="space-y-1.5 text-[10.5px] font-black">
                         <div className="flex items-center justify-between text-rose-500">
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-rose-500" />非常開心</span>
                           <span>25%</span>
@@ -2745,7 +2745,7 @@ export default function InteractiveQuestTab({
                           className="w-full accent-rose-500 h-2 bg-rose-100 rounded-lg appearance-none cursor-pointer"
                         />
 
-                        <div className="flex justify-between text-[10px] font-black text-slate-400">
+                        <div className="flex justify-between text-[12px] font-black text-slate-400">
                           <span>😢 1.非常低落</span>
                           <span>😐 3.普通</span>
                           <span>🥳 6.超級開心</span>
@@ -2781,7 +2781,7 @@ export default function InteractiveQuestTab({
                             <div key={idx} className="bg-[#FCFAF7] border border-[#EAD5C3]/40 p-2.5 rounded-xl flex items-center gap-3 text-xs font-black shadow-3xs">
                               <span className="text-2xl shrink-0">{moodEmojis[m.level - 1].emoji}</span>
                               <div className="text-left">
-                                <span className="text-[9px] text-slate-400 font-bold block">{m.date} ‧ {moodEmojis[m.level - 1].label}</span>
+                                <span className="text-[10.5px] text-slate-400 font-bold block">{m.date} ‧ {moodEmojis[m.level - 1].label}</span>
                                 <p className="text-[#5D4037] leading-normal">{m.note}</p>
                               </div>
                             </div>
@@ -2799,10 +2799,10 @@ export default function InteractiveQuestTab({
                         <img src={charKehuaImg} alt="陳可華" className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm" referrerPolicy="no-referrer" />
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">陳可華的小建議</h5>
-                          <span className="text-[10px] text-slate-400">同桌好夥伴</span>
+                          <span className="text-[12px] text-slate-400">同桌好夥伴</span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                      <p className="text-[12.5px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
                         「曉萍，無論今天是雨天、陰天還是晴天，心情溫度計都只是記錄此時此刻的自己。溫柔地接納自己的每種情緒，不加評判地擁抱自己，就是送給心靈最棒的禮物喔！」
                       </p>
                     </div>
@@ -2860,7 +2860,7 @@ export default function InteractiveQuestTab({
                             style={{ width: `${(unlockedBadgeCount / 4) * 100}%` }} 
                           />
                         </div>
-                        <p className="text-[10px] text-slate-400 font-bold leading-relaxed">
+                        <p className="text-[12px] text-slate-400 font-bold leading-relaxed">
                           持續點亮更多實踐任務！導師會在學習後台同步看見您優異的生命行動力，並給予綜合點評加分！
                         </p>
                       </div>
@@ -2894,7 +2894,7 @@ export default function InteractiveQuestTab({
                               <span className={t.done ? 'line-through text-slate-400 font-bold' : 'font-black'}>{t.text}</span>
                             </div>
 
-                            <span className={`text-[9px] font-black px-2.5 py-1 rounded-lg border ${
+                            <span className={`text-[10.5px] font-black px-2.5 py-1 rounded-lg border ${
                               t.done 
                                 ? 'bg-emerald-50 border-emerald-200 text-emerald-700' 
                                 : 'bg-white border-slate-200 text-slate-400'
@@ -2923,10 +2923,10 @@ export default function InteractiveQuestTab({
                                 : 'bg-slate-50 border-slate-200 text-slate-300 opacity-60 scale-98 select-none'
                             }`}
                           >
-                            {t.done && <div className="absolute -top-1 -right-1 text-[8px] bg-amber-400 text-white px-1.5 py-0.5 rounded-bl-xl shadow-3xs font-black">⭐</div>}
+                            {t.done && <div className="absolute -top-1 -right-1 text-[12px] bg-amber-400 text-white px-1.5 py-0.5 rounded-bl-xl shadow-3xs font-black">⭐</div>}
                             <span className="text-3xl mb-1.5">{t.done ? '🎖️' : '🔒'}</span>
                             <span className="text-xs font-black tracking-wide leading-tight">{t.badge}</span>
-                            <span className="text-[9px] font-bold text-slate-400 mt-1.5 leading-normal">
+                            <span className="text-[10.5px] font-bold text-slate-400 mt-1.5 leading-normal">
                               {t.done ? '已點亮解鎖' : '尚未解鎖'}
                             </span>
                           </div>
@@ -2943,10 +2943,10 @@ export default function InteractiveQuestTab({
                         <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center text-lg shadow-sm">👩🏻‍🏫</div>
                         <div className="text-left leading-none">
                           <h5 className="font-black text-xs text-slate-800">林美蘭導師的期許</h5>
-                          <span className="text-[10px] text-slate-400">生命教育指導老師</span>
+                          <span className="text-[12px] text-slate-400">生命教育指導老師</span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
+                      <p className="text-[12.5px] text-[#7D5C43] leading-relaxed font-bold bg-[#FAF5EC]/40 p-3.5 rounded-xl border border-[#F1E0CE]/40">
                         「同學們，每一個在展示架上亮起的勳章，都記錄了你們在真實生命旅程中朝向真善美邁出的一小步。生命教育不是硬邦邦的課本教條，而是此時此刻你們在日常生活中的勇敢實踐喔！」
                       </p>
                     </div>

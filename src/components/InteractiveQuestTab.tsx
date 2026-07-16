@@ -196,14 +196,8 @@ const renderGameIllustration = (gameId: number) => {
       );
     case 2: // Life Puzzle Map
       return (
-        <div className="w-full h-full bg-[#F5FBF5] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#CDE7CD] relative overflow-hidden select-none">
-          <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
-            <path d="M6 18C6 11.3726 11.3726 6 18 6H30C36.6274 6 42 11.3726 42 18V30C42 36.6274 36.6274 42 30 42H18C11.3726 42 6 36.6274 6 30V18Z" fill="#E8F5E9" stroke="#2E7D32" strokeWidth="1.5" />
-            <path d="M12 18C16 16 18 22 22 20C26 18 28 24 32 22C36 20 36 24 36 26" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
-            <path d="M24 6C24 16 20 22 26 30C32 38 28 42 28 42" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="1 2" />
-            <circle cx="16" cy="14" r="3" fill="#22C55E" />
-            <circle cx="32" cy="32" r="4" fill="#10B981" />
-          </svg>
+        <div className="w-full h-full rounded-xl overflow-hidden border border-[#CDE7CD] relative select-none">
+          <img src={puzzleMapBg} alt="" className="w-full h-full object-cover" />
         </div>
       );
     case 3: // Scenario Adventure
@@ -254,10 +248,11 @@ const renderGameIllustration = (gameId: number) => {
       return (
         <div className="w-full h-full bg-[#FFF9F5] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#FCE1D1] relative overflow-hidden select-none">
           <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
-            <path d="M24 10V38M14 18H34" stroke="#E65100" strokeWidth="2" strokeLinecap="round" />
-            <path d="M14 18L10 30H18L14 18Z" fill="#FFE0B2" stroke="#E65100" strokeWidth="1.2" />
-            <path d="M34 18L30 30H38L34 18Z" fill="#FFE0B2" stroke="#E65100" strokeWidth="1.2" />
-            <path d="M18 38H30" stroke="#E65100" strokeWidth="2" strokeLinecap="round" />
+            <path d="M24 10V38M14 18H34" stroke="#B8860B" strokeWidth="2" strokeLinecap="round" />
+            <path d="M14 18L10 30H18L14 18Z" fill="#F5D98A" stroke="#B8860B" strokeWidth="1.2" />
+            <path d="M34 18L30 30H38L34 18Z" fill="#F5D98A" stroke="#B8860B" strokeWidth="1.2" />
+            <path d="M18 38H30" stroke="#B8860B" strokeWidth="2" strokeLinecap="round" />
+            <circle cx="24" cy="10" r="2.2" fill="#F5D98A" stroke="#B8860B" strokeWidth="1.2" />
           </svg>
         </div>
       );
@@ -308,14 +303,14 @@ const renderGameIllustration = (gameId: number) => {
         <div className="w-full h-full bg-[#FFF1F2] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#FECDD3] relative overflow-hidden select-none">
           <div className="flex items-center gap-1.5 w-full justify-center">
             <div className="w-3 h-10 bg-slate-200 rounded-full p-0.5 relative flex flex-col justify-end border border-slate-300">
-              <div className="w-full bg-gradient-to-t from-rose-500 to-amber-400 rounded-full" style={{ height: '70%' }} />
-              <div className="absolute -bottom-1 -left-0.5 w-3 h-3 bg-rose-500 rounded-full border border-rose-600" />
+              <div className="w-full bg-gradient-to-t from-sky-400 via-emerald-400 to-amber-400 rounded-full" style={{ height: '85%' }} />
+              <div className="absolute -bottom-1 -left-0.5 w-3 h-3 bg-amber-400 rounded-full border border-amber-500" />
             </div>
             <div className="flex flex-col text-[10.5px] leading-tight text-left text-slate-400">
-              <span>🥵 100℃</span>
-              <span>😊 70℃</span>
-              <span>😐 37℃</span>
-              <span>🥶 0℃</span>
+              <span>😄 開心</span>
+              <span>🙂 平靜</span>
+              <span>😐 普通</span>
+              <span>😢 低落</span>
             </div>
           </div>
         </div>

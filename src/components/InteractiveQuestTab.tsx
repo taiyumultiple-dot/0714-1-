@@ -60,6 +60,7 @@ import {
   game08Banner,
   game09Banner,
   game10Banner,
+  puzzleMapBg,
 } from '../assets/images/game-banners';
 
 const GAME_BANNER_IMAGES: Record<number, string> = {
@@ -371,14 +372,6 @@ const PuzzleBadge: React.FC<{ emoji: string; color: string; muted?: boolean; siz
   </svg>
 );
 
-const PUZZLE_GRADIENTS: Record<string, [string, string]> = {
-  sky: ['#CDEBFA', '#E9F5EC'],
-  green: ['#D7EFC9', '#F2F8E6'],
-  violet: ['#E6D8F3', '#F7EFFB'],
-  amber: ['#F8E6BF', '#FCF3E0'],
-  rose: ['#FAD9DF', '#FDF0F2'],
-};
-
 // The five pieces meet at a shared center point (320,230). Each of the four
 // quadrant pieces has a quarter-circle "bite" (r=92) carved out of its
 // inner corner, and a circular center piece (r=88) sits exactly in that gap.
@@ -419,10 +412,11 @@ const PuzzleBoard: React.FC<{
     const isPlaced = placed[themeKey];
     const isHover = hoverZone === themeKey;
     const isPending = !!selectedCard && !isPlaced;
-    const gradId = `puzzle-grad-${theme.color}`;
     const pos = PUZZLE_LABEL_POS[themeKey];
 
-    const fill = isPlaced ? `url(#${gradId})` : isHover ? '#FFE7CE' : isPending ? '#FFF6EA' : '#FAF6F0';
+    // Once placed, the piece becomes fully transparent so the real artwork
+    // (drawn once, beneath all pieces) shows through; only an outline remains.
+    const fill = isPlaced ? 'transparent' : isHover ? '#FFE7CE' : isPending ? '#FFF6EA' : '#FAF6F0';
     const stroke = isPlaced ? '#ffffff' : isHover ? '#E65100' : isPending ? '#F5A15A' : '#E9D8C4';
 
     const shapeProps = {
@@ -449,24 +443,24 @@ const PuzzleBoard: React.FC<{
         ) : (
           <path d={PUZZLE_PIECE_PATHS[slot]} {...shapeProps} />
         )}
-        <text x={pos.x} y={pos.y - 6} textAnchor="middle" fontSize={isPlaced ? 30 : 24} style={{ pointerEvents: 'none' }}>
-          {isPlaced ? theme.emoji : isPending ? '👇' : '➕'}
-        </text>
-        <text
-          x={pos.x}
-          y={pos.y + 22}
-          textAnchor="middle"
-          fontSize={15}
-          fontWeight={900}
-          fill={isPlaced ? '#4A321F' : isPending ? '#E65100' : '#B9A88E'}
-          style={{ pointerEvents: 'none' }}
-        >
-          {themeKey}
-        </text>
-        {isPlaced && (
-          <text x={pos.x} y={pos.y + 40} textAnchor="middle" fontSize={11} fontWeight={700} fill="#7D5C43" opacity={0.75} style={{ pointerEvents: 'none' }}>
-            配對成功
-          </text>
+        {/* Before a piece is placed, its artwork stays hidden and we show a "+" prompt instead */}
+        {!isPlaced && (
+          <>
+            <text x={pos.x} y={pos.y - 6} textAnchor="middle" fontSize={24} style={{ pointerEvents: 'none' }}>
+              {isPending ? '👇' : '➕'}
+            </text>
+            <text
+              x={pos.x}
+              y={pos.y + 22}
+              textAnchor="middle"
+              fontSize={15}
+              fontWeight={900}
+              fill={isPending ? '#E65100' : '#B9A88E'}
+              style={{ pointerEvents: 'none' }}
+            >
+              {themeKey}
+            </text>
+          </>
         )}
       </g>
     );
@@ -475,12 +469,6 @@ const PuzzleBoard: React.FC<{
   return (
     <svg viewBox="0 0 640 460" className="w-full h-auto select-none">
       <defs>
-        {Object.entries(PUZZLE_GRADIENTS).map(([key, [from, to]]) => (
-          <linearGradient id={`puzzle-grad-${key}`} key={key} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={from} />
-            <stop offset="100%" stopColor={to} />
-          </linearGradient>
-        ))}
         <clipPath id="puzzle-board-clip">
           <path d={PUZZLE_PIECE_PATHS.TL} />
           <path d={PUZZLE_PIECE_PATHS.TR} />
@@ -490,17 +478,18 @@ const PuzzleBoard: React.FC<{
         </clipPath>
       </defs>
 
-      {/* Decorative river winding through the whole board, clipped to the puzzle silhouette */}
-      <g clipPath="url(#puzzle-board-clip)" opacity={0.35} style={{ pointerEvents: 'none' }}>
-        <path
-          d="M40,55 C170,120 220,165 260,220 C300,275 345,300 320,405 C312,432 305,450 302,460"
-          fill="none"
-          stroke="#ffffff"
-          strokeWidth={16}
-          strokeLinecap="round"
-        />
-        <path d="M182,300 L202,280 L262,280 L282,300" fill="none" stroke="#B98756" strokeWidth={4} opacity={0.6} />
-      </g>
+      {/* Real landscape artwork, drawn once beneath everything; unplaced pieces cover it with an opaque veil below */}
+      <image href={puzzleMapBg} x={0} y={0} width={640} height={460} preserveAspectRatio="xMidYMid slice" />
+
+      {/* Opaque veils for any piece not yet placed, hiding the artwork until the student places it correctly */}
+      {PUZZLE_THEMES.filter((t) => !placed[t.key]).map((t) => {
+        const slot = PUZZLE_SLOT[t.key];
+        return slot === 'CENTER' ? (
+          <circle key={`veil-${t.key}`} cx={320} cy={230} r={88} fill="#FAF6F0" style={{ pointerEvents: 'none' }} />
+        ) : (
+          <path key={`veil-${t.key}`} d={PUZZLE_PIECE_PATHS[slot]} fill="#FAF6F0" style={{ pointerEvents: 'none' }} />
+        );
+      })}
 
       {PUZZLE_THEMES.map((t) => renderPiece(t.key))}
     </svg>

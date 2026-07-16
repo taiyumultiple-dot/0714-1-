@@ -61,6 +61,15 @@ import {
   game09Banner,
   game10Banner,
   puzzleMapBg,
+  gameIcon01,
+  gameIcon03,
+  gameIcon04,
+  gameIcon05,
+  gameIcon06,
+  gameIcon07,
+  gameIcon08,
+  gameIcon09,
+  gameIcon10,
 } from '../assets/images/game-banners';
 
 const GAME_BANNER_IMAGES: Record<number, string> = {
@@ -179,158 +188,24 @@ const GAMES = [
   }
 ];
 
-const renderGameIllustration = (gameId: number) => {
-  switch (gameId) {
-    case 1: // MBTI
-      return (
-        <div className="w-full h-full bg-[#FFF9F2] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#F1E0CE] relative overflow-hidden select-none">
-          <span className="text-[12px] font-black text-[#C48C46] tracking-wider mb-1">MBTI</span>
-          <svg className="w-8 h-8" viewBox="0 0 40 40" fill="none">
-            {/* Brain outline */}
-            <path d="M12 25C10 25 8 23 8 20C8 17 10 15 12 15C12 13 14 11 17 11C20 11 21 13 22 14C23 13 24 11 27 11C30 11 32 13 32 15C34 15 36 17 36 20C36 23 34 25 32 25" stroke="#C48C46" strokeWidth="1.5" strokeLinecap="round" />
-            <path d="M14 25C14 28 16 30 19 30M30 25C30 28 28 30 25 30" stroke="#C48C46" strokeWidth="1.5" strokeLinecap="round" />
-            <line x1="20" y1="12" x2="20" y2="30" stroke="#C48C46" strokeWidth="1" strokeDasharray="2 2" />
-          </svg>
-          <div className="absolute bottom-1 right-2 text-xs">📝</div>
-        </div>
-      );
-    case 2: // Life Puzzle Map
-      return (
-        <div className="w-full h-full rounded-xl overflow-hidden border border-[#CDE7CD] relative select-none">
-          <img src={puzzleMapBg} alt="" className="w-full h-full object-cover" />
-        </div>
-      );
-    case 3: // Scenario Adventure
-      return (
-        <div className="w-full h-full bg-[#F2F8FF] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#CCE1FB] relative overflow-hidden select-none">
-          <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
-            <path d="M24 42V26M24 26L12 14M24 26L36 14" stroke="#1D4ED8" strokeWidth="2" strokeLinecap="round" />
-            <circle cx="24" cy="16" r="5" fill="#E0F2FE" stroke="#1D4ED8" strokeWidth="1.5" />
-            <text x="21" y="20" className="text-[12px] font-black fill-[#1D4ED8]" style={{ fontFamily: 'monospace' }}>?</text>
-            <circle cx="21" cy="33" r="1.5" fill="#60A5FA" />
-            <circle cx="21" cy="38" r="1.5" fill="#60A5FA" />
-          </svg>
-        </div>
-      );
-    case 4: // Relationships Connection
-      return (
-        <div className="w-full h-full bg-[#FAF6FC] rounded-xl flex flex-col items-center justify-center p-0.5 border border-[#ECCDF2] relative overflow-hidden select-none">
-          <div className="grid grid-cols-2 gap-1 w-full h-full p-1 relative">
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <svg className="w-full h-full" viewBox="0 0 60 40">
-                <line x1="12" y1="10" x2="48" y2="10" stroke="#7B1FA2" strokeWidth="0.8" strokeDasharray="2 2" />
-                <line x1="12" y1="10" x2="12" y2="30" stroke="#7B1FA2" strokeWidth="0.8" />
-                <line x1="48" y1="10" x2="48" y2="30" stroke="#7B1FA2" strokeWidth="0.8" />
-                <line x1="12" y1="30" x2="48" y2="30" stroke="#7B1FA2" strokeWidth="0.8" strokeDasharray="2 2" />
-                <line x1="12" y1="10" x2="48" y2="30" stroke="#7B1FA2" strokeWidth="0.8" />
-              </svg>
-            </div>
-            <div className="flex flex-col items-center scale-75 z-10">
-              <img src={charXiaopingImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
-              <span className="text-[10.5px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">同學</span>
-            </div>
-            <div className="flex flex-col items-center scale-75 z-10">
-              <img src={charBojunImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
-              <span className="text-[10.5px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">朋友</span>
-            </div>
-            <div className="flex flex-col items-center scale-75 z-10">
-              <img src={charXiaowenImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
-              <span className="text-[10.5px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">家人</span>
-            </div>
-            <div className="flex flex-col items-center scale-75 z-10">
-              <img src={charKehuaImg} className="w-4 h-4 rounded-full border border-[#7B1FA2] object-cover bg-white" />
-              <span className="text-[10.5px] font-bold text-[#7B1FA2] scale-75 leading-none mt-0.5">我</span>
-            </div>
-          </div>
-        </div>
-      );
-    case 5: // Value Scales
-      return (
-        <div className="w-full h-full bg-[#FFF9F5] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#FCE1D1] relative overflow-hidden select-none">
-          <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
-            <path d="M24 10V38M14 18H34" stroke="#B8860B" strokeWidth="2" strokeLinecap="round" />
-            <path d="M14 18L10 30H18L14 18Z" fill="#F5D98A" stroke="#B8860B" strokeWidth="1.2" />
-            <path d="M34 18L30 30H38L34 18Z" fill="#F5D98A" stroke="#B8860B" strokeWidth="1.2" />
-            <path d="M18 38H30" stroke="#B8860B" strokeWidth="2" strokeLinecap="round" />
-            <circle cx="24" cy="10" r="2.2" fill="#F5D98A" stroke="#B8860B" strokeWidth="1.2" />
-          </svg>
-        </div>
-      );
-    case 6: // Story Memory Flip Cards
-      return (
-        <div className="w-full h-full bg-[#FFF5F6] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#FCD2B6] relative overflow-hidden select-none">
-          <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none">
-            <rect x="8" y="14" width="20" height="26" rx="2" transform="rotate(-15 8 14)" fill="white" stroke="#C2185B" strokeWidth="1.5" />
-            <rect x="20" y="8" width="20" height="26" rx="2" transform="rotate(10 20 8)" fill="#FFF1F2" stroke="#C2185B" strokeWidth="1.5" />
-            <path d="M28 20C28 19 29 18 30 18C31 18 32 19 32 20C32 21.5 30 23 30 23C30 23 28 21.5 28 20Z" fill="#C2185B" />
-          </svg>
-        </div>
-      );
-    case 7: // Gratitude Bubbles
-      return (
-        <div className="w-full h-full bg-[#F0FDFA] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#99F6E4] relative overflow-hidden select-none">
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="absolute w-6 h-6 rounded-full border border-sky-400/40 bg-sky-200/10 top-2 left-2 flex items-center justify-center">
-              <div className="w-2 h-2 rounded-full bg-white/60 -mt-2 -ml-2" />
-            </div>
-            <div className="absolute w-5 h-5 rounded-full border border-pink-400/30 bg-pink-200/10 bottom-2 right-2 flex items-center justify-center">
-              <div className="w-1.5 h-1.5 rounded-full bg-white/60 -mt-1.5 -ml-1.5" />
-            </div>
-            <div className="absolute w-8 h-8 rounded-full border border-emerald-400/40 bg-emerald-200/20 top-3 right-3 flex items-center justify-center">
-              <span className="text-[12px]">💖</span>
-            </div>
-          </div>
-        </div>
-      );
-    case 8: // Philosophical Debate
-      return (
-        <div className="w-full h-full bg-[#F0F9FF] rounded-xl flex flex-col items-center justify-center p-0.5 border border-[#BAE6FD] relative overflow-hidden select-none">
-          <div className="flex items-center justify-around w-full h-full relative">
-            <div className="flex flex-col items-center scale-75">
-              <img src={charKehuaImg} className="w-4 h-4 rounded-full border border-sky-500 object-cover bg-white" />
-              <span className="text-[10.5px] font-black text-sky-800 scale-90 mt-0.5">可華</span>
-            </div>
-            <div className="text-[10.5px] font-black text-orange-600 bg-orange-50 border border-orange-200 px-1 py-0.5 rounded-md scale-90 z-10">VS</div>
-            <div className="flex flex-col items-center scale-75">
-              <img src={charXiaopingImg} className="w-4 h-4 rounded-full border border-pink-500 object-cover bg-white" />
-              <span className="text-[10.5px] font-black text-pink-800 scale-90 mt-0.5">曉萍</span>
-            </div>
-          </div>
-        </div>
-      );
-    case 9: // Mood Thermometer
-      return (
-        <div className="w-full h-full bg-[#FFF1F2] rounded-xl flex flex-col items-center justify-center p-1.5 border border-[#FECDD3] relative overflow-hidden select-none">
-          <div className="flex items-center gap-1.5 w-full justify-center">
-            <div className="w-3 h-10 bg-slate-200 rounded-full p-0.5 relative flex flex-col justify-end border border-slate-300">
-              <div className="w-full bg-gradient-to-t from-sky-400 via-emerald-400 to-amber-400 rounded-full" style={{ height: '85%' }} />
-              <div className="absolute -bottom-1 -left-0.5 w-3 h-3 bg-amber-400 rounded-full border border-amber-500" />
-            </div>
-            <div className="flex flex-col text-[10.5px] leading-tight text-left text-slate-400">
-              <span>😄 開心</span>
-              <span>🙂 平靜</span>
-              <span>😐 普通</span>
-              <span>😢 低落</span>
-            </div>
-          </div>
-        </div>
-      );
-    case 10: // Badge Challenge
-      return (
-        <div className="w-full h-full bg-[#FFFBEB] rounded-xl flex flex-col items-center justify-center p-1 border border-[#FDE68A] relative overflow-hidden select-none">
-          <div className="grid grid-cols-3 gap-0.5">
-            {['🏅', '🎖️', '⭐', '🏆', '💎', '👑'].map((emoji, index) => (
-              <div key={index} className="w-3.5 h-3.5 rounded-md bg-amber-50 border border-amber-200 flex items-center justify-center text-[12px]">
-                {emoji}
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-    default:
-      return null;
-  }
+const GAME_ICON_IMAGES: Record<number, string> = {
+  1: gameIcon01,
+  2: puzzleMapBg,
+  3: gameIcon03,
+  4: gameIcon04,
+  5: gameIcon05,
+  6: gameIcon06,
+  7: gameIcon07,
+  8: gameIcon08,
+  9: gameIcon09,
+  10: gameIcon10,
 };
+
+const renderGameIllustration = (gameId: number) => (
+  <div className="w-full h-full rounded-xl overflow-hidden border border-[#EAD5C3] bg-white select-none">
+    <img src={GAME_ICON_IMAGES[gameId]} alt="" className="w-full h-full object-cover" />
+  </div>
+);
 
 const PUZZLE_THEMES = [
   { key: '哲學思考', emoji: '🧠', desc: '學習提問與思辨，品嚐思考的樂趣', fullDesc: '🧠 【哲學思考】引導我們對事物進行深刻的發問，澄清概念，發展獨立判斷與思辨能力。', mismatchHint: '💡 提示：這個主題比較偏向「探討思考、邏輯與思辨的樂趣」喔！請試著放入「哲學思考」！', color: 'sky' },

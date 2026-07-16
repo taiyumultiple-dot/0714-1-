@@ -49,16 +49,18 @@ import charDadImg from '../assets/images/characters/char_dad.jpg';
 import charGrandpaImg from '../assets/images/characters/char_grandpa.jpg';
 import storyHeroPair from '../assets/images/characters/story_hero_pair.png';
 
-import game01Banner from '../assets/images/game-banners/game01_banner.jpg';
-import game02Banner from '../assets/images/game-banners/game02_banner.jpg';
-import game03Banner from '../assets/images/game-banners/game03_banner.jpg';
-import game04Banner from '../assets/images/game-banners/game04_banner.jpg';
-import game05Banner from '../assets/images/game-banners/game05_banner.jpg';
-import game06Banner from '../assets/images/game-banners/game06_banner.jpg';
-import game07Banner from '../assets/images/game-banners/game07_banner.jpg';
-import game08Banner from '../assets/images/game-banners/game08_banner.jpg';
-import game09Banner from '../assets/images/game-banners/game09_banner.jpg';
-import game10Banner from '../assets/images/game-banners/game10_banner.jpg';
+import {
+  game01Banner,
+  game02Banner,
+  game03Banner,
+  game04Banner,
+  game05Banner,
+  game06Banner,
+  game07Banner,
+  game08Banner,
+  game09Banner,
+  game10Banner,
+} from '../assets/images/game-banners';
 
 const GAME_BANNER_IMAGES: Record<number, string> = {
   1: game01Banner,

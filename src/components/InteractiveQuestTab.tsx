@@ -49,6 +49,30 @@ import charDadImg from '../assets/images/characters/char_dad.jpg';
 import charGrandpaImg from '../assets/images/characters/char_grandpa.jpg';
 import storyHeroPair from '../assets/images/characters/story_hero_pair.png';
 
+import game01Banner from '../assets/images/game-banners/game01_banner.jpg';
+import game02Banner from '../assets/images/game-banners/game02_banner.jpg';
+import game03Banner from '../assets/images/game-banners/game03_banner.jpg';
+import game04Banner from '../assets/images/game-banners/game04_banner.jpg';
+import game05Banner from '../assets/images/game-banners/game05_banner.jpg';
+import game06Banner from '../assets/images/game-banners/game06_banner.jpg';
+import game07Banner from '../assets/images/game-banners/game07_banner.jpg';
+import game08Banner from '../assets/images/game-banners/game08_banner.jpg';
+import game09Banner from '../assets/images/game-banners/game09_banner.jpg';
+import game10Banner from '../assets/images/game-banners/game10_banner.jpg';
+
+const GAME_BANNER_IMAGES: Record<number, string> = {
+  1: game01Banner,
+  2: game02Banner,
+  3: game03Banner,
+  4: game04Banner,
+  5: game05Banner,
+  6: game06Banner,
+  7: game07Banner,
+  8: game08Banner,
+  9: game09Banner,
+  10: game10Banner,
+};
+
 interface InteractiveQuestTabProps {
   currentStudent: any;
   onSaveQuest: (studentId: string, questType: any, data: any) => void;
@@ -1922,10 +1946,8 @@ export default function InteractiveQuestTab({
                       <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">探索你的性格類型，了解自己與他人。</p>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
-                    {[charXiaopingImg, charKehuaImg, charXiaowenImg, charBojunImg].map((src, i) => (
-                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 4 - i }} referrerPolicy="no-referrer" />
-                    ))}
+                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2">
+                    <img src={GAME_BANNER_IMAGES[1]} alt="" className="h-24 md:h-28 w-auto object-contain rounded-2xl" />
                   </div>
                 </div>
 
@@ -2090,10 +2112,8 @@ export default function InteractiveQuestTab({
                       <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">拼出生命教育地圖，認識課本五大主題。</p>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
-                    {[charKehuaImg, charXiaopingImg, charBojunImg, charXiaowenImg, charDadImg].map((src, i) => (
-                      <img key={i} src={src} alt="" className="w-14 h-14 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 5 - i }} referrerPolicy="no-referrer" />
-                    ))}
+                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2">
+                    <img src={GAME_BANNER_IMAGES[2]} alt="" className="h-24 md:h-28 w-auto object-contain rounded-2xl" />
                   </div>
                 </div>
 
@@ -2234,10 +2254,8 @@ export default function InteractiveQuestTab({
                       <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">面對生活情境做出選擇，看你的價值觀會帶你走向哪裡？</p>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
-                    {[charKehuaImg, charXiaowenImg].map((src, i) => (
-                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 2 - i }} referrerPolicy="no-referrer" />
-                    ))}
+                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2">
+                    <img src={GAME_BANNER_IMAGES[3]} alt="" className="h-24 md:h-28 w-auto object-contain rounded-2xl" />
                   </div>
                 </div>
 
@@ -2386,10 +2404,8 @@ export default function InteractiveQuestTab({
                       <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">連線人物與關係，理解陪伴與支持。</p>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
-                    {[charKehuaImg, charXiaowenImg].map((src, i) => (
-                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 2 - i }} referrerPolicy="no-referrer" />
-                    ))}
+                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2">
+                    <img src={GAME_BANNER_IMAGES[4]} alt="" className="h-24 md:h-28 w-auto object-contain rounded-2xl" />
                   </div>
                 </div>
 
@@ -2555,10 +2571,8 @@ export default function InteractiveQuestTab({
                       <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">排序你的價值觀，認識重要的選擇。</p>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
-                    {[charXiaopingImg, charBojunImg, charDadImg, charGrandpaImg, charXiaowenImg].map((src, i) => (
-                      <img key={i} src={src} alt="" className="w-14 h-14 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 5 - i }} referrerPolicy="no-referrer" />
-                    ))}
+                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2">
+                    <img src={GAME_BANNER_IMAGES[5]} alt="" className="h-24 md:h-28 w-auto object-contain rounded-2xl" />
                   </div>
                 </div>
 
@@ -2710,10 +2724,8 @@ export default function InteractiveQuestTab({
                       <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">翻開故事卡，配對對應的生命主題。</p>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
-                    {[charGrandpaImg, charBojunImg, charXiaopingImg, charXiaowenImg, charDadImg, charKehuaImg].map((src, i) => (
-                      <img key={i} src={src} alt="" className="w-12 h-12 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 6 - i }} referrerPolicy="no-referrer" />
-                    ))}
+                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2">
+                    <img src={GAME_BANNER_IMAGES[6]} alt="" className="h-24 md:h-28 w-auto object-contain rounded-2xl" />
                   </div>
                 </div>
 
@@ -2854,10 +2866,8 @@ export default function InteractiveQuestTab({
                       <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">寫下感謝的話，讓溫暖在班上飄散。</p>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
-                    {[charXiaopingImg, charXiaowenImg, charGrandpaImg].map((src, i) => (
-                      <img key={i} src={src} alt="" className="w-14 h-14 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 3 - i }} referrerPolicy="no-referrer" />
-                    ))}
+                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2">
+                    <img src={GAME_BANNER_IMAGES[7]} alt="" className="h-24 md:h-28 w-auto object-contain rounded-2xl" />
                   </div>
                 </div>
 
@@ -3038,10 +3048,8 @@ export default function InteractiveQuestTab({
                       <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">用觀點與理由展開思辨挑戰。</p>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
-                    {[charKehuaImg, charXiaopingImg].map((src, i) => (
-                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 2 - i }} referrerPolicy="no-referrer" />
-                    ))}
+                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2">
+                    <img src={GAME_BANNER_IMAGES[8]} alt="" className="h-24 md:h-28 w-auto object-contain rounded-2xl" />
                   </div>
                 </div>
 
@@ -3223,10 +3231,8 @@ export default function InteractiveQuestTab({
                       <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">辨識今天的情緒，學習理解自己。</p>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
-                    {[charXiaopingImg, charXiaowenImg].map((src, i) => (
-                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 2 - i }} referrerPolicy="no-referrer" />
-                    ))}
+                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2">
+                    <img src={GAME_BANNER_IMAGES[9]} alt="" className="h-24 md:h-28 w-auto object-contain rounded-2xl" />
                   </div>
                 </div>
 
@@ -3401,10 +3407,8 @@ export default function InteractiveQuestTab({
                       <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">完成任務、收集徽章、看見自己的成長。</p>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
-                    {[charKehuaImg, charXiaopingImg].map((src, i) => (
-                      <img key={i} src={src} alt="" className="w-16 h-16 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 2 - i }} referrerPolicy="no-referrer" />
-                    ))}
+                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2">
+                    <img src={GAME_BANNER_IMAGES[10]} alt="" className="h-24 md:h-28 w-auto object-contain rounded-2xl" />
                   </div>
                 </div>
 

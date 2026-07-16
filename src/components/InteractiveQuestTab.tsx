@@ -351,43 +351,147 @@ const PUZZLE_STYLES: Record<string, string> = {
   rose: 'bg-rose-50 border-rose-300 text-rose-700',
 };
 
-const PuzzleZone: React.FC<{
-  themeKey: string;
-  placed: boolean;
-  onDropTheme: (dropped: string, target: string) => void;
+const PUZZLE_CHIP_STYLES: Record<string, string> = {
+  sky: 'bg-sky-500 text-white',
+  green: 'bg-emerald-500 text-white',
+  violet: 'bg-violet-500 text-white',
+  amber: 'bg-amber-500 text-white',
+  rose: 'bg-rose-500 text-white',
+};
+
+const PUZZLE_GRADIENTS: Record<string, [string, string]> = {
+  sky: ['#CDEBFA', '#E9F5EC'],
+  green: ['#D7EFC9', '#F2F8E6'],
+  violet: ['#E6D8F3', '#F7EFFB'],
+  amber: ['#F8E6BF', '#FCF3E0'],
+  rose: ['#FAD9DF', '#FDF0F2'],
+};
+
+// The five pieces meet at a shared center point (320,230). Each of the four
+// quadrant pieces has a quarter-circle "bite" (r=92) carved out of its
+// inner corner, and a circular center piece (r=88) sits exactly in that gap.
+const PUZZLE_PIECE_PATHS: Record<'TL' | 'TR' | 'BL' | 'BR', string> = {
+  TL: 'M28,8 L300,8 A20,20 0 0 1 320,28 L320,138 A92,92 0 0 0 228,230 L28,230 A20,20 0 0 1 8,210 L8,28 A20,20 0 0 1 28,8 Z',
+  TR: 'M612,8 A20,20 0 0 0 632,28 L632,210 A20,20 0 0 0 612,230 L412,230 A92,92 0 0 1 320,138 L320,28 A20,20 0 0 0 340,8 L612,8 Z',
+  BL: 'M28,452 A20,20 0 0 0 8,432 L8,250 A20,20 0 0 0 28,230 L228,230 A92,92 0 0 1 320,322 L320,432 A20,20 0 0 0 300,452 L28,452 Z',
+  BR: 'M612,452 L340,452 A20,20 0 0 1 320,432 L320,322 A92,92 0 0 0 412,230 L612,230 A20,20 0 0 1 632,250 L632,432 A20,20 0 0 1 612,452 Z',
+};
+
+const PUZZLE_SLOT: Record<string, 'TL' | 'TR' | 'CENTER' | 'BL' | 'BR'> = {
+  '哲學思考': 'TL',
+  '人學探索': 'TR',
+  '終極關懷': 'CENTER',
+  '價值思辨': 'BL',
+  '靈性修養': 'BR',
+};
+
+const PUZZLE_LABEL_POS: Record<string, { x: number; y: number }> = {
+  '哲學思考': { x: 130, y: 100 },
+  '人學探索': { x: 505, y: 100 },
+  '終極關懷': { x: 320, y: 230 },
+  '價值思辨': { x: 130, y: 358 },
+  '靈性修養': { x: 505, y: 358 },
+};
+
+const PuzzleBoard: React.FC<{
+  placed: Record<string, boolean>;
   selectedCard: string | null;
+  onDropTheme: (dropped: string, target: string) => void;
   onZoneClick: (zoneKey: string) => void;
-  tall?: boolean;
-}> = ({ themeKey, placed, onDropTheme, selectedCard, onZoneClick, tall }) => {
-  const theme = PUZZLE_THEMES.find((t) => t.key === themeKey)!;
-  const [isOver, setIsOver] = useState(false);
-  return (
-    <div
-      onDragOver={(e) => { e.preventDefault(); setIsOver(true); }}
-      onDragLeave={() => setIsOver(false)}
-      onDrop={(e) => {
+}> = ({ placed, selectedCard, onDropTheme, onZoneClick }) => {
+  const [hoverZone, setHoverZone] = useState<string | null>(null);
+
+  const renderPiece = (themeKey: string) => {
+    const theme = PUZZLE_THEMES.find((t) => t.key === themeKey)!;
+    const slot = PUZZLE_SLOT[themeKey];
+    const isPlaced = placed[themeKey];
+    const isHover = hoverZone === themeKey;
+    const isPending = !!selectedCard && !isPlaced;
+    const gradId = `puzzle-grad-${theme.color}`;
+    const pos = PUZZLE_LABEL_POS[themeKey];
+
+    const fill = isPlaced ? `url(#${gradId})` : isHover ? '#FFE7CE' : isPending ? '#FFF6EA' : '#FAF6F0';
+    const stroke = isPlaced ? '#ffffff' : isHover ? '#E65100' : isPending ? '#F5A15A' : '#E9D8C4';
+
+    const shapeProps = {
+      fill,
+      stroke,
+      strokeWidth: 3,
+      strokeDasharray: isPlaced ? undefined : '6 5',
+      onDragOver: (e: React.DragEvent) => { e.preventDefault(); setHoverZone(themeKey); },
+      onDragLeave: () => setHoverZone((z) => (z === themeKey ? null : z)),
+      onDrop: (e: React.DragEvent) => {
         e.preventDefault();
-        setIsOver(false);
+        setHoverZone(null);
         const dropped = e.dataTransfer.getData('text/plain');
         onDropTheme(dropped, themeKey);
-      }}
-      onClick={() => onZoneClick(themeKey)}
-      className={`rounded-2xl border-2 flex flex-col items-center justify-center p-2 text-center transition-all cursor-pointer ${tall ? 'h-24' : 'h-20'} ${
-        placed
-          ? `${PUZZLE_STYLES[theme.color]} shadow-sm font-bold`
-          : selectedCard
-            ? 'bg-orange-50 border-orange-300 border-dashed animate-pulse text-orange-400'
-            : isOver
-              ? 'bg-orange-100 border-[#E65100] border-dashed'
-              : 'bg-[#FAF6F0]/50 border-dashed border-[#F1E0CE] text-slate-300 hover:border-orange-200'
-      }`}
-    >
-      <span className="text-xl">{placed ? theme.emoji : selectedCard ? '👇' : '➕'}</span>
-      <span className={`text-[12px] font-black ${placed ? '' : selectedCard ? 'text-orange-500' : 'text-slate-400'}`}>
-        {themeKey}
-      </span>
-      {placed && <span className="text-[10px] opacity-75 font-bold leading-none mt-1">配對成功</span>}
-    </div>
+      },
+      onClick: () => onZoneClick(themeKey),
+      style: { cursor: 'pointer', transition: 'fill 0.25s, stroke 0.25s' } as React.CSSProperties,
+    };
+
+    return (
+      <g key={themeKey} className={isPending ? 'animate-pulse' : ''}>
+        {slot === 'CENTER' ? (
+          <circle cx={320} cy={230} r={88} {...shapeProps} />
+        ) : (
+          <path d={PUZZLE_PIECE_PATHS[slot]} {...shapeProps} />
+        )}
+        <text x={pos.x} y={pos.y - 6} textAnchor="middle" fontSize={isPlaced ? 30 : 24} style={{ pointerEvents: 'none' }}>
+          {isPlaced ? theme.emoji : isPending ? '👇' : '➕'}
+        </text>
+        <text
+          x={pos.x}
+          y={pos.y + 22}
+          textAnchor="middle"
+          fontSize={15}
+          fontWeight={900}
+          fill={isPlaced ? '#4A321F' : isPending ? '#E65100' : '#B9A88E'}
+          style={{ pointerEvents: 'none' }}
+        >
+          {themeKey}
+        </text>
+        {isPlaced && (
+          <text x={pos.x} y={pos.y + 40} textAnchor="middle" fontSize={11} fontWeight={700} fill="#7D5C43" opacity={0.75} style={{ pointerEvents: 'none' }}>
+            配對成功
+          </text>
+        )}
+      </g>
+    );
+  };
+
+  return (
+    <svg viewBox="0 0 640 460" className="w-full h-auto select-none">
+      <defs>
+        {Object.entries(PUZZLE_GRADIENTS).map(([key, [from, to]]) => (
+          <linearGradient id={`puzzle-grad-${key}`} key={key} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={from} />
+            <stop offset="100%" stopColor={to} />
+          </linearGradient>
+        ))}
+        <clipPath id="puzzle-board-clip">
+          <path d={PUZZLE_PIECE_PATHS.TL} />
+          <path d={PUZZLE_PIECE_PATHS.TR} />
+          <path d={PUZZLE_PIECE_PATHS.BL} />
+          <path d={PUZZLE_PIECE_PATHS.BR} />
+          <circle cx={320} cy={230} r={88} />
+        </clipPath>
+      </defs>
+
+      {/* Decorative river winding through the whole board, clipped to the puzzle silhouette */}
+      <g clipPath="url(#puzzle-board-clip)" opacity={0.35} style={{ pointerEvents: 'none' }}>
+        <path
+          d="M40,55 C170,120 220,165 260,220 C300,275 345,300 320,405 C312,432 305,450 302,460"
+          fill="none"
+          stroke="#ffffff"
+          strokeWidth={16}
+          strokeLinecap="round"
+        />
+        <path d="M182,300 L202,280 L262,280 L282,300" fill="none" stroke="#B98756" strokeWidth={4} opacity={0.6} />
+      </g>
+
+      {PUZZLE_THEMES.map((t) => renderPiece(t.key))}
+    </svg>
   );
 };
 
@@ -2151,7 +2255,7 @@ export default function InteractiveQuestTab({
                                     : `cursor-grab active:cursor-grabbing hover:border-orange-200 ${PUZZLE_STYLES[t.color]}`
                               }`}
                             >
-                              <span className="text-lg shrink-0">{t.emoji}</span>
+                              <span className={`w-9 h-9 rounded-lg flex items-center justify-center text-base shrink-0 shadow-xs ${puzzlePlaced[t.key] ? 'bg-slate-200 text-slate-400' : PUZZLE_CHIP_STYLES[t.color]}`}>{t.emoji}</span>
                               <div className="text-left leading-tight">
                                 <div className="text-xs font-black">{t.key}</div>
                                 <div className="text-[12px] font-bold opacity-80">{t.desc}</div>
@@ -2164,21 +2268,14 @@ export default function InteractiveQuestTab({
                   </div>
 
                   {/* Middle: Puzzle board */}
-                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
-                    <div className="grid grid-cols-2 gap-2 mb-2">
-                      {['哲學思考', '人學探索'].map((key) => (
-                        <PuzzleZone key={key} themeKey={key} placed={puzzlePlaced[key]} onDropTheme={handlePlacePuzzle} selectedCard={selectedPuzzleCard} onZoneClick={handleZoneClick} />
-                      ))}
-                    </div>
-                    <div className="mb-2">
-                      <PuzzleZone themeKey="終極關懷" placed={puzzlePlaced['終極關懷']} onDropTheme={handlePlacePuzzle} selectedCard={selectedPuzzleCard} onZoneClick={handleZoneClick} tall />
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      {['價值思辨', '靈性修養'].map((key) => (
-                        <PuzzleZone key={key} themeKey={key} placed={puzzlePlaced[key]} onDropTheme={handlePlacePuzzle} selectedCard={selectedPuzzleCard} onZoneClick={handleZoneClick} />
-                      ))}
-                    </div>
-                    <p className="text-center text-[12.5px] font-bold text-slate-400 mt-4">🖐️ 拖曳拼圖或點選放置，完美拼出五大生命領域吧！</p>
+                  <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-4 md:p-6 shadow-sm">
+                    <PuzzleBoard
+                      placed={puzzlePlaced}
+                      selectedCard={selectedPuzzleCard}
+                      onDropTheme={handlePlacePuzzle}
+                      onZoneClick={handleZoneClick}
+                    />
+                    <p className="text-center text-[12.5px] font-bold text-slate-400 mt-3">🖐️ 拖曳拼圖或點選放置，完美拼出五大生命領域吧！</p>
                   </div>
 
                   {/* Right: Progress + dad tip */}
@@ -2216,12 +2313,29 @@ export default function InteractiveQuestTab({
                 <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm">
                   <h4 className="font-black text-[#4A321F] text-xs mb-3 flex items-center gap-1.5">🏅 <span>已完成的主題</span></h4>
                   <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-4">
-                    {PUZZLE_THEMES.map((t) => (
-                      <div key={t.key} className={`rounded-xl border-2 p-3 text-center ${puzzlePlaced[t.key] ? PUZZLE_STYLES[t.color] : 'bg-slate-50 border-slate-200 text-slate-300'}`}>
-                        <div className="text-xs font-black">{t.key}</div>
-                        <div className="text-[12px] font-bold mt-1">{puzzlePlaced[t.key] ? '已完成' : '尚未完成'}</div>
-                      </div>
-                    ))}
+                    {PUZZLE_THEMES.map((t, idx) => {
+                      const isDone = puzzlePlaced[t.key];
+                      const portrait = [charKehuaImg, charXiaopingImg, charXiaowenImg, charBojunImg, charGrandpaImg][idx];
+                      return (
+                        <div key={t.key} className={`relative overflow-hidden rounded-xl border-2 p-3 ${isDone ? PUZZLE_STYLES[t.color] : 'bg-slate-50 border-slate-200 text-slate-300'}`}>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-sm">{t.emoji}</span>
+                            <span className="text-xs font-black">{t.key}</span>
+                          </div>
+                          <div className={`inline-block mt-1.5 px-2 py-0.5 rounded-full text-[10px] font-black ${isDone ? 'bg-white/70' : 'bg-slate-200/70'}`}>
+                            {isDone ? '已完成' : '尚未完成'}
+                          </div>
+                          {isDone && (
+                            <img
+                              src={portrait}
+                              alt=""
+                              referrerPolicy="no-referrer"
+                              className="absolute -right-2 -bottom-2 w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm opacity-90"
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="flex gap-3 justify-end">
                     <button onClick={resetPuzzle} className="px-5 py-2 border-2 border-[#F1E0CE] text-slate-500 font-black text-xs rounded-xl hover:bg-slate-50 transition-all cursor-pointer">重置拼圖</button>

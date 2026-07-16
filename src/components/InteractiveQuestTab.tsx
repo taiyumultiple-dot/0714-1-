@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import QRCode from 'qrcode';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ResponsiveContainer, 
@@ -55,6 +56,7 @@ interface InteractiveQuestTabProps {
   submissions: any[];
   onSaveQuestFeedback: (studentId: string, questType: string, feedback: any) => void;
   defaultQuest?: string;
+  defaultGameId?: number;
 }
 
 const GAMES = [
@@ -309,11 +311,11 @@ const renderGameIllustration = (gameId: number) => {
 };
 
 const PUZZLE_THEMES = [
-  { key: '哲學思考', emoji: '🧠', desc: '思考生命的意義，探索世界與自我。', color: 'sky' },
-  { key: '人學探索', emoji: '🧑', desc: '認識自己與他人，建立良好關係。', color: 'green' },
-  { key: '終極關懷', emoji: '💜', desc: '關懷生命的價值，尊重與珍惜生命。', color: 'violet' },
-  { key: '價值思辨', emoji: '⚖️', desc: '思辨價值觀，做出負責任的選擇。', color: 'amber' },
-  { key: '靈性修養', emoji: '🌸', desc: '培養內在修養，追求心靈的成長。', color: 'rose' },
+  { key: '哲學思考', emoji: '🧠', desc: '學習提問與思辨，品嚐思考的樂趣', fullDesc: '🧠 【哲學思考】引導我們對事物進行深刻的發問，澄清概念，發展獨立判斷與思辨能力。', mismatchHint: '💡 提示：這個主題比較偏向「探討思考、邏輯與思辨的樂趣」喔！請試著放入「哲學思考」！', color: 'sky' },
+  { key: '人學探索', emoji: '🧑', desc: '認識人與自我，漫步奇幻的旅程', fullDesc: '🧑 【人學探索】探索「人是誰」的根本問題，明白生命的神聖尊嚴與豐富可能性。', mismatchHint: '💡 提示：這個主題是在「認識自我與他人互動、探索我是誰」喔！請試著放入「人學探索」！', color: 'green' },
+  { key: '終極關懷', emoji: '💜', desc: '思考生命意義，旅程中的神奇羅盤', fullDesc: '💜 【終極關懷】面對人生的有限，思索終極意義，學習生死關懷與悲傷輔導。', mismatchHint: '💡 提示：這個主題比較偏向「思考生死價值、生命有限與終極意義」喔！請試著放入「終極關懷」！', color: 'violet' },
+  { key: '價值思辨', emoji: '⚖️', desc: '掌握智慧方向盤，思辨道德的選擇', fullDesc: '⚖️ 【價值思辨】在多元價值的社會中學會客觀衡量，做出良善與負責任的道德選擇。', mismatchHint: '💡 提示：這個主題是關於「思辨多元道德情境、做出合理選擇」喔！請試著放入「價值思辨」！', color: 'amber' },
+  { key: '靈性修養', emoji: '🌸', desc: '開啟心靈超能量，培養內在人格統整', fullDesc: '🌸 【靈性修養】整合身心靈，培養卓越的人格，散發生命的內在人格光輝。', mismatchHint: '💡 提示：這個主題是關於「整合身心靈、修養內在力量與卓越人格」喔！請試著放入「靈性修養」！', color: 'rose' },
 ];
 const PUZZLE_STYLES: Record<string, string> = {
   sky: 'bg-sky-50 border-sky-300 text-sky-700',
@@ -326,9 +328,11 @@ const PUZZLE_STYLES: Record<string, string> = {
 const PuzzleZone: React.FC<{
   themeKey: string;
   placed: boolean;
-  onDropTheme: (theme: string) => void;
+  onDropTheme: (dropped: string, target: string) => void;
+  selectedCard: string | null;
+  onZoneClick: (zoneKey: string) => void;
   tall?: boolean;
-}> = ({ themeKey, placed, onDropTheme, tall }) => {
+}> = ({ themeKey, placed, onDropTheme, selectedCard, onZoneClick, tall }) => {
   const theme = PUZZLE_THEMES.find((t) => t.key === themeKey)!;
   const [isOver, setIsOver] = useState(false);
   return (
@@ -339,18 +343,24 @@ const PuzzleZone: React.FC<{
         e.preventDefault();
         setIsOver(false);
         const dropped = e.dataTransfer.getData('text/plain');
-        if (dropped === themeKey) onDropTheme(themeKey);
+        onDropTheme(dropped, themeKey);
       }}
-      className={`rounded-2xl border-2 flex flex-col items-center justify-center gap-1 transition-all ${tall ? 'h-20' : 'h-24'} ${
+      onClick={() => onZoneClick(themeKey)}
+      className={`rounded-2xl border-2 flex flex-col items-center justify-center p-2 text-center transition-all cursor-pointer ${tall ? 'h-24' : 'h-20'} ${
         placed
-          ? `${PUZZLE_STYLES[theme.color]} shadow-sm`
-          : isOver
-            ? 'bg-orange-50 border-[#E65100] border-dashed'
-            : 'bg-[#FAF6F0]/50 border-dashed border-[#F1E0CE] text-slate-300'
+          ? `${PUZZLE_STYLES[theme.color]} shadow-sm font-bold`
+          : selectedCard
+            ? 'bg-orange-50 border-orange-300 border-dashed animate-pulse text-orange-400'
+            : isOver
+              ? 'bg-orange-100 border-[#E65100] border-dashed'
+              : 'bg-[#FAF6F0]/50 border-dashed border-[#F1E0CE] text-slate-300 hover:border-orange-200'
       }`}
     >
-      <span className="text-xl">{placed ? theme.emoji : '➕'}</span>
-      <span className={`text-xs font-black ${placed ? '' : 'text-slate-400'}`}>{themeKey}</span>
+      <span className="text-xl">{placed ? theme.emoji : selectedCard ? '👇' : '➕'}</span>
+      <span className={`text-[12px] font-black ${placed ? '' : selectedCard ? 'text-orange-500' : 'text-slate-400'}`}>
+        {themeKey}
+      </span>
+      {placed && <span className="text-[10px] opacity-75 font-bold leading-none mt-1">配對成功</span>}
     </div>
   );
 };
@@ -361,38 +371,165 @@ export default function InteractiveQuestTab({
   role,
   submissions,
   onSaveQuestFeedback,
-  defaultQuest
+  defaultQuest,
+  defaultGameId
 }: InteractiveQuestTabProps) {
   
-  const [activeGameId, setActiveGameId] = useState<number | null>(null);
+  const [activeGameId, setActiveGameId] = useState<number | null>(defaultGameId || null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // QR Code auto-refresh: regenerates the class join code every 90s for security
-  const QR_REFRESH_SECONDS = 90;
-  const [qrSecondsLeft, setQrSecondsLeft] = useState(QR_REFRESH_SECONDS);
-  const [qrVersion, setQrVersion] = useState(0);
+  // Synchronized Game State (Teacher Dashboard & Classroom Projection & Students)
+  const [gameMode, setGameMode] = useState<'individual' | 'team' | 'class'>('individual');
+  const [teamSizes, setTeamSizes] = useState<Record<string, number>>({
+    xiaoping: 8,
+    bojun: 8,
+    kehua: 8,
+    xiaowen: 8,
+  });
+  const [projectionEnabled, setProjectionEnabled] = useState<boolean>(true);
+  const [randomModeEnabled, setRandomModeEnabled] = useState<boolean>(true);
+  const [timerPerQuestion, setTimerPerQuestion] = useState<number>(30);
 
+  // Poll state from server to maintain real-time sync across all pages/devices
   useEffect(() => {
-    const timer = setInterval(() => {
-      setQrSecondsLeft((prev) => {
-        if (prev <= 1) {
-          setQrVersion((v) => v + 1);
-          return QR_REFRESH_SECONDS;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
+    let isMounted = true;
+    
+    const fetchState = () => {
+      fetch('/api/state')
+        .then(res => res.json())
+        .then(data => {
+          if (!isMounted) return;
+          if (data && data.interactiveQuestState) {
+            const qState = data.interactiveQuestState;
+            if (qState.gameMode) setGameMode(qState.gameMode);
+            if (qState.teamSizes) setTeamSizes(qState.teamSizes);
+            if (qState.projectionEnabled !== undefined) setProjectionEnabled(qState.projectionEnabled);
+            if (qState.randomModeEnabled !== undefined) setRandomModeEnabled(qState.randomModeEnabled);
+            if (qState.timerPerQuestion !== undefined) setTimerPerQuestion(qState.timerPerQuestion);
+          }
+        })
+        .catch(err => console.error("Failed to fetch interactive quest state:", err));
+    };
+
+    fetchState();
+    const interval = setInterval(fetchState, 3500); // Poll every 3.5 seconds
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
-  const qrProgressPercent = ((QR_REFRESH_SECONDS - qrSecondsLeft) / QR_REFRESH_SECONDS) * 100;
+  // Sync state helper to persist on the server instantly
+  const handleUpdateQuestState = (updates: {
+    gameMode?: 'individual' | 'team' | 'class';
+    teamSizes?: Record<string, number>;
+    projectionEnabled?: boolean;
+    randomModeEnabled?: boolean;
+    timerPerQuestion?: number;
+  }) => {
+    const nextGameMode = updates.gameMode !== undefined ? updates.gameMode : gameMode;
+    const nextTeamSizes = updates.teamSizes !== undefined ? updates.teamSizes : teamSizes;
+    const nextProjectionEnabled = updates.projectionEnabled !== undefined ? updates.projectionEnabled : projectionEnabled;
+    const nextRandomModeEnabled = updates.randomModeEnabled !== undefined ? updates.randomModeEnabled : randomModeEnabled;
+    const nextTimerPerQuestion = updates.timerPerQuestion !== undefined ? updates.timerPerQuestion : timerPerQuestion;
 
-  // Link copy simulation
+    if (updates.gameMode !== undefined) setGameMode(updates.gameMode);
+    if (updates.teamSizes !== undefined) setTeamSizes(updates.teamSizes);
+    if (updates.projectionEnabled !== undefined) setProjectionEnabled(updates.projectionEnabled);
+    if (updates.randomModeEnabled !== undefined) setRandomModeEnabled(updates.randomModeEnabled);
+    if (updates.timerPerQuestion !== undefined) setTimerPerQuestion(updates.timerPerQuestion);
+
+    fetch('/api/state', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        interactiveQuestState: {
+          gameMode: nextGameMode,
+          teamSizes: nextTeamSizes,
+          projectionEnabled: nextProjectionEnabled,
+          randomModeEnabled: nextRandomModeEnabled,
+          timerPerQuestion: nextTimerPerQuestion,
+        }
+      })
+    })
+    .catch(err => console.error("Failed to sync interactive quest state to server:", err));
+  };
+
+  useEffect(() => {
+    if (defaultGameId) {
+      setActiveGameId(defaultGameId);
+    }
+  }, [defaultGameId]);
+
+  // Dynamic class code that is different every time or can be refreshed
+  const [classCode, setClassCode] = useState<string>(() => {
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('taiyu_life_class_code') : null;
+    if (saved) return saved;
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let code = '';
+    for (let i = 0; i < 4; i++) {
+      code += chars[Math.floor(Math.random() * chars.length)];
+    }
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('taiyu_life_class_code', code);
+    }
+    return code;
+  });
+
+  const handleRefreshClassCode = () => {
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let code = '';
+    for (let i = 0; i < 4; i++) {
+      code += chars[Math.floor(Math.random() * chars.length)];
+    }
+    setClassCode(code);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('taiyu_life_class_code', code);
+    }
+    showToast('🎲 已產生全新班級互動代碼！');
+  };
+
+  const joinUrl = typeof window !== 'undefined' 
+    ? `${window.location.origin}${window.location.pathname}?tab=互動遊戲&join=${classCode}` 
+    : 'https://taiyu-life.edu';
+
+  // Link copy with clipboard support
   const [copiedLink, setCopiedLink] = useState(false);
   const handleCopyLink = () => {
-    setCopiedLink(true);
-    showToast('🔗 已複製班級互動連結，快分享給同學們吧！');
-    setTimeout(() => setCopiedLink(false), 2000);
+    const copyText = joinUrl;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(copyText)
+        .then(() => {
+          setCopiedLink(true);
+          showToast('🔗 已複製班級互動連結，快分享給同學們吧！');
+          setTimeout(() => setCopiedLink(false), 2000);
+        })
+        .catch(() => {
+          fallbackCopyText(copyText);
+        });
+    } else {
+      fallbackCopyText(copyText);
+    }
+  };
+
+  const fallbackCopyText = (text: string) => {
+    try {
+      const el = document.createElement('textarea');
+      el.value = text;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      setCopiedLink(true);
+      showToast('🔗 已複製班級互動連結，快分享給同學們吧！');
+      setTimeout(() => setCopiedLink(false), 2000);
+    } catch (err) {
+      showToast('❌ 複製失敗，請手動複製瀏覽器網址！');
+    }
   };
 
   const showToast = (msg: string) => {
@@ -502,54 +639,45 @@ export default function InteractiveQuestTab({
   const MBTI_GROUPS = [
     { name: '外交家', color: 'emerald', desc: '溫暖友善，重視和諧與人際關係，擁有理想與同理心。', types: 'ENFJ · ENFP · INFJ · INFP' },
     { name: '分析家', color: 'violet', desc: '理性思考，喜歡探索真理，追求知識與創新。', types: 'INTJ · INTP · ENTJ · ENTP' },
-    { name: '守護者', color: 'sky', desc: '可靠負責，注重秩序與規則，樂於保護他人。', types: 'ISTJ · ISFJ · ESTJ · ESFJ' },
-    { name: '探險家', color: 'orange', desc: '熱愛自由，勇於嘗試新事物，活在當下、行動力強。', types: 'ISTP · ISFP · ESTP · ESFP' },
+    { name: '守護者', color: 'sky', desc: '注重守護與實踐，腳踏實地、盡忠職守且值得信賴。', types: 'ISTJ · ISFJ · ESTJ · ESFJ' },
+    { name: '探險家', color: 'orange', desc: '靈活應變，充滿活力，熱愛藝術，享受在當下的體驗。', types: 'ISTP · ISFP · ESTP · ESFP' },
   ];
 
   const handleMbtiAnswer = (val: string) => {
     const nextAnswers = { ...mbtiAnswers, [mbtiStep]: val };
     setMbtiAnswers(nextAnswers);
-    if (mbtiStep < mbtiQuestions.length - 1) {
-      setMbtiStep(mbtiStep + 1);
-    } else {
-      showToast('🎉 MBTI 測驗完成！已算出您的性格傾向！');
-      setMbtiStep(mbtiStep + 1); // completion view
-      const pickFinal = (axis: string, a: string, b: string) => {
-        let ca = 0, cb = 0;
-        mbtiQuestions.forEach((q, i) => {
-          if (q.axis !== axis) return;
-          const ans = nextAnswers[i];
-          if (ans === a) ca++; else if (ans) cb++;
-        });
-        return ca >= cb ? a : b;
-      };
-      const finalType = pickFinal('EI', 'E', 'I') + pickFinal('SN', 'S', 'N') + pickFinal('TF', 'T', 'F') + pickFinal('JP', 'J', 'P');
-      saveGameResult('mbti', { type: finalType, answers: nextAnswers });
+    const nextStep = mbtiStep + 1;
+    setMbtiStep(nextStep);
+    if (nextStep >= mbtiQuestions.length) {
+      saveGameResult('mbti', { answers: nextAnswers });
+      showToast('🎉 MBTI 測驗完成！');
     }
   };
 
-  const mbtiAxisPercent = (axis: string, letterA: string) => {
-    let countA = 0, countB = 0;
-    mbtiQuestions.forEach((q, i) => {
-      if (q.axis !== axis) return;
-      const ans = mbtiAnswers[i];
-      if (ans === letterA) countA++;
-      else if (ans) countB++;
+  const mbtiAxisPercent = (leftChar: string, rightChar: string): number => {
+    const relevantQuestions = mbtiQuestions.filter(q => q.axis === leftChar + rightChar || q.axis === rightChar + leftChar);
+    if (relevantQuestions.length === 0) return 50;
+    let leftCount = 0;
+    relevantQuestions.forEach((q) => {
+      const originalIdx = mbtiQuestions.indexOf(q);
+      const ans = mbtiAnswers[originalIdx];
+      if (ans === leftChar) leftCount++;
     });
-    const total = countA + countB;
-    if (total === 0) return 50;
-    return Math.round((countA / total) * 100);
+    return Math.round((leftCount / relevantQuestions.length) * 100);
   };
 
-  const getMbtiResult = () => {
-    const pick = (axis: string, a: string, b: string) => (mbtiAxisPercent(axis, a) >= 50 ? a : b);
-    return pick('EI', 'E', 'I') + pick('SN', 'S', 'N') + pick('TF', 'T', 'F') + pick('JP', 'J', 'P');
+  const getMbtiResult = (): string => {
+    const E = mbtiAxisPercent('E', 'I') >= 50 ? 'E' : 'I';
+    const S = mbtiAxisPercent('S', 'N') >= 50 ? 'S' : 'N';
+    const T = mbtiAxisPercent('T', 'F') >= 50 ? 'T' : 'F';
+    const J = mbtiAxisPercent('J', 'P') >= 50 ? 'J' : 'P';
+    return `${E}${S}${T}${J}`;
   };
 
   const resetMbti = () => {
-    setMbtiStarted(false);
     setMbtiStep(0);
     setMbtiAnswers({});
+    setMbtiStarted(false);
   };
 
   // ----------------------------------------------------
@@ -562,18 +690,40 @@ export default function InteractiveQuestTab({
     '價值思辨': false,
     '靈性修養': false
   });
-  const handlePlacePuzzle = (theme: string) => {
-    setPuzzlePlaced(prev => ({ ...prev, [theme]: true }));
-    showToast(`🧩 成功嵌入拼圖：${theme}！`);
+  const [selectedPuzzleCard, setSelectedPuzzleCard] = useState<string | null>(null);
+
+  const handlePlacePuzzle = (themeKey: string) => {
+    const nextPlaced = { ...puzzlePlaced, [themeKey]: true };
+    setPuzzlePlaced(nextPlaced);
+    setSelectedPuzzleCard(null);
+    showToast(`🧩 成功將「${themeKey}」放置到地圖上！`);
+    saveGameResult('puzzle', { placed: nextPlaced });
   };
+
+  const handleZoneClick = (themeKey: string) => {
+    if (!selectedPuzzleCard) {
+      showToast('💡 請先點擊左側「主題拼圖卡」，再點擊對應的地圖空格！');
+      return;
+    }
+    if (selectedPuzzleCard === themeKey) {
+      handlePlacePuzzle(themeKey);
+    } else {
+      showToast(`❌ 放錯位置囉！「${selectedPuzzleCard}」不應該放在這裡，請再想想看！`);
+    }
+  };
+
   const resetPuzzle = () => {
-    setPuzzlePlaced({
+    const cleared = {
       '哲學思考': false,
       '人學探索': false,
       '終極關懷': false,
       '價值思辨': false,
       '靈性修養': false
-    });
+    };
+    setPuzzlePlaced(cleared);
+    setSelectedPuzzleCard(null);
+    saveGameResult('puzzle', { placed: cleared });
+    showToast('🔄 拼圖地圖已重置！');
   };
 
   // ----------------------------------------------------
@@ -581,10 +731,12 @@ export default function InteractiveQuestTab({
   // ----------------------------------------------------
   const [adventureStage, setAdventureStage] = useState(0);
   const [adventurePoints, setAdventurePoints] = useState({ 同理: 10, 責任: 10, 勇氣: 10 });
+  const [adventureChoices, setAdventureChoices] = useState<Record<number, number>>({});
+  
   const adventureScenarios = [
     {
       title: '校園小衝突',
-      story: '下課時，博鈞不小心撞倒了小文正在整理的書本，兩人因此起了口角，周圍同學都圍過來看熱鬧。此時你會？',
+      story: '下課時，博鈞不小心撞倒了小文正在整理的書本，兩人起了口角，周圍同學都在圍觀。此時你會？',
       options: [
         { text: '上前打圓場，請兩人先冷靜下來再說。', points: { 責任: 6, 同理: 6, 勇氣: 5 } },
         { text: '幫忙把散落的書撿起來，緩和現場氣氛。', points: { 責任: 4, 同理: 8, 勇氣: 2 } },
@@ -604,7 +756,7 @@ export default function InteractiveQuestTab({
     },
     {
       title: '考試作弊的誘惑',
-      story: '快段考了，隔壁的好友博鈞因為練球沒時間複習，偷偷把英文單字卡夾在筆袋下。你看見了，而且他向你投來求助的眼神。此時你會？',
+      story: '快段考了，隔壁的好友博鈞因練球沒時間複習，偷偷把單字卡夾在筆袋下。你看見了，且他投來求助眼神。此時你會？',
       options: [
         { text: '假裝沒看見，專心寫自己的考卷。', points: { 責任: 5, 同理: 0, 勇氣: 0 } },
         { text: '以嚴肅眼神制止他，並在考後主動約他一起溫習。', points: { 責任: 8, 同理: 6, 勇氣: 8 } },
@@ -614,7 +766,7 @@ export default function InteractiveQuestTab({
     },
     {
       title: '被排擠時的心情',
-      story: '班上的小文因為性格內向、不擅言詞，分組時大家都不想跟他一組。小文一個人默默站在教室角落，看起來非常失落。此時你會？',
+      story: '班上的小文性格內向、不擅言詞，分組時大家都不想跟他一組。小文一個人默默站在教室角落，看起來非常失落。此時你會？',
       options: [
         { text: '主動走過去邀請小文加入我們小組。', points: { 同理: 10, 勇氣: 8, 責任: 5 } },
         { text: '跟組員討論看看，看大家願不願意接納他。', points: { 同理: 6, 勇氣: 3, 責任: 4 } },
@@ -624,7 +776,7 @@ export default function InteractiveQuestTab({
     },
     {
       title: '拾到錢包時',
-      story: '放學路上，你在樓梯間撿到一個錢包，裡面有現金跟一張學生證，是隔壁班同學的。四下無人，只有你知道這件事。此時你會？',
+      story: '放學路上，你在樓梯間撿到一個錢包，裡面有現金跟學生證。四下無人，只有你知道這件事。此時你會？',
       options: [
         { text: '立刻拿去交給學務處，請他們幫忙聯絡失主。', points: { 責任: 10, 同理: 6, 勇氣: 5 } },
         { text: '直接聯絡學生證上的同學，親自歸還。', points: { 責任: 8, 同理: 8, 勇氣: 6 } },
@@ -634,7 +786,7 @@ export default function InteractiveQuestTab({
     },
     {
       title: '家庭意見不一致',
-      story: '爸爸希望你選擇比較穩定的科系，將來有份不錯的工作；但你對繪畫和設計很有熱情，夢想是成為插畫家，這條路比較不確定。此時你會？',
+      story: '爸爸希望你選擇穩定的科系，將來有份不錯的工作；但你對繪畫有熱情，夢想是成為插畫家。此時你會？',
       options: [
         { text: '好好跟爸爸溝通，說明自己的想法與規劃。', points: { 責任: 8, 同理: 6, 勇氣: 8 } },
         { text: '先聽爸爸的建議，之後再慢慢調整方向。', points: { 責任: 6, 同理: 5, 勇氣: 3 } },
@@ -644,54 +796,86 @@ export default function InteractiveQuestTab({
     },
   ];
 
-  const handleAdventureChoice = (points: Record<string, number>) => {
+  const handleAdventureChoice = (points: Record<string, number>, optionIdx: number) => {
+    const nextChoices = { ...adventureChoices, [adventureStage]: optionIdx };
+    setAdventureChoices(nextChoices);
+
     const nextPoints = {
       同理: Math.max(0, adventurePoints.同理 + (points.同理 || 0)),
       責任: Math.max(0, adventurePoints.責任 + (points.責任 || 0)),
       勇氣: Math.max(0, adventurePoints.勇氣 + (points.勇氣 || 0))
     };
     setAdventurePoints(nextPoints);
-    if (adventureStage < adventureScenarios.length - 1) {
-      setAdventureStage(adventureStage + 1);
+
+    const isLast = adventureStage >= adventureScenarios.length - 1;
+    const nextStage = adventureStage + 1;
+    setAdventureStage(nextStage);
+
+    if (!isLast) {
       showToast('⚔️ 抉擇完成，前往下一個情境冒險！');
+      saveGameResult('adventure', { points: nextPoints, stage: nextStage, selectedChoices: nextChoices });
     } else {
-      setAdventureStage(adventureStage + 1); // Complete
       showToast('🌟 恭喜你，冒險關卡全數完成！');
-      saveGameResult('adventure', { points: nextPoints });
+      saveGameResult('adventure', { points: nextPoints, stage: nextStage, selectedChoices: nextChoices });
     }
   };
 
   const resetAdventure = () => {
     setAdventureStage(0);
     setAdventurePoints({ 同理: 10, 責任: 10, 勇氣: 10 });
+    setAdventureChoices({});
   };
 
   // ----------------------------------------------------
-  // GAME STATE 4: RELATIONSHIPS
+  // GAME STATE 4: RELATIONSHIPS (Interactive connection game)
   // ----------------------------------------------------
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [selectedRel, setSelectedRel] = useState<string>('死黨');
-  const [connections, setConnections] = useState<Array<{ from: string; to: string; rel: string }>>([
-    { from: '陳可華', to: '王博鈞', rel: '死黨' },
-    { from: '張曉萍', to: '王小文', rel: '陪伴者' },
-    { from: '陳可華', to: '可華爸爸', rel: '家人' },
-    { from: '陳可華', to: '可華爺爺', rel: '支持者' }
-  ]);
+  const [connections, setConnections] = useState<Array<{ from: string; to: string; rel: string; desc?: string }>>([]);
+
+  const VALID_RELATIONSHIPS = [
+    { from: '陳可華', to: '王博鈞', rel: '死黨', desc: '博鈞是可華最好的球友和死黨，在對方心情低潮時互相陪伴打氣！' },
+    { from: '張曉萍', to: '王小文', rel: '陪伴者', desc: '小文是曉萍最溫柔的陪伴者，在曉萍因家庭壓力難過時默默給予肩膀與傾聽！' },
+    { from: '陳可華', to: '可華爸爸', rel: '家人', desc: '爸爸在可華失去爺爺而感到迷惘時，給予穩定的支持和父愛，是可信任的親情家人！' },
+    { from: '陳可華', to: '可華爺爺', rel: '支持者', desc: '爺爺是可華生命中智慧的指路明燈，常常講述深刻的人生哲理故事！' }
+  ];
 
   const handleNodeClick = (node: string) => {
     if (!selectedNode) {
       setSelectedNode(node);
+      showToast(`🎯 已選擇第一個角色：${node}，接著請點選要與其連線的角色！`);
     } else {
       if (selectedNode !== node) {
-        // Create link
-        const exists = connections.some(c => (c.from === selectedNode && c.to === node) || (c.from === node && c.to === selectedNode));
-        if (exists) {
-          showToast('⚠️ 這兩個角色之間已經建立了連結！');
+        // Find if this connection pair exists in valid textbook relationships
+        const match = VALID_RELATIONSHIPS.find(r => 
+          ((r.from === selectedNode && r.to === node) || (r.from === node && r.to === selectedNode)) &&
+          r.rel === selectedRel
+        );
+
+        if (match) {
+          const exists = connections.some(c => (c.from === selectedNode && c.to === node) || (c.from === node && c.to === selectedNode));
+          if (exists) {
+            showToast(`⚠️ 「${selectedNode}」與「${node}」之間已建立了「${selectedRel}」關係！`);
+          } else {
+            const newConn = { from: selectedNode, to: node, rel: selectedRel, desc: match.desc };
+            const nextConnections = [...connections, newConn];
+            setConnections(nextConnections);
+            showToast(`🎉 配對成功！\n👉 ${match.desc}`);
+            saveGameResult('relationships', { connections: nextConnections });
+          }
         } else {
-          const nextConnections = [...connections, { from: selectedNode, to: node, rel: selectedRel }];
-          setConnections(nextConnections);
-          showToast(`💖 建立了「${selectedNode}」與「${node}」的 ${selectedRel} 關係！`);
-          saveGameResult('relationships', { connections: nextConnections });
+          // Provide a helpful clue depending on who is clicked
+          let feedbackClue = '💡 提示：請重新觀察課本中他們的角色互動與支持陪伴關係喔！例如陳可華和他的爺爺是什麼關係呢？';
+          if ((selectedNode === '陳可華' && node === '王博鈞') || (selectedNode === '王博鈞' && node === '陳可華')) {
+            feedbackClue = '💡 提示：博鈞是可華最好的球友和同學，這在關係中被稱為什麼呢？請切換下方關係標籤！';
+          } else if ((selectedNode === '張曉萍' && node === '王小文') || (selectedNode === '王小文' && node === '張曉萍')) {
+            feedbackClue = '💡 提示：小文經常在曉萍哭泣難過時默默傾聽，她是曉萍溫柔的「什麼者」呢？';
+          } else if ((selectedNode === '陳可華' && node === '可華爸爸') || (selectedNode === '可華爸爸' && node === '陳可華')) {
+            feedbackClue = '💡 提示：可華爸爸和可華有共同血緣和深厚的愛，他是最親近的「什麼」呢？';
+          } else if ((selectedNode === '陳可華' && node === '可華爺爺') || (selectedNode === '可華爺爺' && node === '陳可華')) {
+            feedbackClue = '💡 提示：爺爺常和可華講故事，給予他在悲傷中向前走的精神力量，他是可華的「什麼者」呢？';
+          }
+          showToast(`❌ 關係配對不正確喔！\n${feedbackClue}`);
         }
       }
       setSelectedNode(null);
@@ -699,8 +883,18 @@ export default function InteractiveQuestTab({
   };
 
   const handleRemoveConnection = (idx: number) => {
-    setConnections(prev => prev.filter((_, i) => i !== idx));
+    setConnections(prev => {
+      const next = prev.filter((_, i) => i !== idx);
+      saveGameResult('relationships', { connections: next });
+      return next;
+    });
     showToast('❌ 關係連結已移除。');
+  };
+
+  const resetConnections = () => {
+    setConnections([]);
+    setSelectedNode(null);
+    showToast('🔄 關係連線已全數重置，請重新挑戰！');
   };
 
   // ----------------------------------------------------
@@ -960,6 +1154,127 @@ export default function InteractiveQuestTab({
 
   const unlockedBadgeCount = badgeTasks.filter(t => t.done).length;
 
+  // ----------------------------------------------------
+  // CORE CLASSROOM DATA SYNCHRONIZATION EFFECT
+  // ----------------------------------------------------
+  useEffect(() => {
+    if (!submissions || submissions.length === 0) return;
+
+    // 1. Load active student's own persistent state across sessions
+    if (currentStudent?.studentId) {
+      const mySub = submissions.find(s => s.studentId === currentStudent.studentId);
+      if (mySub && mySub.games) {
+        // Game 1: MBTI
+        if (mySub.games['game_mbti']?.data) {
+          const mbtiData = mySub.games['game_mbti'].data;
+          if (mbtiData.answers && Object.keys(mbtiData.answers).length > 0) {
+            setMbtiAnswers(mbtiData.answers);
+            setMbtiStarted(true);
+            setMbtiStep(mbtiQuestions.length); // Direct jump to results view
+          }
+        }
+        // Game 2: Puzzle Map
+        if (mySub.games['game_puzzle']?.data?.placed) {
+          const loadedPlaced = mySub.games['game_puzzle'].data.placed;
+          // Only sync if there is actual progress
+          if (Object.values(loadedPlaced).filter(Boolean).length > 0) {
+            setPuzzlePlaced(loadedPlaced);
+          }
+        }
+        // Game 3: Scenario Adventure
+        if (mySub.games['game_adventure']?.data) {
+          const advData = mySub.games['game_adventure'].data;
+          if (advData.points) setAdventurePoints(advData.points);
+          if (advData.stage !== undefined) setAdventureStage(advData.stage);
+        }
+        // Game 4: Relationships Connecting
+        if (mySub.games['game_relationships']?.data?.connections) {
+          setConnections(mySub.games['game_relationships'].data.connections);
+        }
+        // Game 5: Value Scales
+        if (mySub.games['game_value_scales']?.data) {
+          const valData = mySub.games['game_value_scales'].data;
+          if (valData.valuesList) setValuesList(valData.valuesList);
+          if (valData.reflection !== undefined) setReflectionText(valData.reflection);
+        }
+        // Game 9: Mood History
+        if (mySub.games['game_mood']?.data) {
+          const latestMood = mySub.games['game_mood'].data;
+          setSavedMoods(prev => {
+            const exists = prev.some(m => m.note === latestMood.note && m.level === latestMood.level);
+            if (exists) return prev;
+            return [latestMood, ...prev];
+          });
+        }
+        // Game 10: Badge Tasks
+        if (mySub.games['game_badges']?.data?.tasks) {
+          setBadgeTasks(mySub.games['game_badges'].data.tasks);
+        }
+      }
+    }
+
+    // 2. Aggregate class-wide real-time live boards (Games 7 & 8)
+    // --- Game 7: Classroom Gratitude Bubble Wall ---
+    const defaultBubbles = [
+      { text: '謝謝小文今天借我橡皮擦，你總是默默照顧身邊的人！', sender: '陳可華', color: '#FED7AA' },
+      { text: '謝謝博鈞放學後耐心教我數學題，你真的很厲害！', sender: '張曉萍', color: '#FBCFE8' },
+      { text: '感謝林老師這週課堂上生動的引導，讓我學會珍惜生命。', sender: '王小文', color: '#D9F99D' },
+      { text: '感謝曉萍跟我一起分工做藝術海報，非常有耐心！', sender: 'Anonymous', color: '#BAE6FD' }
+    ];
+    const liveBubbles = [...defaultBubbles];
+    
+    submissions.forEach(sub => {
+      const gradData = sub.games?.['game_gratitude']?.data;
+      if (gradData && gradData.message) {
+        const isAnon = gradData.anonymous;
+        const senderName = isAnon ? '匿名同學' : (sub.studentName || '同學');
+        // Prevent duplicate rendering
+        const exists = liveBubbles.some(b => b.text === gradData.message && b.sender === senderName);
+        if (!exists) {
+          liveBubbles.unshift({
+            text: gradData.message,
+            sender: senderName,
+            color: gradData.color || '#FED7AA'
+          });
+        }
+      }
+    });
+    setBubbles(liveBubbles);
+    setWarmthIndex(Math.min(100, 80 + liveBubbles.length * 2));
+
+    // --- Game 8: Real-time Debate Votes & Comments ---
+    let livePro = 16;
+    let liveCon = 14;
+    const defaultComments = [
+      { user: '張曉萍', text: '正方博鈞說的「心靈安定才是幸福」真的很有深度，完全認同！', side: 'pro' },
+      { user: '陳可華', text: '可是反方說得也對，沒有健康的成功保障，幸福有時很難持久呀？', side: 'con' },
+      { user: '林老師', text: '這是一個經典的雙向思考：成功是外在的刻度，幸福是內在的羅盤。', side: 'teacher' }
+    ];
+    const liveComments = [...defaultComments];
+
+    submissions.forEach(sub => {
+      const debateData = sub.games?.['game_debate']?.data;
+      if (debateData) {
+        if (debateData.vote === 'pro') livePro++;
+        if (debateData.vote === 'con') liveCon++;
+        if (debateData.comment) {
+          const user = sub.studentName || '熱情同學';
+          const exists = liveComments.some(c => c.text === debateData.comment && c.user === user);
+          if (!exists) {
+            liveComments.push({
+              user,
+              text: debateData.comment,
+              side: debateData.vote || 'spectator'
+            });
+          }
+        }
+      }
+    });
+    setDebateVotes({ pro: livePro, con: liveCon });
+    setComments(liveComments);
+
+  }, [submissions, currentStudent]);
+
   return (
     <div className="min-h-screen bg-[#FBF3E4] text-[#3E2723] font-sans pb-16 px-4 md:px-8 relative overflow-hidden">
 
@@ -1026,7 +1341,7 @@ export default function InteractiveQuestTab({
                 </h1>
                 
                 <p className="text-sm md:text-base font-extrabold text-[#7D5C43]/90 leading-relaxed max-w-xl">
-                  老師掌控節奏，學生掃描 QR Code 即可加入，一起參與互動遊戲，讓學習更有趣！
+                  老師掌控節奏，學生輸入代碼即可加入，一起參與互動遊戲，讓學習更有趣！
                 </p>
               </div>
 
@@ -1073,54 +1388,31 @@ export default function InteractiveQuestTab({
                         <h3 className="font-black text-[#4A321F] text-sm">本班遊戲入口</h3>
                       </div>
 
-                      {/* Horizontal layout card */}
-                      <div className="flex items-center gap-4 bg-white border border-[#EAD5C3]/60 p-4 pb-5 rounded-2xl shadow-3xs">
-                        {/* QR Code Box with auto-refresh countdown ring */}
-                        <div className="relative w-24 h-24 shrink-0">
-                          {/* Countdown ring */}
-                          <svg className="absolute inset-0 w-24 h-24 -rotate-90 pointer-events-none" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="46" fill="none" stroke="#FCE1D1" strokeWidth="4" />
-                            <circle
-                              cx="50" cy="50" r="46" fill="none" stroke="#E65100" strokeWidth="4"
-                              strokeDasharray={2 * Math.PI * 46}
-                              strokeDashoffset={2 * Math.PI * 46 * (1 - qrProgressPercent / 100)}
-                              strokeLinecap="round"
-                              style={{ transition: 'stroke-dashoffset 1s linear' }}
-                            />
-                          </svg>
-                          <div key={qrVersion} className="absolute inset-1.5 bg-[#FFFDF9] border-2 border-[#FAD8C1] rounded-xl p-1.5 flex flex-col items-center justify-center overflow-hidden group">
-                            {/* Fake QR code blocks - re-seeded on each refresh */}
-                            <div
-                              className="w-full h-full opacity-90"
-                              style={{
-                                backgroundImage: 'radial-gradient(#4A321F 2.5px, transparent 2.5px)',
-                                backgroundSize: '6px 6px',
-                                backgroundPosition: `${(qrVersion * 3) % 6}px ${(qrVersion * 2) % 6}px`
-                              }}
-                            />
-                            <div className="absolute top-2 left-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
-                            <div className="absolute top-2 right-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
-                            <div className="absolute bottom-2 left-2 w-5 h-5 border-2 border-[#4A321F] bg-white rounded-xs" />
-                            <div className="absolute w-4 h-4 bg-[#FFEAD5] border-2 border-[#E65100] rounded-full flex items-center justify-center shadow-xs">
-                              <span className="text-[12px]">📙</span>
-                            </div>
-                          </div>
-                          {/* Seconds-left badge */}
-                          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#E65100] text-white text-[10.5px] font-black px-2 py-0.5 rounded-full shadow-xs whitespace-nowrap flex items-center gap-1">
-                            <RefreshCw className="w-2.5 h-2.5" />
-                            <span>{qrSecondsLeft}s 後更新</span>
+                      {/* Polished, clean Class Code card */}
+                      <div className="bg-white border-2 border-[#EAD5C3]/60 p-4 rounded-2xl shadow-3xs text-center space-y-3.5 relative">
+                        <div className="absolute top-3 right-3 flex gap-1">
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping absolute" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 relative" />
+                        </div>
+                        
+                        <div className="space-y-1 text-center">
+                          <span className="text-[11px] font-black text-slate-400 uppercase tracking-wider block">專屬班級互動代碼</span>
+                          <div className="flex items-center justify-center gap-2">
+                            <span className="text-3xl font-black text-[#E65100] tracking-widest font-mono bg-[#FFF8F2] py-1.5 px-5 rounded-xl border-2 border-[#FCD2B5] inline-block shadow-3xs">
+                              {classCode}
+                            </span>
+                            <button
+                              onClick={handleRefreshClassCode}
+                              title="更換新班級代碼"
+                              className="p-2 rounded-xl text-slate-400 hover:text-[#E65100] hover:bg-orange-50 border border-transparent hover:border-[#FCD2B5] transition-all cursor-pointer bg-[#FCFAF7] active:scale-95"
+                            >
+                              <RefreshCw className="w-4 h-4" />
+                            </button>
                           </div>
                         </div>
 
-                        {/* Class Info */}
-                        <div className="space-y-1.5 flex-1 text-left">
-                          <span className="text-[12px] font-black text-slate-400 block uppercase">班級代碼</span>
-                          <span className="text-2xl font-black text-[#E65100] tracking-widest font-mono bg-[#FFF8F2] py-0.5 px-2.5 rounded-lg border border-[#FCD2B5] inline-block">4A28</span>
-                          
-                          <div className="text-[12px] font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 inline-flex items-center gap-1.5 mt-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            <span>已加入 32 / 40 人</span>
-                          </div>
+                        <div className="text-[12px] font-black text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-flex items-center gap-1.5 mx-auto">
+                          <span>已連線學生：32 / 40 人</span>
                         </div>
                       </div>
                     </div>
@@ -1162,13 +1454,34 @@ export default function InteractiveQuestTab({
                       <div className="space-y-1.5">
                         <label className="text-[12.5px] font-black text-slate-400 block text-left uppercase">🎮 遊戲模式</label>
                         <div className="grid grid-cols-3 gap-1.5 bg-white p-1 rounded-xl border border-[#EAD5C3]/40 shadow-3xs">
-                          <button className="py-1 px-2.5 bg-[#FFF0E0] border border-[#F3C29F] rounded-lg text-xs font-black text-[#D84315] flex items-center justify-center gap-1 shadow-3xs">
+                          <button 
+                            onClick={() => handleUpdateQuestState({ gameMode: 'individual' })}
+                            className={`py-1 px-2.5 rounded-lg text-xs font-black flex items-center justify-center gap-1 transition-all cursor-pointer ${
+                              gameMode === 'individual'
+                                ? 'bg-[#FFF0E0] border border-[#F3C29F] text-[#D84315] shadow-3xs'
+                                : 'hover:bg-slate-50 border border-transparent text-slate-500'
+                            }`}
+                          >
                             <span>👤 個人作答</span>
                           </button>
-                          <button className="py-1 px-2.5 hover:bg-slate-50 border border-transparent rounded-lg text-xs font-black text-slate-500 flex items-center justify-center gap-1 transition-all">
+                          <button 
+                            onClick={() => handleUpdateQuestState({ gameMode: 'team' })}
+                            className={`py-1 px-2.5 rounded-lg text-xs font-black flex items-center justify-center gap-1 transition-all cursor-pointer ${
+                              gameMode === 'team'
+                                ? 'bg-[#FFF0E0] border border-[#F3C29F] text-[#D84315] shadow-3xs'
+                                : 'hover:bg-slate-50 border border-transparent text-slate-500'
+                            }`}
+                          >
                             <span>👥 小組競賽</span>
                           </button>
-                          <button className="py-1 px-2.5 hover:bg-slate-50 border border-transparent rounded-lg text-xs font-black text-slate-500 flex items-center justify-center gap-1 transition-all">
+                          <button 
+                            onClick={() => handleUpdateQuestState({ gameMode: 'class' })}
+                            className={`py-1 px-2.5 rounded-lg text-xs font-black flex items-center justify-center gap-1 transition-all cursor-pointer ${
+                              gameMode === 'class'
+                                ? 'bg-[#FFF0E0] border border-[#F3C29F] text-[#D84315] shadow-3xs'
+                                : 'hover:bg-slate-50 border border-transparent text-slate-500'
+                            }`}
+                          >
                             <span>🤝 全班合作</span>
                           </button>
                         </div>
@@ -1184,7 +1497,27 @@ export default function InteractiveQuestTab({
                               <img src={charXiaopingImg} className="w-6 h-6 rounded-full border border-pink-200 object-cover" />
                               <span className="text-xs font-black text-slate-800">張曉萍隊</span>
                             </div>
-                            <span className="text-[12px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                            <div className="flex items-center gap-1 bg-emerald-50 px-1 py-0.5 rounded-md border border-emerald-100">
+                              <button 
+                                onClick={() => {
+                                  const size = teamSizes.xiaoping ?? 8;
+                                  if (size > 0) handleUpdateQuestState({ teamSizes: { ...teamSizes, xiaoping: size - 1 } });
+                                }}
+                                className="w-3.5 h-3.5 bg-white text-emerald-800 border border-emerald-200 rounded flex items-center justify-center text-[9px] font-black hover:bg-emerald-100 cursor-pointer active:scale-90"
+                              >
+                                -
+                              </button>
+                              <span className="text-[10px] text-emerald-600 font-extrabold px-0.5">{teamSizes.xiaoping ?? 8}人</span>
+                              <button 
+                                onClick={() => {
+                                  const size = teamSizes.xiaoping ?? 8;
+                                  handleUpdateQuestState({ teamSizes: { ...teamSizes, xiaoping: size + 1 } });
+                                }}
+                                className="w-3.5 h-3.5 bg-white text-emerald-800 border border-emerald-200 rounded flex items-center justify-center text-[9px] font-black hover:bg-emerald-100 cursor-pointer active:scale-90"
+                              >
+                                +
+                              </button>
+                            </div>
                           </div>
                           
                           {/* Team 2: 王博鈞 */}
@@ -1193,7 +1526,27 @@ export default function InteractiveQuestTab({
                               <img src={charBojunImg} className="w-6 h-6 rounded-full border border-blue-200 object-cover" />
                               <span className="text-xs font-black text-slate-800">王博鈞隊</span>
                             </div>
-                            <span className="text-[12px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                            <div className="flex items-center gap-1 bg-emerald-50 px-1 py-0.5 rounded-md border border-emerald-100">
+                              <button 
+                                onClick={() => {
+                                  const size = teamSizes.bojun ?? 8;
+                                  if (size > 0) handleUpdateQuestState({ teamSizes: { ...teamSizes, bojun: size - 1 } });
+                                }}
+                                className="w-3.5 h-3.5 bg-white text-emerald-800 border border-emerald-200 rounded flex items-center justify-center text-[9px] font-black hover:bg-emerald-100 cursor-pointer active:scale-90"
+                              >
+                                -
+                              </button>
+                              <span className="text-[10px] text-emerald-600 font-extrabold px-0.5">{teamSizes.bojun ?? 8}人</span>
+                              <button 
+                                onClick={() => {
+                                  const size = teamSizes.bojun ?? 8;
+                                  handleUpdateQuestState({ teamSizes: { ...teamSizes, bojun: size + 1 } });
+                                }}
+                                className="w-3.5 h-3.5 bg-white text-emerald-800 border border-emerald-200 rounded flex items-center justify-center text-[9px] font-black hover:bg-emerald-100 cursor-pointer active:scale-90"
+                              >
+                                +
+                              </button>
+                            </div>
                           </div>
 
                           {/* Team 3: 陳可華 */}
@@ -1202,7 +1555,27 @@ export default function InteractiveQuestTab({
                               <img src={charKehuaImg} className="w-6 h-6 rounded-full border border-sky-200 object-cover" />
                               <span className="text-xs font-black text-slate-800">陳可華隊</span>
                             </div>
-                            <span className="text-[12px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                            <div className="flex items-center gap-1 bg-emerald-50 px-1 py-0.5 rounded-md border border-emerald-100">
+                              <button 
+                                onClick={() => {
+                                  const size = teamSizes.kehua ?? 8;
+                                  if (size > 0) handleUpdateQuestState({ teamSizes: { ...teamSizes, kehua: size - 1 } });
+                                }}
+                                className="w-3.5 h-3.5 bg-white text-emerald-800 border border-emerald-200 rounded flex items-center justify-center text-[9px] font-black hover:bg-emerald-100 cursor-pointer active:scale-90"
+                              >
+                                -
+                              </button>
+                              <span className="text-[10px] text-emerald-600 font-extrabold px-0.5">{teamSizes.kehua ?? 8}人</span>
+                              <button 
+                                onClick={() => {
+                                  const size = teamSizes.kehua ?? 8;
+                                  handleUpdateQuestState({ teamSizes: { ...teamSizes, kehua: size + 1 } });
+                                }}
+                                className="w-3.5 h-3.5 bg-white text-emerald-800 border border-emerald-200 rounded flex items-center justify-center text-[9px] font-black hover:bg-emerald-100 cursor-pointer active:scale-90"
+                              >
+                                +
+                              </button>
+                            </div>
                           </div>
 
                           {/* Team 4: 王小文 */}
@@ -1211,7 +1584,27 @@ export default function InteractiveQuestTab({
                               <img src={charXiaowenImg} className="w-6 h-6 rounded-full border border-purple-200 object-cover" />
                               <span className="text-xs font-black text-slate-800">王小文隊</span>
                             </div>
-                            <span className="text-[12px] text-emerald-600 font-extrabold bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">8人</span>
+                            <div className="flex items-center gap-1 bg-emerald-50 px-1 py-0.5 rounded-md border border-emerald-100">
+                              <button 
+                                onClick={() => {
+                                  const size = teamSizes.xiaowen ?? 8;
+                                  if (size > 0) handleUpdateQuestState({ teamSizes: { ...teamSizes, xiaowen: size - 1 } });
+                                }}
+                                className="w-3.5 h-3.5 bg-white text-emerald-800 border border-emerald-200 rounded flex items-center justify-center text-[9px] font-black hover:bg-emerald-100 cursor-pointer active:scale-90"
+                              >
+                                -
+                              </button>
+                              <span className="text-[10px] text-emerald-600 font-extrabold px-0.5">{teamSizes.xiaowen ?? 8}人</span>
+                              <button 
+                                onClick={() => {
+                                  const size = teamSizes.xiaowen ?? 8;
+                                  handleUpdateQuestState({ teamSizes: { ...teamSizes, xiaowen: size + 1 } });
+                                }}
+                                className="w-3.5 h-3.5 bg-white text-emerald-800 border border-emerald-200 rounded flex items-center justify-center text-[9px] font-black hover:bg-emerald-100 cursor-pointer active:scale-90"
+                              >
+                                +
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1219,139 +1612,208 @@ export default function InteractiveQuestTab({
                   </div>
                 </div>
 
-                {/* Bottom Row: 10 款互動遊戲列表 (takes full width of Left Group - col-span-9) */}
-                <div className="space-y-4 pt-2">
-                  <div className="flex items-center gap-2 border-b-2 border-[#EAD5C3]/40 pb-2">
-                    <Gamepad2 className="w-5 h-5 text-[#E65100]" />
-                    <h2 className="text-base font-black text-[#4A321F]">課堂專用互動遊戲（共 10 款）</h2>
-                  </div>
+                {/* Bottom Row: 10 款互動遊戲列表 */}
+                  <div className="space-y-4 pt-2">
+                    <div className="flex items-center gap-2 border-b-2 border-[#EAD5C3]/40 pb-2">
+                      <Gamepad2 className="w-5 h-5 text-[#E65100]" />
+                      <h2 className="text-base font-black text-[#4A321F]">課堂專用互動遊戲（共 10 款）</h2>
+                    </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
-                    {GAMES.map((game) => (
-                      <div 
-                        key={game.id}
-                        className="bg-white border-2 border-[#EAD5C3] hover:border-[#E65100] p-4 rounded-3xl transition-all duration-300 shadow-3xs flex flex-col justify-between min-h-[225px] group hover:-translate-y-1 relative"
-                      >
-                        <div className="space-y-3">
-                          <div className="flex justify-between items-center">
-                            <span className={`text-[12px] font-black font-mono px-2 py-0.5 rounded-md border ${game.color}`}>
-                              {game.number}
-                            </span>
-                          </div>
-
-                          {/* Custom vector illustration inside */}
-                          <div className="h-14 w-full rounded-xl overflow-hidden shadow-3xs">
-                            {renderGameIllustration(game.id)}
-                          </div>
-
-                          <div className="space-y-1 text-left">
-                            <h4 className="font-black text-xs text-[#4A321F] group-hover:text-[#E65100] transition-colors leading-tight line-clamp-1">
-                              {game.title}
-                            </h4>
-                            <p className="text-[12px] text-slate-400 font-bold leading-normal line-clamp-2">
-                              {game.description}
-                            </p>
-                          </div>
-                        </div>
-
-                        <button 
-                          onClick={() => {
-                            setActiveGameId(game.id);
-                            showToast(`🎮 歡迎進入：${game.title}！`);
-                          }}
-                          className="w-full mt-2.5 py-1.5 bg-white hover:bg-orange-50 border-2 border-[#EAD5C3] group-hover:border-[#E65100] rounded-xl text-[12px] font-black text-[#4A321F] group-hover:text-[#E65100] transition-all shadow-3xs flex items-center justify-center gap-0.5 cursor-pointer"
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
+                      {GAMES.map((game) => (
+                        <div 
+                          key={game.id}
+                          className="bg-white border-2 border-[#EAD5C3] hover:border-[#E65100] p-4 rounded-3xl transition-all duration-300 shadow-3xs flex flex-col justify-between min-h-[225px] group hover:-translate-y-1 relative"
                         >
-                          <span>進入遊戲</span>
-                          <ChevronRight className="w-3 h-3" />
-                        </button>
-                      </div>
-                    ))}
+                          <div className="space-y-3">
+                            <div className="flex justify-between items-center">
+                              <span className={`text-[12px] font-black font-mono px-2 py-0.5 rounded-md border ${game.color}`}>
+                                {game.number}
+                              </span>
+                            </div>
+
+                            {/* Custom vector illustration inside */}
+                            <div className="h-14 w-full rounded-xl overflow-hidden shadow-3xs">
+                              {renderGameIllustration(game.id)}
+                            </div>
+
+                            <div className="space-y-1 text-left">
+                              <h4 className="font-black text-xs text-[#4A321F] group-hover:text-[#E65100] transition-colors leading-tight line-clamp-1">
+                                {game.title}
+                              </h4>
+                              <p className="text-[12px] text-slate-400 font-bold leading-normal line-clamp-2">
+                                {game.description}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-1.5 mt-2.5">
+                            <button 
+                              onClick={() => {
+                                setActiveGameId(game.id);
+                                showToast(`🎮 歡迎進入：${game.title}！`);
+                              }}
+                              className="py-1.5 bg-[#E65100] hover:bg-[#D84315] text-white border border-[#E65100] rounded-xl text-[11px] font-black transition-all shadow-3xs flex items-center justify-center gap-0.5 cursor-pointer"
+                            >
+                              <span>進入遊戲</span>
+                              <ChevronRight className="w-2.5 h-2.5" />
+                            </button>
+                            <button 
+                              onClick={() => {
+                                const gameLink = typeof window !== 'undefined'
+                                  ? `${window.location.origin}/?tab=互動遊戲&gameId=${game.id}`
+                                  : `https://ais-dev-gyn54gieiwj7kxse4qngdt-72799407197.asia-northeast1.run.app/?tab=互動遊戲&gameId=${game.id}`;
+                                if (navigator.clipboard && navigator.clipboard.writeText) {
+                                  navigator.clipboard.writeText(gameLink)
+                                    .then(() => {
+                                      showToast(`🔗 已複製第 ${game.id} 關「${game.title}」專屬連結！`);
+                                    })
+                                    .catch(() => {
+                                      const el = document.createElement('textarea');
+                                      el.value = gameLink;
+                                      el.setAttribute('readonly', '');
+                                      el.style.position = 'absolute';
+                                      el.style.left = '-9999px';
+                                      document.body.appendChild(el);
+                                      el.select();
+                                      document.execCommand('copy');
+                                      document.body.removeChild(el);
+                                      showToast(`🔗 已複製第 ${game.id} 關「${game.title}」專屬連結！`);
+                                    });
+                                } else {
+                                  const el = document.createElement('textarea');
+                                  el.value = gameLink;
+                                  el.setAttribute('readonly', '');
+                                  el.style.position = 'absolute';
+                                  el.style.left = '-9999px';
+                                  document.body.appendChild(el);
+                                  el.select();
+                                  document.execCommand('copy');
+                                  document.body.removeChild(el);
+                                  showToast(`🔗 已複製第 ${game.id} 關「${game.title}」專屬連結！`);
+                                }
+                              }}
+                              className="py-1.5 bg-white hover:bg-orange-50 border border-[#EAD5C3] rounded-xl text-[11px] font-black text-[#E65100] hover:border-[#E65100] transition-all shadow-3xs flex items-center justify-center gap-0.5 cursor-pointer"
+                            >
+                              <LinkIcon className="w-2.5 h-2.5" />
+                              <span>複製連結</span>
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* RIGHT GROUP (col-span-3): Projection settings and Classroom Timelines */}
-              <div className="lg:col-span-3 space-y-6">
-                
-                {/* 投影模式設定 */}
-                <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm space-y-4">
-                  <div className="flex items-center justify-between border-b-2 border-[#EAD5C3]/60 pb-3">
-                    <span className="font-black text-[#4A321F] text-sm">投影模式設定</span>
-                    {/* Toggle switch simulation */}
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[12px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">已開啟</span>
-                      <div className="w-9 h-5 bg-emerald-500 rounded-full p-0.5 cursor-pointer flex justify-end shadow-inner">
-                        <div className="w-4 h-4 bg-white rounded-full shadow-xs" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3.5 text-xs font-extrabold text-[#7D5C43] leading-relaxed text-left">
-                    <div className="flex justify-between items-center bg-white border border-[#F0E2D5] p-2.5 rounded-xl shadow-3xs">
-                      <span className="text-slate-400 text-[12.5px]">隨機出題模式:</span>
-                      <span className="font-black text-[#E65100]">開啟 (不重覆)</span>
-                    </div>
-                    <div className="flex justify-between items-center bg-white border border-[#F0E2D5] p-2.5 rounded-xl shadow-3xs">
-                      <span className="text-slate-400 text-[12.5px]">單題答題計時:</span>
-                      <span className="font-black text-[#E65100]">30 秒 / 題</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 課堂互動流程 */}
-                <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm space-y-4 relative overflow-hidden">
-                  <div className="absolute -bottom-10 -right-10 text-5xl opacity-5 pointer-events-none">🌿</div>
+                {/* RIGHT GROUP (col-span-3): Projection settings and Classroom Timelines */}
+                <div className="lg:col-span-3 space-y-6">
                   
-                  <div className="flex items-center gap-2 border-b-2 border-[#EAD5C3]/60 pb-3">
-                    <span className="text-lg">📋</span>
-                    <h3 className="font-black text-[#4A321F] text-sm">課堂互動流程</h3>
+                  {/* 投影模式設定 */}
+                  <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm space-y-4">
+                    <div className="flex items-center justify-between border-b-2 border-[#EAD5C3]/60 pb-3">
+                      <span className="font-black text-[#4A321F] text-sm">投影模式設定</span>
+                      {/* Toggle switch simulation */}
+                      <button 
+                        onClick={() => handleUpdateQuestState({ projectionEnabled: !projectionEnabled })}
+                        className="flex items-center gap-1.5 focus:outline-none cursor-pointer group active:scale-95 transition-transform"
+                      >
+                        <span className={`text-[12px] font-black px-2 py-0.5 rounded-full border ${
+                          projectionEnabled 
+                            ? 'text-emerald-700 bg-emerald-50 border-emerald-200' 
+                            : 'text-slate-500 bg-slate-50 border-slate-200'
+                        }`}>
+                          {projectionEnabled ? '已開啟' : '已關閉'}
+                        </span>
+                        <div className={`w-9 h-5 rounded-full p-0.5 shadow-inner transition-colors duration-200 flex ${
+                          projectionEnabled ? 'bg-emerald-500 justify-end' : 'bg-slate-300 justify-start'
+                        }`}>
+                          <div className="w-4 h-4 bg-white rounded-full shadow-xs" />
+                        </div>
+                      </button>
+                    </div>
+
+                    <div className="space-y-3.5 text-xs font-extrabold text-[#7D5C43] leading-relaxed text-left">
+                      <button 
+                        onClick={() => handleUpdateQuestState({ randomModeEnabled: !randomModeEnabled })}
+                        className="w-full flex justify-between items-center bg-white hover:bg-orange-50 active:scale-99 border border-[#EAD5C3]/60 hover:border-[#E65100] p-2.5 rounded-xl shadow-3xs cursor-pointer transition-all"
+                      >
+                        <span className="text-slate-400 text-[12.5px]">隨機出題模式:</span>
+                        <span className="font-black text-[#E65100]">
+                          {randomModeEnabled ? '開啟 (不重覆)' : '關閉 (依序)'}
+                        </span>
+                      </button>
+                      
+                      <button 
+                        onClick={() => {
+                          const timings = [15, 30, 45, 60, 0];
+                          const currentIndex = timings.indexOf(timerPerQuestion);
+                          const nextIndex = (currentIndex + 1) % timings.length;
+                          handleUpdateQuestState({ timerPerQuestion: timings[nextIndex] });
+                        }}
+                        className="w-full flex justify-between items-center bg-white hover:bg-orange-50 active:scale-99 border border-[#EAD5C3]/60 hover:border-[#E65100] p-2.5 rounded-xl shadow-3xs cursor-pointer transition-all"
+                      >
+                        <span className="text-slate-400 text-[12.5px]">單題答題計時:</span>
+                        <span className="font-black text-[#E65100]">
+                          {timerPerQuestion === 0 ? '無限制' : `${timerPerQuestion} 秒 / 題`}
+                        </span>
+                      </button>
+                    </div>
                   </div>
 
-                  {/* Vertical Timeline stepper */}
-                  <div className="space-y-4 relative pl-5 text-left">
-                    <div className="absolute left-1.5 top-2 bottom-2 w-0.5 border-l-2 border-dashed border-[#F3C29F]" />
+                  {/* 課堂互動流程 */}
+                  <div className="bg-[#FCFAF7] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm space-y-4 relative overflow-hidden">
+                    <div className="absolute -bottom-10 -right-10 text-5xl opacity-5 pointer-events-none">🌿</div>
                     
-                    <div className="relative">
-                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">1</div>
-                      <div className="leading-tight">
-                        <div className="text-xs font-black text-[#4A321F]">Step 1 老師選擇遊戲</div>
-                        <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">點選下方 10 款互動遊戲之一，按「進入遊戲」</p>
-                      </div>
+                    <div className="flex items-center gap-2 border-b-2 border-[#EAD5C3]/60 pb-3">
+                      <span className="text-lg">📋</span>
+                      <h3 className="font-black text-[#4A321F] text-sm">課堂互動流程</h3>
                     </div>
 
-                    <div className="relative">
-                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">2</div>
-                      <div className="leading-tight">
-                        <div className="text-xs font-black text-[#4A321F]">Step 2 學生掃描 QR Code</div>
-                        <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">學生開啟手機鏡頭，掃描 left 側班級大 QR Code</p>
+                    {/* Vertical Timeline stepper */}
+                    <div className="space-y-4 relative pl-5 text-left">
+                      <div className="absolute left-1.5 top-2 bottom-2 w-0.5 border-l-2 border-dashed border-[#F3C29F]" />
+                      
+                      <div className="relative">
+                        <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">1</div>
+                        <div className="leading-tight">
+                          <div className="text-xs font-black text-[#4A321F]">Step 1 老師選擇遊戲</div>
+                          <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">點選下方 10 款互動遊戲之一，按「進入遊戲」</p>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="relative">
-                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">3</div>
-                      <div className="leading-tight">
-                        <div className="text-xs font-black text-[#4A321F]">Step 3 學生進入遊戲</div>
-                        <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">學生輸入座號姓名，一秒登入班級同樂大廳</p>
+                      <div className="relative">
+                        <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">2</div>
+                        <div className="leading-tight">
+                          <div className="text-xs font-black text-[#4A321F]">Step 2 學生點擊互動連結</div>
+                          <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">學生點擊分享的專屬互動連結，或輸入 4 碼班級代碼</p>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="relative">
-                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">4</div>
-                      <div className="leading-tight">
-                        <div className="text-xs font-black text-[#4A321F]">Step 4 全班即時作答／小組比賽</div>
-                        <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">手機端與課堂大投影同步作答，累積生命點數</p>
+                      <div className="relative">
+                        <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">3</div>
+                        <div className="leading-tight">
+                          <div className="text-xs font-black text-[#4A321F]">Step 3 學生進入遊戲</div>
+                          <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">學生輸入座號姓名，一秒登入班級同樂大廳</p>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="relative">
-                      <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">5</div>
-                      <div className="leading-tight">
-                        <div className="text-xs font-black text-[#4A321F]">Step 5 顯示結果與總結</div>
-                        <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">大螢幕秀出全班答題分佈，老師進行一鍵點評</p>
+                      <div className="relative">
+                        <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">4</div>
+                        <div className="leading-tight">
+                          <div className="text-xs font-black text-[#4A321F]">Step 4 全班即時作答／小組比賽</div>
+                          <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">手機端與課堂大投影同步作答，累積生命點數</p>
+                        </div>
+                      </div>
+
+                      <div className="relative">
+                        <div className="absolute -left-5 top-0.5 w-3.5 h-3.5 rounded-full bg-[#E65100] border-2 border-white shadow-xs flex items-center justify-center text-[12px] text-white font-black">5</div>
+                        <div className="leading-tight">
+                          <div className="text-xs font-black text-[#4A321F]">Step 5 顯示結果與總結</div>
+                          <p className="text-[12px] text-slate-400 font-bold leading-normal mt-0.5">大螢幕秀出全班答題分佈，老師進行一鍵點評</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
               </div>
             </div>
 
@@ -1398,19 +1860,42 @@ export default function InteractiveQuestTab({
           <div className="space-y-6">
             
             {/* BACK TO LOBBY BUTTON */}
-            <div className="flex items-center justify-between bg-[#FCFAF6] border border-[#F1E0CE] rounded-2xl px-4 py-2.5 shadow-3xs">
-              <button 
-                onClick={() => {
-                  setActiveGameId(null);
-                  showToast('🚪 已返回班級同樂大廳');
-                }}
-                className="px-4 py-1.5 border border-[#F1E0CE] hover:bg-[#FAF5EC] text-slate-600 font-black text-xs rounded-xl transition-all flex items-center gap-1.5 cursor-pointer bg-white shadow-3xs"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>返回大廳</span>
-              </button>
-
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-[#FCFAF6] border border-[#F1E0CE] rounded-2xl p-3 shadow-3xs">
               <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => {
+                    setActiveGameId(null);
+                    showToast('🚪 已返回班級同樂大廳');
+                  }}
+                  className="px-4 py-1.5 border border-[#F1E0CE] hover:bg-[#FAF5EC] text-slate-600 font-black text-xs rounded-xl transition-all flex items-center gap-1.5 cursor-pointer bg-white shadow-3xs"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>返回大廳</span>
+                </button>
+
+                <button 
+                  onClick={() => {
+                    const gameUrl = `${window.location.origin}${window.location.pathname}?tab=互動遊戲&gameId=${activeGameId}`;
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                      navigator.clipboard.writeText(gameUrl)
+                        .then(() => {
+                          showToast('📋 已複製此關卡的專屬進入連結！快分享給同學吧！');
+                        })
+                        .catch(() => {
+                          fallbackCopyText(gameUrl);
+                        });
+                    } else {
+                      fallbackCopyText(gameUrl);
+                    }
+                  }}
+                  className="px-4 py-1.5 border border-orange-200 text-orange-700 bg-orange-50/50 hover:bg-orange-100/50 font-black text-xs rounded-xl transition-all flex items-center gap-1.5 cursor-pointer shadow-3xs"
+                >
+                  <LinkIcon className="w-3.5 h-3.5" />
+                  <span>複製此關卡連結</span>
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2 justify-end">
                 <span className="text-xs font-bold text-[#7D6B5D] bg-[#FAF5EC] px-3.5 py-1.5 rounded-full border border-[#F1E0CE]">
                   🎮 當前同樂：{GAMES.find(g => g.id === activeGameId)?.title}
                 </span>
@@ -1614,23 +2099,40 @@ export default function InteractiveQuestTab({
                   {/* Left: Draggable pieces list */}
                   <div className="lg:col-span-3 space-y-4">
                     <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left">
-                      <h4 className="font-black text-[#4A321F] text-xs pb-2 mb-3 flex items-center gap-1.5">📌 <span>可拖曳拼圖</span></h4>
-                      <p className="text-[12px] font-bold text-slate-400 mb-3">將左側拼圖拖曳到地圖上對應的位置！</p>
+                      <h4 className="font-black text-[#4A321F] text-xs pb-2 mb-3 flex items-center gap-1.5">📌 <span>主題拼圖卡</span></h4>
+                      <p className="text-[12px] font-bold text-slate-400 mb-3">💡 電腦：拖曳拼圖到右側空格。<br />📱 手機：點擊拼圖卡，再點擊地圖空格！</p>
                       <div className="space-y-2.5">
-                        {PUZZLE_THEMES.map((t) => (
-                          <div
-                            key={t.key}
-                            draggable={!puzzlePlaced[t.key]}
-                            onDragStart={(e) => e.dataTransfer.setData('text/plain', t.key)}
-                            className={`flex items-center gap-2.5 p-2.5 rounded-xl border-2 ${PUZZLE_STYLES[t.color]} ${puzzlePlaced[t.key] ? 'opacity-30 cursor-not-allowed' : 'cursor-grab active:cursor-grabbing'}`}
-                          >
-                            <span className="text-lg shrink-0">{t.emoji}</span>
-                            <div className="text-left leading-tight">
-                              <div className="text-xs font-black">{t.key}</div>
-                              <div className="text-[12px] font-bold opacity-80">{t.desc}</div>
+                        {PUZZLE_THEMES.map((t) => {
+                          const isSelected = selectedPuzzleCard === t.key;
+                          return (
+                            <div
+                              key={t.key}
+                              draggable={!puzzlePlaced[t.key]}
+                              onDragStart={(e) => e.dataTransfer.setData('text/plain', t.key)}
+                              onClick={() => {
+                                if (puzzlePlaced[t.key]) {
+                                  showToast(`✨ ${t.key} 已經成功置放囉！`);
+                                  return;
+                                }
+                                setSelectedPuzzleCard(isSelected ? null : t.key);
+                                showToast(`🎯 已選擇「${t.key}」，請點擊右邊對應的空格放置！`);
+                              }}
+                              className={`flex items-center gap-2.5 p-2.5 rounded-xl border-2 transition-all ${
+                                puzzlePlaced[t.key] 
+                                  ? 'opacity-30 cursor-not-allowed bg-slate-50 border-slate-100' 
+                                  : isSelected 
+                                    ? 'border-orange-500 bg-orange-50 ring-2 ring-orange-200 scale-102 cursor-pointer shadow-xs' 
+                                    : `cursor-grab active:cursor-grabbing hover:border-orange-200 ${PUZZLE_STYLES[t.color]}`
+                              }`}
+                            >
+                              <span className="text-lg shrink-0">{t.emoji}</span>
+                              <div className="text-left leading-tight">
+                                <div className="text-xs font-black">{t.key}</div>
+                                <div className="text-[12px] font-bold opacity-80">{t.desc}</div>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
@@ -1639,18 +2141,18 @@ export default function InteractiveQuestTab({
                   <div className="lg:col-span-6 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
                     <div className="grid grid-cols-2 gap-2 mb-2">
                       {['哲學思考', '人學探索'].map((key) => (
-                        <PuzzleZone key={key} themeKey={key} placed={puzzlePlaced[key]} onDropTheme={handlePlacePuzzle} />
+                        <PuzzleZone key={key} themeKey={key} placed={puzzlePlaced[key]} onDropTheme={handlePlacePuzzle} selectedCard={selectedPuzzleCard} onZoneClick={handleZoneClick} />
                       ))}
                     </div>
                     <div className="mb-2">
-                      <PuzzleZone themeKey="終極關懷" placed={puzzlePlaced['終極關懷']} onDropTheme={handlePlacePuzzle} tall />
+                      <PuzzleZone themeKey="終極關懷" placed={puzzlePlaced['終極關懷']} onDropTheme={handlePlacePuzzle} selectedCard={selectedPuzzleCard} onZoneClick={handleZoneClick} tall />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       {['價值思辨', '靈性修養'].map((key) => (
-                        <PuzzleZone key={key} themeKey={key} placed={puzzlePlaced[key]} onDropTheme={handlePlacePuzzle} />
+                        <PuzzleZone key={key} themeKey={key} placed={puzzlePlaced[key]} onDropTheme={handlePlacePuzzle} selectedCard={selectedPuzzleCard} onZoneClick={handleZoneClick} />
                       ))}
                     </div>
-                    <p className="text-center text-[12.5px] font-bold text-slate-400 mt-4">🖐️ 拖曳左側拼圖到對應位置，完成五大主題地圖！</p>
+                    <p className="text-center text-[12.5px] font-bold text-slate-400 mt-4">🖐️ 拖曳拼圖或點選放置，完美拼出五大生命領域吧！</p>
                   </div>
 
                   {/* Right: Progress + dad tip */}
@@ -1777,7 +2279,7 @@ export default function InteractiveQuestTab({
                           {adventureScenarios[adventureStage].options.map((opt, idx) => (
                             <button
                               key={idx}
-                              onClick={() => handleAdventureChoice(opt.points)}
+                              onClick={() => handleAdventureChoice(opt.points, idx)}
                               className="w-full text-left p-3.5 rounded-2xl border-2 border-[#F1E0CE] hover:border-[#E65100] hover:bg-orange-50/50 transition-all shadow-xs cursor-pointer active:scale-98 flex items-center gap-3"
                             >
                               <span className="w-6 h-6 rounded-full bg-[#E65100] text-white text-xs font-black flex items-center justify-center shrink-0">{idx + 1}</span>
@@ -1924,7 +2426,35 @@ export default function InteractiveQuestTab({
                           ))
                         )}
                       </div>
+
+                      {connections.length > 0 && (
+                        <div className="pt-3 border-t border-[#EAD5C3] mt-3.5 flex flex-col gap-2">
+                          <button
+                            onClick={resetConnections}
+                            className="w-full py-1.5 border border-red-200 text-red-600 bg-red-50/50 hover:bg-red-100/50 text-xs font-black rounded-lg transition-colors cursor-pointer"
+                          >
+                            🔄 重置關係連線
+                          </button>
+                        </div>
+                      )}
                     </div>
+
+                    {/* Unlocked Textbook Stories Feed */}
+                    {connections.length > 0 && (
+                      <div className="bg-[#FAFDF6] border-2 border-[#D2E4C4] rounded-3xl p-4 shadow-xs text-left">
+                        <h4 className="font-black text-[#2E5A1C] text-xs pb-1.5 border-b border-[#D2E4C4] mb-2 flex items-center gap-1">
+                          📖 Unlocked Relationship Stories
+                        </h4>
+                        <div className="space-y-3 max-h-48 overflow-y-auto pr-1">
+                          {connections.map((c, i) => (
+                            <div key={i} className="text-[11.5px] text-[#3F6A2D] bg-[#F1F9EB] p-2.5 rounded-xl border border-[#DDEED5] leading-relaxed">
+                              <b>{c.from} ↔️ {c.to} ({c.rel})：</b>
+                              <p className="text-slate-600 font-bold mt-1">{c.desc || '已配對成功！這是他們在生命探索中的重要夥伴關係。'}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Middle Column (col-span-6): Interactive Relations Canvas */}

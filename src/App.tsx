@@ -215,6 +215,43 @@ export default function App() {
   // Current Navigation Tab: '首頁' | '課程地圖' | '思辨與遊戲' | '成長表單' | '角色故事'
   const [activeTab, setActiveTab] = useState<string>('首頁');
   const [activeQuestType, setActiveQuestType] = useState<'autopilot' | 'socrates' | 'trolley' | 'fallacy' | 'teacher_panel' | undefined>(undefined);
+  const [initialGameId, setInitialGameId] = useState<number | null>(null);
+
+  // Parse deep-link URL query parameters (e.g., from QR code scans or shared links)
+  useEffect(() => {
+    if (!isLoaded) return;
+    
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get('tab');
+    const joinParam = params.get('join');
+    const gameIdParam = params.get('gameId');
+    
+    if (tabParam === '互動遊戲' || tabParam === '遊戲探索' || joinParam || gameIdParam) {
+      setActiveTab('互動遊戲');
+      
+      if (gameIdParam) {
+        const parsedGId = parseInt(gameIdParam, 10);
+        if (!isNaN(parsedGId)) {
+          setInitialGameId(parsedGId);
+        }
+      }
+      
+      // If student joins via QR code and isn't logged in, log them in as a seed student
+      if (!currentUser) {
+        const defaultStudent = registeredUsers.find(u => u.id === 'stud_xiaoping') || registeredUsers[0];
+        if (defaultStudent) {
+          setCurrentUser(defaultStudent);
+          safeStorage.setItem('life_edu_current_user', JSON.stringify(defaultStudent));
+        }
+      }
+      
+      // Clean up URL parameters to keep address bar pristine after processing
+      try {
+        const newUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+      } catch (e) {}
+    }
+  }, [isLoaded, registeredUsers, currentUser]);
 
   // Achievement popup tracking states
   const [unlockedBadgeForPopup, setUnlockedBadgeForPopup] = useState<any>(null);
@@ -587,6 +624,10 @@ export default function App() {
               <HomeTab 
                 onNavigate={handleTabSelection} 
                 onSelectUnit={handleSelectUnitFromHome} 
+                onSelectGameId={(gameId) => {
+                  setInitialGameId(gameId);
+                  handleTabSelection('互動遊戲');
+                }}
                 activeStudent={{
                   name: currentStudent?.studentName || '陳可華',
                   avatarEmoji: currentUser?.avatarEmoji || '👦🏻',
@@ -624,6 +665,7 @@ export default function App() {
                 submissions={submissions}
                 onSaveQuestFeedback={handleSaveQuestFeedback}
                 defaultQuest={activeQuestType}
+                defaultGameId={initialGameId || undefined}
               />
             )}
 

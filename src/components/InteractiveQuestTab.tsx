@@ -71,6 +71,13 @@ import {
   gameIcon10,
   lobbyHero,
   lobbyFloral,
+  badgeHero,
+  badgeSibian,
+  badgeTongli,
+  badgeYongqi,
+  badgeGanen,
+  badgeShengming,
+  badgeRecommendTask,
 } from '../assets/images/game-banners';
 
 const GAME_BANNER_IMAGES: Record<number, string> = {
@@ -200,6 +207,14 @@ const GAME_ICON_IMAGES: Record<number, string> = {
   8: gameIcon08,
   9: gameIcon09,
   10: gameIcon10,
+};
+
+const BADGE_ARTWORK: Record<string, string> = {
+  '思辨達人': badgeSibian,
+  '同理之心': badgeTongli,
+  '勇氣前行': badgeYongqi,
+  '感恩之光': badgeGanen,
+  '生命探索家': badgeShengming,
 };
 
 const renderGameIllustration = (gameId: number) => (
@@ -3372,8 +3387,9 @@ export default function InteractiveQuestTab({
               <div id="game-view-badge" className="space-y-6">
                 {/* 1. Banner */}
                 <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
-                  <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
-                  <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+                  <div className="absolute left-2 top-2 w-20 h-20 opacity-90 pointer-events-none select-none">
+                    <img src={lobbyFloral} alt="" className="w-full h-full object-contain" />
+                  </div>
                   <div className="flex items-center gap-5 z-10">
                     <div className="w-16 h-16 rounded-full bg-[#E65100] text-white flex items-center justify-center text-2xl font-black font-mono shrink-0 shadow-md">10</div>
                     <div className="space-y-1 text-left">
@@ -3381,8 +3397,8 @@ export default function InteractiveQuestTab({
                       <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">完成任務、收集徽章、看見自己的成長。</p>
                     </div>
                   </div>
-                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2">
-                    <img src={GAME_BANNER_IMAGES[10]} alt="" className="h-24 md:h-28 w-auto object-contain rounded-2xl" />
+                  <div className="hidden md:flex items-center z-10 shrink-0 pr-2 max-w-[340px]">
+                    <img src={badgeHero} alt="" className="w-full h-auto object-contain" />
                   </div>
                 </div>
 
@@ -3472,7 +3488,11 @@ export default function InteractiveQuestTab({
                             }`}
                           >
                             {t.done && <div className="absolute -top-1 -right-1 text-[12px] bg-amber-400 text-white px-1.5 py-0.5 rounded-bl-xl shadow-3xs font-black">⭐</div>}
-                            <span className="text-3xl mb-1.5">{t.done ? '🎖️' : '🔒'}</span>
+                            {BADGE_ARTWORK[t.badge] ? (
+                              <img src={BADGE_ARTWORK[t.badge]} alt={t.badge} className={`w-16 h-16 object-contain mb-1 ${t.done ? '' : 'grayscale opacity-60'}`} />
+                            ) : (
+                              <span className="text-3xl mb-1.5">{t.done ? '🎖️' : '🔒'}</span>
+                            )}
                             <span className="text-xs font-black tracking-wide leading-tight">{t.badge}</span>
                             <span className="text-[10.5px] font-bold text-slate-400 mt-1.5 leading-normal">
                               {t.done ? '已點亮解鎖' : '尚未解鎖'}
@@ -3485,6 +3505,23 @@ export default function InteractiveQuestTab({
 
                   {/* Right Column (col-span-3): Instructor encouragement card */}
                   <div className="lg:col-span-3 space-y-4">
+                    <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
+                      <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">
+                        <span className="text-base">⭐</span>
+                        <h5 className="font-black text-xs text-slate-800">今日推薦任務</h5>
+                      </div>
+                      <img src={badgeRecommendTask} alt="感恩小行動" className="w-full h-auto object-contain rounded-xl mb-3" />
+                      <p className="text-xs font-black text-[#4A321F] mb-1">感恩小行動</p>
+                      <p className="text-[12px] text-slate-400 font-bold leading-relaxed mb-3">對身邊的人表達感謝，讓溫暖在你我之間傳遞。</p>
+                      <button
+                        onClick={() => showToast('🌟 前往完成「感恩小行動」任務！')}
+                        className="w-full py-2 bg-white border-2 border-[#F1E0CE] hover:border-[#E65100] text-[#E65100] font-black text-xs rounded-xl transition-all shadow-3xs flex items-center justify-center gap-1 cursor-pointer"
+                      >
+                        <span>立即前往</span>
+                        <ChevronRight className="w-3 h-3" />
+                      </button>
+                    </div>
+
                     <div className="bg-[#FFFDF9] border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-xs text-left relative overflow-hidden">
                       <div className="absolute -bottom-8 -right-8 text-5xl opacity-10 pointer-events-none">✨</div>
                       <div className="flex items-center gap-2 border-b border-[#EAD5C3] pb-2.5 mb-3">

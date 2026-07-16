@@ -351,13 +351,25 @@ const PUZZLE_STYLES: Record<string, string> = {
   rose: 'bg-rose-50 border-rose-300 text-rose-700',
 };
 
-const PUZZLE_CHIP_STYLES: Record<string, string> = {
-  sky: 'bg-sky-500 text-white',
-  green: 'bg-emerald-500 text-white',
-  violet: 'bg-violet-500 text-white',
-  amber: 'bg-amber-500 text-white',
-  rose: 'bg-rose-500 text-white',
+const PUZZLE_CHIP_HEX: Record<string, string> = {
+  sky: '#0284c7',
+  green: '#059669',
+  violet: '#7c3aed',
+  amber: '#d97706',
+  rose: '#e11d48',
 };
+
+// Small badge shaped like an actual jigsaw piece (rounded square with a tab
+// bump on the right edge), used next to each theme card / completed pill.
+const PuzzleBadge: React.FC<{ emoji: string; color: string; muted?: boolean; size?: number }> = ({ emoji, color, muted, size = 36 }) => (
+  <svg width={size} height={size} viewBox="0 0 40 40" className="shrink-0" style={{ filter: muted ? 'grayscale(1) opacity(0.45)' : undefined }}>
+    <path
+      d="M12,4 H28 A4,4 0 0 1 32,8 V14 A6,6 0 1 1 32,26 V32 A4,4 0 0 1 28,36 H12 A4,4 0 0 1 8,32 V8 A4,4 0 0 1 12,4 Z"
+      fill={PUZZLE_CHIP_HEX[color]}
+    />
+    <text x="20" y="25" textAnchor="middle" fontSize="16">{emoji}</text>
+  </svg>
+);
 
 const PUZZLE_GRADIENTS: Record<string, [string, string]> = {
   sky: ['#CDEBFA', '#E9F5EC'],
@@ -2255,7 +2267,7 @@ export default function InteractiveQuestTab({
                                     : `cursor-grab active:cursor-grabbing hover:border-orange-200 ${PUZZLE_STYLES[t.color]}`
                               }`}
                             >
-                              <span className={`w-9 h-9 rounded-lg flex items-center justify-center text-base shrink-0 shadow-xs ${puzzlePlaced[t.key] ? 'bg-slate-200 text-slate-400' : PUZZLE_CHIP_STYLES[t.color]}`}>{t.emoji}</span>
+                              <PuzzleBadge emoji={t.emoji} color={t.color} muted={puzzlePlaced[t.key]} />
                               <div className="text-left leading-tight">
                                 <div className="text-xs font-black">{t.key}</div>
                                 <div className="text-[12px] font-bold opacity-80">{t.desc}</div>

@@ -414,15 +414,15 @@ const PuzzleBoard: React.FC<{
     const isPending = !!selectedCard && !isPlaced;
     const pos = PUZZLE_LABEL_POS[themeKey];
 
-    // Once placed, the piece becomes fully transparent so the real artwork
-    // (drawn once, beneath all pieces) shows through; only an outline remains.
+    // Once placed, the piece becomes fully transparent with no outline, so the
+    // real artwork (drawn once, beneath all pieces) shows through cleanly.
     const fill = isPlaced ? 'transparent' : isHover ? '#FFE7CE' : isPending ? '#FFF6EA' : '#FAF6F0';
-    const stroke = isPlaced ? '#ffffff' : isHover ? '#E65100' : isPending ? '#F5A15A' : '#E9D8C4';
+    const stroke = isPlaced ? 'none' : isHover ? '#E65100' : isPending ? '#F5A15A' : '#E9D8C4';
 
     const shapeProps = {
       fill,
       stroke,
-      strokeWidth: 3,
+      strokeWidth: isPlaced ? 0 : 3,
       strokeDasharray: isPlaced ? undefined : '6 5',
       onDragOver: (e: React.DragEvent) => { e.preventDefault(); setHoverZone(themeKey); },
       onDragLeave: () => setHoverZone((z) => (z === themeKey ? null : z)),

@@ -1624,25 +1624,65 @@ export default function InteractiveQuestTab({
                       <h2 className="text-base font-black text-[#4A321F]">課堂專用互動遊戲（共 10 款）</h2>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                       {GAMES.map((game) => (
                         <div 
                           key={game.id}
-                          className="bg-white border-2 border-[#EAD5C3] hover:border-[#E65100] p-5 rounded-3xl transition-all duration-300 shadow-3xs flex flex-col justify-between min-h-[260px] group hover:-translate-y-1 hover:shadow-md relative"
+                          className="bg-white border-2 border-[#EAD5C3] hover:border-[#E65100] p-4 rounded-3xl transition-all duration-300 shadow-3xs flex flex-col justify-between min-h-[240px] group hover:-translate-y-1 hover:shadow-md relative"
                         >
-                          <div className="space-y-3.5">
+                          <div className="space-y-3">
                             <div className="flex justify-between items-center">
                               <span className={`text-[12px] font-black font-mono px-2 py-0.5 rounded-md border ${game.color}`}>
                                 {game.number}
                               </span>
+                              <button
+                                onClick={() => {
+                                  const gameLink = typeof window !== 'undefined'
+                                    ? `${window.location.origin}/?tab=互動遊戲&gameId=${game.id}`
+                                    : `https://ais-dev-gyn54gieiwj7kxse4qngdt-72799407197.asia-northeast1.run.app/?tab=互動遊戲&gameId=${game.id}`;
+                                  if (navigator.clipboard && navigator.clipboard.writeText) {
+                                    navigator.clipboard.writeText(gameLink)
+                                      .then(() => {
+                                        showToast(`🔗 已複製第 ${game.id} 關「${game.title}」專屬連結！`);
+                                      })
+                                      .catch(() => {
+                                        const el = document.createElement('textarea');
+                                        el.value = gameLink;
+                                        el.setAttribute('readonly', '');
+                                        el.style.position = 'absolute';
+                                        el.style.left = '-9999px';
+                                        document.body.appendChild(el);
+                                        el.select();
+                                        document.execCommand('copy');
+                                        document.body.removeChild(el);
+                                        showToast(`🔗 已複製第 ${game.id} 關「${game.title}」專屬連結！`);
+                                      });
+                                  } else {
+                                    const el = document.createElement('textarea');
+                                    el.value = gameLink;
+                                    el.setAttribute('readonly', '');
+                                    el.style.position = 'absolute';
+                                    el.style.left = '-9999px';
+                                    document.body.appendChild(el);
+                                    el.select();
+                                    document.execCommand('copy');
+                                    document.body.removeChild(el);
+                                    showToast(`🔗 已複製第 ${game.id} 關「${game.title}」專屬連結！`);
+                                  }
+                                }}
+                                title="複製專屬連結"
+                                className="p-1.5 rounded-lg text-slate-300 hover:text-[#E65100] hover:bg-orange-50 transition-colors cursor-pointer"
+                              >
+                                <LinkIcon className="w-3.5 h-3.5" />
+                              </button>
                             </div>
 
                             {/* Custom vector illustration inside */}
-                            <div className="h-24 w-full rounded-xl overflow-hidden shadow-3xs">
+                            <div className="h-20 w-full rounded-xl overflow-hidden shadow-3xs">
                               {renderGameIllustration(game.id)}
                             </div>
 
-                            <div className="space-y-1.5 text-left">
+                            <div className="space-y-1 text-left">
                               <h4 className="font-black text-sm text-[#4A321F] group-hover:text-[#E65100] transition-colors leading-tight line-clamp-1">
                                 {game.title}
                               </h4>
@@ -1652,58 +1692,16 @@ export default function InteractiveQuestTab({
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-2 gap-2 mt-3.5">
-                            <button 
-                              onClick={() => {
-                                setActiveGameId(game.id);
-                                showToast(`🎮 歡迎進入：${game.title}！`);
-                              }}
-                              className="py-2 bg-[#E65100] hover:bg-[#D84315] text-white border border-[#E65100] rounded-xl text-xs font-black transition-all shadow-3xs flex items-center justify-center gap-0.5 cursor-pointer"
-                            >
-                              <span>進入遊戲</span>
-                              <ChevronRight className="w-3 h-3" />
-                            </button>
-                            <button 
-                              onClick={() => {
-                                const gameLink = typeof window !== 'undefined'
-                                  ? `${window.location.origin}/?tab=互動遊戲&gameId=${game.id}`
-                                  : `https://ais-dev-gyn54gieiwj7kxse4qngdt-72799407197.asia-northeast1.run.app/?tab=互動遊戲&gameId=${game.id}`;
-                                if (navigator.clipboard && navigator.clipboard.writeText) {
-                                  navigator.clipboard.writeText(gameLink)
-                                    .then(() => {
-                                      showToast(`🔗 已複製第 ${game.id} 關「${game.title}」專屬連結！`);
-                                    })
-                                    .catch(() => {
-                                      const el = document.createElement('textarea');
-                                      el.value = gameLink;
-                                      el.setAttribute('readonly', '');
-                                      el.style.position = 'absolute';
-                                      el.style.left = '-9999px';
-                                      document.body.appendChild(el);
-                                      el.select();
-                                      document.execCommand('copy');
-                                      document.body.removeChild(el);
-                                      showToast(`🔗 已複製第 ${game.id} 關「${game.title}」專屬連結！`);
-                                    });
-                                } else {
-                                  const el = document.createElement('textarea');
-                                  el.value = gameLink;
-                                  el.setAttribute('readonly', '');
-                                  el.style.position = 'absolute';
-                                  el.style.left = '-9999px';
-                                  document.body.appendChild(el);
-                                  el.select();
-                                  document.execCommand('copy');
-                                  document.body.removeChild(el);
-                                  showToast(`🔗 已複製第 ${game.id} 關「${game.title}」專屬連結！`);
-                                }
-                              }}
-                              className="py-2 bg-white hover:bg-orange-50 border border-[#EAD5C3] rounded-xl text-xs font-black text-[#E65100] hover:border-[#E65100] transition-all shadow-3xs flex items-center justify-center gap-0.5 cursor-pointer"
-                            >
-                              <LinkIcon className="w-3 h-3" />
-                              <span>複製連結</span>
-                            </button>
-                          </div>
+                          <button 
+                            onClick={() => {
+                              setActiveGameId(game.id);
+                              showToast(`🎮 歡迎進入：${game.title}！`);
+                            }}
+                            className="w-full py-2 mt-3 bg-[#E65100] hover:bg-[#D84315] text-white border border-[#E65100] rounded-xl text-xs font-black transition-all shadow-3xs flex items-center justify-center gap-1 cursor-pointer"
+                          >
+                            <span>進入遊戲</span>
+                            <ChevronRight className="w-3 h-3" />
+                          </button>
                         </div>
                       ))}
                     </div>

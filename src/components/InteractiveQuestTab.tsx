@@ -47,7 +47,6 @@ import charXiaowenImg from '../assets/images/characters/char_xiaowen.jpg';
 import charXiaopingImg from '../assets/images/characters/char_xiaoping.jpg';
 import charDadImg from '../assets/images/characters/char_dad.jpg';
 import charGrandpaImg from '../assets/images/characters/char_grandpa.jpg';
-import storyHeroPair from '../assets/images/characters/story_hero_pair.png';
 
 import {
   game01Banner,
@@ -70,6 +69,8 @@ import {
   gameIcon08,
   gameIcon09,
   gameIcon10,
+  lobbyHero,
+  lobbyFloral,
 } from '../assets/images/game-banners';
 
 const GAME_BANNER_IMAGES: Record<number, string> = {
@@ -1323,13 +1324,10 @@ export default function InteractiveQuestTab({
           <>
             {/* HERO BANNER SECTION */}
             <div id="lobby-hero-banner" className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
-              {/* Floral / Botanical Ornaments inside banner */}
-              <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(circle_at_center,rgba(230,81,0,0.06)_0,transparent_75%)] pointer-events-none" />
-              <div className="absolute bottom-0 right-0 w-48 h-48 bg-[radial-gradient(circle_at_center,rgba(76,175,80,0.06)_0,transparent_75%)] pointer-events-none" />
-              
-              {/* Floating Leaf SVGs */}
-              <div className="absolute top-4 right-1/3 opacity-20 pointer-events-none text-emerald-600 animate-pulse">🌱</div>
-              <div className="absolute bottom-4 left-1/4 opacity-25 pointer-events-none text-orange-500 animate-bounce">🍂</div>
+              {/* Floral vine decoration, top-left of the text block */}
+              <div className="absolute left-0 top-6 w-24 h-24 pointer-events-none opacity-90 select-none">
+                <img src={lobbyFloral} alt="" className="w-full h-full object-contain" />
+              </div>
 
               <div className="space-y-4 max-w-2xl text-center md:text-left z-10">
                 <div className="inline-flex items-center gap-2 bg-[#FFEAD5] border border-[#F3C29F] text-[#D84315] px-4 py-1.5 rounded-full text-xs font-black tracking-wide shadow-xs uppercase">
@@ -1346,25 +1344,14 @@ export default function InteractiveQuestTab({
                 </p>
               </div>
 
-              {/* Character illustrations decoration - Story Hero Pair from Character stories */}
-              <div className="relative shrink-0 flex items-center justify-center z-10">
-                {/* Decorative plant elements */}
-                <div className="absolute -left-10 -bottom-6 text-4xl select-none opacity-85 animate-pulse">🌿</div>
-                <div className="absolute -right-8 -top-8 text-4xl select-none opacity-85 animate-bounce">🌸</div>
-                
-                {/* Frame or container for the pair */}
-                <div className="relative bg-white/70 backdrop-blur-xs p-3 rounded-3xl border-2 border-[#EAD5C3] shadow-md overflow-hidden max-w-[280px]">
-                  <img 
-                    src={storyHeroPair} 
-                    alt="張曉萍 與 陳可華" 
-                    className="w-full h-auto object-cover rounded-2xl hover:scale-102 transition-transform duration-500" 
-                    referrerPolicy="no-referrer"
-                  />
-                  {/* Tiny captions */}
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-amber-50/90 border border-[#F3C29F] py-1 px-3 rounded-full shadow-xs flex items-center gap-1.5 whitespace-nowrap">
-                    <span className="text-[12px] font-black text-[#8D6E63]">張曉萍 ＆ 陳可華</span>
-                  </div>
-                </div>
+              {/* Character illustration decoration: students cheering, with book + floral vines */}
+              <div className="relative shrink-0 flex items-center justify-center z-10 w-full md:w-auto md:max-w-[420px]">
+                <img
+                  src={lobbyHero}
+                  alt="同學們開心迎接互動遊戲"
+                  className="w-full h-auto object-contain select-none"
+                  referrerPolicy="no-referrer"
+                />
               </div>
             </div>
 

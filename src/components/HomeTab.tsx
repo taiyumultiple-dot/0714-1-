@@ -819,7 +819,7 @@ export default function HomeTab({
 
               {/* Step 2 */}
               <div 
-                onClick={() => onNavigate('成長表單')}
+                onClick={() => onNavigate('課程地圖')}
                 className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs cursor-pointer hover:bg-[#FFFBF5] hover:scale-[1.03] transition-all group"
                 title="點選前往瀏覽成長學習單分類"
               >
@@ -834,7 +834,7 @@ export default function HomeTab({
 
               {/* Step 3 */}
               <div 
-                onClick={() => onNavigate('成長表單')}
+                onClick={() => onNavigate('課程地圖')}
                 className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs cursor-pointer hover:bg-[#FFFBF5] hover:scale-[1.03] transition-all group"
                 title="點選前往成長表單填寫作答"
               >
@@ -849,7 +849,7 @@ export default function HomeTab({
 
               {/* Step 4 */}
               <div 
-                onClick={() => onNavigate('成長表單')}
+                onClick={() => onNavigate('課程地圖')}
                 className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs cursor-pointer hover:bg-[#FFFBF5] hover:scale-[1.03] transition-all group"
                 title="點選前往成長表單送出提交"
               >
@@ -864,7 +864,7 @@ export default function HomeTab({
 
               {/* Step 5 */}
               <div 
-                onClick={() => onNavigate('成長表單')}
+                onClick={() => onNavigate('課程地圖')}
                 className="flex items-center gap-2 bg-white/60 px-3.5 py-2 rounded-2xl border border-[#F2E5D5]/50 shadow-3xs cursor-pointer hover:bg-[#FFFBF5] hover:scale-[1.03] transition-all group"
                 title="點選前往成長表單查看老師評分與引導回饋"
               >

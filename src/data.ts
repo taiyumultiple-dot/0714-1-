@@ -275,7 +275,7 @@ export const UNIT_DATA = [
     totalChapters: 3,
     status: 'completed' as const, // completed, active, locked
     chapters: [
-      { id: '01-1', title: '思考的樂趣', completed: true },
+      { id: '01-1', title: '跳脫慣性、正確思考', completed: true },
       { id: '01-2', title: '思考的邏輯與方法', completed: true },
       { id: '01-3', title: '思考的幸福方程式', completed: true }
     ],
@@ -292,7 +292,7 @@ export const UNIT_DATA = [
     chapters: [
       { id: '02-1', title: '「人」是什麼？', completed: true },
       { id: '02-2', title: '探索自我', completed: true },
-      { id: '02-3', title: '生命的網絡 你我他', completed: false }
+      { id: '02-3', title: '生命的網絡——你我他', completed: false }
     ],
     avatar: '👤'
   },
@@ -306,7 +306,7 @@ export const UNIT_DATA = [
     status: 'active' as const,
     chapters: [
       { id: '03-1', title: '哲學與生命意義', completed: true },
-      { id: '03-2', title: '愛與勇氣生死無懼', completed: true },
+      { id: '03-2', title: '愛與勇氣讓生死無懼', completed: true },
       { id: '03-3', title: '智慧與愛讓生命更高', completed: false }
     ],
     avatar: '🧡'

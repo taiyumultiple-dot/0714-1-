@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import charKehuaImg from '../assets/images/characters/char_kehua.jpg';
 import charXiaowenImg from '../assets/images/characters/char_xiaowen.jpg';
+import charDadImg from '../assets/images/characters/char_dad.jpg';
+import storyHeroPairImg from '../assets/images/characters/story_hero_pair.png';
 import { 
   Sparkles, 
   Tv, 
@@ -85,9 +87,9 @@ interface ThreePanelBentoLayoutProps {
   middleTitle: React.ReactNode;
   middleIcon?: React.ReactNode;
   middleContent: React.ReactNode;
-  rightTitle: React.ReactNode;
+  rightTitle?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  rightContent: React.ReactNode;
+  rightContent?: React.ReactNode;
 }
 
 export function ThreePanelBentoLayout({
@@ -98,13 +100,14 @@ export function ThreePanelBentoLayout({
   middleIcon = "✍️",
   middleContent,
   rightTitle,
-  rightIcon = "💡",
+  rightIcon,
   rightContent
 }: ThreePanelBentoLayoutProps) {
+  const hasRightContent = !!rightContent;
   return (
     <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch w-full">
       {/* Left Panel: Scenario / Context */}
-      <div className="xl:col-span-4 flex flex-col border border-purple-200/60 bg-[#FBF9F6] rounded-3xl shadow-sm overflow-hidden h-full">
+      <div className={`${hasRightContent ? 'xl:col-span-4' : 'xl:col-span-5'} flex flex-col border border-purple-200/60 bg-[#FBF9F6] rounded-3xl shadow-sm overflow-hidden h-full`}>
         <div className="flex items-center gap-2 border-b border-[#EAD2B3]/30 bg-[#F5EFE6]/50 px-4 py-3 shrink-0">
           <span className="text-base bg-purple-100 p-1 rounded-xl text-purple-700 font-extrabold flex items-center justify-center shrink-0 w-8 h-8">{leftIcon}</span>
           <span className="text-xs sm:text-sm font-black text-purple-950 tracking-wide">
@@ -117,7 +120,7 @@ export function ThreePanelBentoLayout({
       </div>
 
       {/* Middle Panel: Interactive Form */}
-      <div className="xl:col-span-5 flex flex-col border border-amber-200/60 bg-white rounded-3xl shadow-sm overflow-hidden h-full">
+      <div className={`${hasRightContent ? 'xl:col-span-5' : 'xl:col-span-7'} flex flex-col border border-amber-200/60 bg-white rounded-3xl shadow-sm overflow-hidden h-full`}>
         <div className="flex items-center gap-2 border-b border-[#EAD2B3]/30 bg-amber-50/30 px-4 py-3 shrink-0">
           <span className="text-base bg-amber-100 p-1 rounded-xl text-amber-700 font-extrabold flex items-center justify-center shrink-0 w-8 h-8">{middleIcon}</span>
           <span className="text-xs sm:text-sm font-black text-[#4A321F] tracking-wide">
@@ -129,26 +132,28 @@ export function ThreePanelBentoLayout({
         </div>
       </div>
 
-      {/* Right Panel: Hints / Quotes */}
-      <div className="xl:col-span-3 flex flex-col border border-orange-200/50 bg-[#FFFBF7] rounded-3xl shadow-sm overflow-hidden h-full">
-        <div className="flex items-center gap-2 border-b border-orange-100/50 bg-orange-50/40 px-4 py-3 shrink-0">
-          <span className="text-base bg-orange-100 p-1 rounded-xl text-orange-600 font-extrabold flex items-center justify-center shrink-0 w-8 h-8">{rightIcon}</span>
-          <span className="text-xs sm:text-sm font-black text-orange-950 tracking-wide">
-            {rightTitle}
-          </span>
-        </div>
-        <div className="p-5 flex-1 overflow-y-visible flex flex-col gap-4 text-xs text-[#735A45] leading-relaxed relative">
-          {rightContent}
-          <div className="mt-auto pt-4 flex justify-end">
-            <div className="flex items-center gap-1.5 opacity-80 scale-90">
-              <span className="text-[10px] font-black text-orange-800 bg-orange-100/80 px-2.5 py-0.5 rounded-full">
-                思考中...
-              </span>
-              <span className="text-lg animate-bounce">🤔</span>
+      {/* Right Panel: Hints / Quotes (optional) */}
+      {hasRightContent && (
+        <div className="xl:col-span-3 flex flex-col border border-orange-200/50 bg-[#FFFBF7] rounded-3xl shadow-sm overflow-hidden h-full">
+          <div className="flex items-center gap-2 border-b border-orange-100/50 bg-orange-50/40 px-4 py-3 shrink-0">
+            <span className="text-base bg-orange-100 p-1 rounded-xl text-orange-600 font-extrabold flex items-center justify-center shrink-0 w-8 h-8">{rightIcon || "💡"}</span>
+            <span className="text-xs sm:text-sm font-black text-orange-950 tracking-wide">
+              {rightTitle}
+            </span>
+          </div>
+          <div className="p-5 flex-1 overflow-y-visible flex flex-col gap-4 text-xs text-[#735A45] leading-relaxed relative">
+            {rightContent}
+            <div className="mt-auto pt-4 flex justify-end">
+              <div className="flex items-center gap-1.5 opacity-80 scale-90">
+                <span className="text-[10px] font-black text-orange-800 bg-orange-100/80 px-2.5 py-0.5 rounded-full">
+                  思考中...
+                </span>
+                <span className="text-lg animate-bounce">🤔</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -231,42 +236,177 @@ export default function Unit00TextbookPageViewer({
             leftTitle="📖 情晨的對話 · 凝視生命地圖"
             leftIcon={<Compass className="w-4 h-4 text-purple-600" />}
             leftContent={
-              <div className="space-y-4">
-                <div className="border border-purple-100 rounded-xl bg-gradient-to-br from-purple-50/50 to-indigo-50/30 p-3 shadow-3xs">
-                  <span className="text-[9px] text-purple-600 font-extrabold uppercase block tracking-wider">Scene 01 · 課業壓力</span>
-                  <p className="text-[11px] text-[#5C4033] font-semibold leading-relaxed mt-1">
-                    身處在學霸如雲的環境，時間永遠不夠用，書感覺永遠讀不完。
-                  </p>
+              <div className="relative bg-[#FCFAF7] border border-[#F0E6D2] rounded-2xl overflow-hidden shadow-3xs flex flex-col h-full select-none">
+                {/* Page Number & Top Bar */}
+                <div className="absolute top-2.5 left-3.5 text-[10px] font-black text-[#8C7A6B]/60 font-mono tracking-widest z-10">
+                  004
                 </div>
-                <div className="border border-amber-100 rounded-xl bg-gradient-to-br from-amber-50/70 to-orange-50/30 p-3 shadow-3xs">
-                  <span className="text-[9px] text-amber-600 font-extrabold uppercase block tracking-wider">Scene 02 · 疲憊的父親</span>
-                  <p className="text-[11px] text-[#5C4033] font-semibold leading-relaxed mt-1">
-                    看見經常熬夜加班的父親，週末只能像爛泥般癱在沙發上，毫無生氣。
-                  </p>
-                </div>
-                <div className="border-t border-[#EAD2B3]/30 pt-3 space-y-3">
-                  <div className="pl-3 border-l-2 border-amber-400 bg-amber-50/20 p-2.5 rounded-r-xl">
-                    <span className="text-[9px] font-black text-amber-800 block">爸爸 👨‍👦：</span>
-                    <p className="text-xs font-bold text-[#4A321F] italic mt-0.5 leading-relaxed">
-                      「好好用功讀書，考上大學，未來才會有好的工作，才會有幸福的人生啊！」
-                    </p>
+
+                {/* Top Section with Coral Header and Illustration Collage / Textbook Image */}
+                <div className="relative grid grid-cols-1 md:grid-cols-12 gap-3 min-h-[260px] pb-4 border-b border-dashed border-[#EAD2B3]/60">
+                  
+                  {/* Left Column: Coral Header */}
+                  <div className="md:col-span-5 relative bg-[#E27468] rounded-br-[4rem] rounded-tl-xl p-4.5 pt-7 flex flex-col justify-between shadow-xs text-white overflow-hidden shrink-0">
+                    {/* Background Subtle Wave Details */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent pointer-events-none" />
+                    
+                    <div className="relative z-10 space-y-2">
+                      {/* Dots and line */}
+                      <div className="flex items-center gap-1 opacity-80 text-[7px] tracking-widest text-[#FFEBE8] font-bold">
+                        <span>♦</span><span>♦</span><span>♦</span>
+                        <div className="h-[1px] bg-white/30 flex-1 ml-1" />
+                      </div>
+
+                      {/* Pill Badge */}
+                      <span className="inline-block px-2.5 py-0.5 bg-white/20 border border-white/30 rounded-full text-[9px] font-black tracking-widest uppercase text-[#FFEBE8]">
+                        # 總說
+                      </span>
+                    </div>
+
+                    <div className="relative z-10 pt-6">
+                      <h3 className="font-serif text-lg sm:text-xl font-extrabold tracking-widest text-white leading-snug drop-shadow-xs">
+                        凝視<br />
+                        生命的地圖
+                      </h3>
+                    </div>
                   </div>
-                  <div className="pl-3 border-l-2 border-sky-400 bg-sky-50/20 p-2.5 rounded-r-xl">
-                    <span className="text-[9px] font-black text-sky-800 block">可華 💬：</span>
-                    <p className="text-xs font-bold text-[#1E3A8A] italic mt-0.5 leading-relaxed">
-                      「書感覺永遠讀不完，為什麼要過這樣的生活？追求好工作就是唯一答案嗎？」
-                    </p>
+
+                  {/* Right Column: Beautiful Collage or Custom Uploaded Textbook Image */}
+                  <div className="md:col-span-7 relative flex items-center justify-center min-h-[180px] md:min-h-auto px-2 overflow-hidden bg-amber-50/10">
+                    {answers.p04_custom_textbook_image ? (
+                      <div className="w-full h-full p-2 relative flex flex-col items-center justify-center">
+                        <img 
+                          src={answers.p04_custom_textbook_image} 
+                          alt="課本圖片" 
+                          className="max-h-[200px] w-auto object-contain rounded-xl shadow-xs border border-amber-100"
+                          referrerPolicy="no-referrer"
+                        />
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            updateAnswer('p04_custom_textbook_image', null);
+                          }}
+                          className="absolute bottom-2 right-2 bg-red-500 hover:bg-red-600 text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full shadow-xs transition-all cursor-pointer animate-fade-in"
+                          title="還原預設插圖"
+                        >
+                          還原預設
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        {/* 1. Students walking under the sun (floating dream/memory cloud bubble) */}
+                        <div className="absolute top-2 right-2 w-[140px] h-[95px] rounded-[50%] overflow-hidden border-2 border-white shadow-md rotate-[-4deg] bg-amber-50/50 z-20">
+                          <img 
+                            src={storyHeroPairImg} 
+                            alt="學生回憶" 
+                            className="w-full h-full object-cover scale-110"
+                            referrerPolicy="no-referrer"
+                          />
+                          {/* Overlay light aura */}
+                          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-white/10 mix-blend-overlay" />
+                        </div>
+
+                        {/* 2. Studying student scene (bottom-left overlay) */}
+                        <div className="absolute bottom-2 left-2 w-[95px] h-[95px] rounded-2xl overflow-hidden border-2 border-white shadow-sm rotate-[3deg] z-10">
+                          <img 
+                            src={charKehuaImg} 
+                            alt="可華讀書" 
+                            className="w-full h-full object-cover"
+                            referrerPolicy="no-referrer"
+                          />
+                        </div>
+
+                        {/* 3. Father walking away in suit (bottom-right overlap) */}
+                        <div className="absolute bottom-1.5 right-6 w-[80px] h-[110px] rounded-[1.5rem] overflow-hidden border-2 border-white shadow-sm rotate-[-2deg] z-10">
+                          <img 
+                            src={charDadImg} 
+                            alt="疲憊的父親" 
+                            className="w-full h-full object-cover"
+                            referrerPolicy="no-referrer"
+                          />
+                        </div>
+
+                        {/* Dream Connector Small Circles (representing thinking/dream bubble) */}
+                        <div className="absolute bottom-14 left-24 w-3 h-3 bg-white border border-slate-100 rounded-full shadow-3xs opacity-80 animate-pulse z-20" />
+                        <div className="absolute bottom-20 left-[6.5rem] w-2 h-2 bg-white border border-slate-100 rounded-full shadow-3xs opacity-60 z-20" />
+                        <div className="absolute bottom-24 left-[7.5rem] w-1.5 h-1.5 bg-white border border-slate-100 rounded-full shadow-3xs opacity-40 z-20" />
+                      </>
+                    )}
+
+                    {/* Interactive File Input Badge for custom textbook image uploading */}
+                    <label className="absolute top-2 left-2 bg-black/60 hover:bg-black/80 text-white text-[9px] font-black px-2.5 py-1 rounded-full shadow-xs cursor-pointer transition-all z-30 flex items-center gap-1 select-none">
+                      <span>📷</span>
+                      <span>{answers.p04_custom_textbook_image ? '更換課本圖檔' : '上傳課本圖片'}</span>
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="hidden" 
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                              if (reader.readyState === FileReader.DONE && event.target?.result) {
+                                updateAnswer('p04_custom_textbook_image', event.target.result);
+                              }
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+
+                </div>
+
+                {/* Bottom Section: Pre-reading / Row Text */}
+                <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+                  <div className="space-y-4">
+                    {/* 行前閱讀 Heading Tab */}
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-4 bg-[#E27468] rounded-full" />
+                      <span className="text-[10px] font-black text-white bg-[#E27468] px-2.5 py-0.5 rounded tracking-widest uppercase">
+                        行前閱讀
+                      </span>
+                    </div>
+
+                    {/* Exact complete textbook paragraphs matching image 2 - WITH IMPROVED TYPOGRAPHY AND SPACING */}
+                    <div className="text-[13px] sm:text-[14px] text-[#4A3C31] leading-relaxed sm:leading-loose font-medium space-y-4 pl-0.5 select-text">
+                      <p>
+                        <span className="underline decoration-[#E27468] decoration-2 underline-offset-3 font-extrabold text-[#2F2117]">可華</span>一早起床，爸爸就載他上學，途中爸爸關心問到：「昨晚有沒有為準備考試而熬夜嗎？」
+                      </p>
+                      <p>
+                        <span className="underline decoration-[#E27468] decoration-2 underline-offset-3 font-extrabold text-[#2F2117]">可華</span>打著哈欠回應：「讀書真的很累人，班上同學都是學霸，時間總是不夠用，書感覺永遠讀不完，為什麼要過這樣的生活？」
+                      </p>
+                      <p>
+                        爸爸試著用自己經歷的人生道理說服<span className="underline decoration-[#E27468] decoration-2 underline-offset-3 font-extrabold text-[#2F2117]">可華</span>：「學生只需要認真讀書，是很幸福的！等你長大出社會工作，就知道什麼叫壓力。」
+                      </p>
+                      <p className="pl-4 border-l-2 border-[#E27468]/40 italic text-[#5C4538] font-bold py-1 my-2 bg-amber-50/30 rounded-r-lg">
+                        「好好用功讀書，考上大學，未來才會有好的工作，才會有幸福的人生啊！」
+                      </p>
+                      <p>
+                        對於<span className="underline decoration-[#E27468] decoration-2 underline-offset-3 font-extrabold text-[#2F2117]">爸爸</span>說的幸福人生，<span className="underline decoration-[#E27468] decoration-2 underline-offset-3 font-extrabold text-[#2F2117]">可華</span>回想起爸爸經常拖著疲憊的身體，熬夜加班工作，壓力大到假日只能像爛泥般癱在沙發上。這樣的生活真的是幸福人生嗎？可華<span className="underline decoration-[#E27468] decoration-2 underline-offset-3 font-extrabold text-[#2F2117]">陷入沈思⋯⋯</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 pt-3.5 border-t border-[#EAD2B3]/30 flex justify-between items-center text-[10px] text-[#8C7A6B]/80 font-black">
+                    <span className="flex items-center gap-1">
+                      📖 泰宇生命教育 ── 導讀課文
+                    </span>
+                    <span>P.4</span>
                   </div>
                 </div>
+
               </div>
             }
             middleTitle="01 你的看法是？"
             middleIcon={<Sparkles className="w-4 h-4 text-amber-600" />}
             middleContent={
-              <div className="space-y-4">
-                <div className="bg-teal-50/50 border border-teal-100/50 p-3.5 rounded-2xl">
-                  <span className="text-[10px] font-black text-teal-800 bg-teal-100 px-2 py-0.5 rounded-md">思考問題</span>
-                  <p className="text-xs font-bold text-teal-950 leading-relaxed mt-1.5">
+              <div className="space-y-5">
+                <div className="bg-teal-50/60 border border-teal-100/60 p-4 rounded-2xl shadow-3xs">
+                  <span className="text-[10.5px] font-black text-teal-800 bg-teal-100 px-2.5 py-0.5 rounded-md uppercase tracking-wider">思考問題</span>
+                  <p className="text-[13px] sm:text-[13.5px] font-bold text-teal-950 leading-relaxed mt-2">
                     你是否也曾像可華一樣，對「好好讀書 ➔ 考上大學 ➔ 找好工作 ➔ 幸福人生」這條世俗規劃的公式產生過懷疑？如果是你，你會怎麼回答可華的問題？
                   </p>
                 </div>
@@ -277,35 +417,40 @@ export default function Unit00TextbookPageViewer({
                     value={answers.p04_story_reflection || ''}
                     onChange={(e) => updateAnswer('p04_story_reflection', e.target.value)}
                     placeholder="在此寫下你的真實看法..."
-                    className="w-full text-xs p-3.5 rounded-2xl border border-gray-200 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-200 bg-white font-semibold shadow-3xs text-gray-700 leading-relaxed resize-none"
+                    className="w-full text-xs sm:text-sm p-4 rounded-2xl border border-gray-200 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-200 bg-white font-semibold shadow-2xs text-gray-700 leading-relaxed resize-none"
                   />
-                  <div className="flex justify-between items-center text-[10px] text-amber-700/60 font-bold px-1">
+                  <div className="flex justify-between items-center text-[10.5px] text-amber-700/60 font-bold px-1">
                     <span>✍️ 答案將即時記錄於學習報告</span>
                     <span>{answers.p04_story_reflection?.length || 0} 字</span>
                   </div>
                 </div>
-              </div>
-            }
-            rightTitle="💡 思考提示"
-            rightIcon={<HelpCircle className="w-4 h-4 text-orange-600" />}
-            rightContent={
-              <div className="space-y-3">
-                <div className="border-b border-orange-100/40 pb-2">
-                  <span className="text-[10px] font-bold text-orange-500 uppercase">Tip 01</span>
-                  <p className="text-xs text-[#735A45] font-semibold mt-0.5">「好工作」真的是幸福人生的「唯一」充要條件嗎？</p>
-                </div>
-                <div className="border-b border-orange-100/40 pb-2">
-                  <span className="text-[10px] font-bold text-orange-500 uppercase">Tip 02</span>
-                  <p className="text-xs text-[#735A45] font-semibold mt-0.5">當社會的期待與自己內心真正的渴望產生衝突時，該如何自處？</p>
-                </div>
-                <div>
-                  <span className="text-[10px] font-bold text-orange-500 uppercase">Tip 03</span>
-                  <p className="text-xs text-[#735A45] font-semibold mt-0.5">如果沒有自己的核心價值，拿到成功後是否依然空虛？</p>
+
+                {/* 💡 思考提示: Placed horizontal at the bottom of Thinking Question */}
+                <div className="bg-orange-50/30 border border-orange-100/50 rounded-2xl p-4.5 mt-2 space-y-3 shadow-3xs animate-fade-in">
+                  <div className="flex items-center gap-1.5 border-b border-orange-100/30 pb-2 mb-2.5">
+                    <span className="text-base bg-orange-100 p-1 rounded-xl text-orange-600 font-extrabold flex items-center justify-center shrink-0 w-6 h-6">💡</span>
+                    <span className="text-xs sm:text-sm font-black text-orange-950 tracking-wide">思考提示</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="bg-white/70 p-3 rounded-xl border border-orange-100/20 shadow-4xs">
+                      <span className="text-[9px] font-black text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded uppercase block w-fit">Tip 01</span>
+                      <p className="text-[11.5px] font-bold text-[#735A45] mt-1.5 leading-normal">「好工作」真的是幸福人生的「唯一」充要條件嗎？</p>
+                    </div>
+                    <div className="bg-white/70 p-3 rounded-xl border border-orange-100/20 shadow-4xs">
+                      <span className="text-[9px] font-black text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded uppercase block w-fit">Tip 02</span>
+                      <p className="text-[11.5px] font-bold text-[#735A45] mt-1.5 leading-normal">當社會的期待與內心渴望衝突時，該如何自處？</p>
+                    </div>
+                    <div className="bg-white/70 p-3 rounded-xl border border-orange-100/20 shadow-4xs">
+                      <span className="text-[9px] font-black text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded uppercase block w-fit">Tip 03</span>
+                      <p className="text-[11.5px] font-bold text-[#735A45] mt-1.5 leading-normal">如果沒有自我的核心價值，成功後是否依然空虛？</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             }
           />
         );
+
 
       case 5: // Page 005
         return (

@@ -1370,10 +1370,11 @@ export default function InteractiveQuestTab({
             {/* MAIN DASHBOARD PANEL - THREE COLUMN MASTER LAYOUT */}
             <div id="lobby-main-dashboard" className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               
-              {/* LEFT GROUP (col-span-9): Contains 本班遊戲入口, 老師控制台 at the top, and 10 Games below */}
-              <div className="lg:col-span-9 space-y-6">
+              {/* LEFT GROUP: Contains 本班遊戲入口, 老師控制台 at the top (teacher only), and 10 Games below */}
+              <div className={role === 'teacher' ? 'lg:col-span-9 space-y-6' : 'lg:col-span-12 space-y-6'}>
                 
-                {/* Top Row: 本班遊戲入口 (col-span-5) & 老師控制台 (col-span-7) */}
+                {/* Top Row: 本班遊戲入口 (col-span-5) & 老師控制台 (col-span-7) — teacher only, students go straight to the game grid below */}
+                {role === 'teacher' && (
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                   
                   {/* 本班遊戲入口 Card */}
@@ -1611,6 +1612,7 @@ export default function InteractiveQuestTab({
                     </div>
                   </div>
                 </div>
+                )}
 
                 {/* Bottom Row: 10 款互動遊戲列表 */}
                   <div className="space-y-4 pt-2">
@@ -1705,7 +1707,8 @@ export default function InteractiveQuestTab({
                   </div>
                 </div>
 
-                {/* RIGHT GROUP (col-span-3): Projection settings and Classroom Timelines */}
+                {/* RIGHT GROUP (col-span-3): Projection settings and Classroom Timelines — teacher only */}
+                {role === 'teacher' && (
                 <div className="lg:col-span-3 space-y-6">
                   
                   {/* 投影模式設定 */}
@@ -1815,6 +1818,7 @@ export default function InteractiveQuestTab({
                     </div>
                   </div>
               </div>
+              )}
             </div>
 
             {/* FOOTER TIPS CARDS - BOTTOM 3 COLUMN USAGE ADVICE (Matches Image 1 exactly) */}

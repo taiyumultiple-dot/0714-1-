@@ -450,6 +450,8 @@ export default function App() {
     { name: '首頁', icon: Home, badge: null },
     { name: '課程地圖', icon: Map, badge: null },
     { name: '互動遊戲', icon: Gamepad2, badge: null },
+    { name: '關鍵字牆', icon: Sparkles, badge: null },
+    { name: '成長表單', icon: FileText, badge: null },
     { name: '角色故事', icon: Users, badge: null },
     ...(currentUser?.role === 'teacher' ? [{ name: '學習統計', icon: TrendingUp, badge: null }] : [])
   ];

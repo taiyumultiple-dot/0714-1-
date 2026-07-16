@@ -4,10 +4,9 @@
  */
 
 import React, { useState } from 'react';
-import { BookOpen, HeartHandshake, Search, UsersRound } from 'lucide-react';
+import { BookOpen, HeartHandshake, UsersRound } from 'lucide-react';
 import { CHARACTERS } from '../data';
 import { Character } from '../types';
-import storyHeroPair from '../assets/images/characters/story_hero_pair.png';
 import kehuaImg from '../assets/images/characters/char_kehua.jpg';
 import xiaopingImg from '../assets/images/characters/char_xiaoping.jpg';
 import xiaowenImg from '../assets/images/characters/char_xiaowen.jpg';
@@ -129,114 +128,174 @@ export default function CharacterStoryTab({ characters: propCharacters }: Charac
         : relationCopy.kehua;
 
   return (
-    <div className="role-story-page">
-      <style>{styles}</style>
+    <div className="min-h-screen bg-[#FBF3E4] text-[#3E2723] font-sans pb-16 px-4 md:px-8 relative overflow-hidden">
+      {/* Corner floral decorations */}
+      <div className="hidden md:block absolute left-1 top-20 w-48 h-64 opacity-70 pointer-events-none select-none rotate-[8deg] z-0" aria-hidden="true">
+        <svg viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 300C95 220 90 150 60 90C40 50 20 30 10 10" stroke="#B7C79A" strokeWidth="3" strokeLinecap="round" />
+          <ellipse cx="55" cy="95" rx="16" ry="8" fill="#C6D6A8" transform="rotate(-30 55 95)" />
+          <ellipse cx="35" cy="60" rx="16" ry="8" fill="#C6D6A8" transform="rotate(-50 35 60)" />
+          <circle cx="70" cy="130" r="10" fill="#F3C1CE" />
+          <circle cx="45" cy="170" r="8" fill="#F6D3A8" />
+        </svg>
+      </div>
 
-      <section className="role-hero">
-        <div className="role-hero-copy">
-          <h1>角色故事｜青春關係圖</h1>
-          <p>透過角色互動，一起探索生命中的重要課題與人際關係。</p>
-        </div>
-        <img src={storyHeroPair} alt="張曉萍與陳可華" />
-      </section>
+      <div className="max-w-7xl mx-auto pt-8 space-y-6 relative z-10">
 
-      <section className="role-grid">
-        <div className="relation-map card-panel">
-          <h2>青春關係圖</h2>
-          <div className="map-canvas">
-            <svg className="relation-lines" viewBox="0 0 700 350" aria-hidden="true">
-              <line x1="156" y1="88" x2="544" y2="88" className="line-orange" />
-              <line x1="156" y1="88" x2="544" y2="268" className="line-purple dashed" />
-              <line x1="544" y1="88" x2="156" y2="268" className="line-purple dashed" />
-              <line x1="156" y1="268" x2="544" y2="268" className="line-green dashed" />
-              <line x1="156" y1="88" x2="156" y2="268" className="line-blue" />
-              <line x1="544" y1="88" x2="544" y2="268" className="line-blue" />
-            </svg>
-
-            <button onClick={() => setSelectedId('char_xiaoping')} className={`map-card top-left ${selected.id === 'char_xiaoping' ? 'active' : ''}`}>
-              <div><strong>張曉萍</strong><span>活潑開朗<br />樂於助人</span></div>
-              <img src={xiaopingImg} alt="張曉萍" />
-            </button>
-            <button onClick={() => setSelectedId('char_kehua')} className={`map-card top-right ${selected.id === 'char_kehua' ? 'active' : ''}`}>
-              <img src={kehuaImg} alt="陳可華" />
-              <div><strong>陳可華</strong><span>溫和細心<br />善於觀察</span></div>
-            </button>
-            <button onClick={() => setSelectedId('char_xiaowen')} className={`map-card bottom-left ${selected.id === 'char_xiaowen' ? 'active' : ''}`}>
-              <div><strong>王小文</strong><span>善解人意<br />心思細膩</span></div>
-              <img src={xiaowenImg} alt="王小文" />
-            </button>
-            <button onClick={() => setSelectedId('char_bojun')} className={`map-card bottom-right ${selected.id === 'char_bojun' ? 'active' : ''}`}>
-              <img src={bojunImg} alt="王博鈞" />
-              <div><strong>王博鈞</strong><span>熱情幽默<br />樂觀積極</span></div>
-            </button>
-
-            <span className="relation-label label-friend">親密／好友</span>
-            <span className="relation-label label-neighbor">鄰居關係</span>
-            <span className="relation-label label-classmate-left">同學</span>
-            <span className="relation-label label-classmate-right">同學</span>
-            <span className="relation-label label-buddy">死黨</span>
+        {/* Hero banner */}
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-6 md:p-8 flex items-center justify-between gap-6 shadow-sm">
+          <div className="absolute top-4 left-10 text-3xl opacity-20 pointer-events-none select-none">🌸</div>
+          <div className="absolute bottom-3 right-1/3 text-3xl opacity-20 pointer-events-none select-none">🌿</div>
+          <div className="space-y-1 text-left z-10">
+            <h1 className="text-2xl md:text-3xl font-black text-[#4A321F]">角色故事｜青春關係圖</h1>
+            <p className="text-xs md:text-sm font-bold text-[#7D5C43]/90">透過角色互動，一起探索生命中的重要課題與人際關係。</p>
           </div>
-
-          <div className="family-strip">
-            <div className="family-title"><HeartHandshake size={18} />家庭支持</div>
-            <button onClick={() => setSelectedId('char_dad')} className="family-card">
-              <img src={dadImg} alt="可華爸爸" />
-              <div><strong>可華爸爸</strong><span>穩重可靠<br />給予方向與支持</span></div>
-            </button>
-            <button onClick={() => setSelectedId('char_grandpa')} className="family-card">
-              <img src={grandpaImg} alt="可華爺爺" />
-              <div><strong>可華爺爺</strong><span>溫暖慈愛<br />陪伴與鼓勵成長</span></div>
-            </button>
+          <div className="hidden md:flex items-end -space-x-3 z-10 shrink-0 pr-2">
+            {[xiaopingImg, kehuaImg].map((src, i) => (
+              <img key={i} src={src} alt="" className="w-20 h-20 rounded-full object-cover border-[3px] border-white shadow-md" style={{ zIndex: 2 - i }} referrerPolicy="no-referrer" />
+            ))}
           </div>
         </div>
 
-        <aside className="story-side">
-          <div className="insight-card card-panel">
-            <HeartHandshake size={26} />
-            <div>
-              <h3>當前選取關係故事 <span>(RELATIONSHIP INSIGHT)</span></h3>
-              <strong>{relationship.title}</strong>
-              <p>{relationship.body}</p>
-            </div>
-          </div>
+        {/* Main 2-column grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-          <div className="selector-card card-panel">
-            <h3><UsersRound size={14} />人物角色卡總覽</h3>
-            <div className="pill-row">
-              {storyCharacters.map((character) => (
-                <button key={character.id} onClick={() => setSelectedId(character.id)} className={selected.id === character.id ? 'selected' : ''}>
-                  {character.name}
-                </button>
-              ))}
-            </div>
-          </div>
+          {/* Left: Relationship map */}
+          <div className="lg:col-span-7 bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm">
+            <h2 className="text-center text-sm font-black tracking-widest text-[#4A321F] mb-6">青春關係圖</h2>
 
-          <div className="profile-card card-panel">
-            <img src={portraitById[selected.id] || selected.image} alt={selected.name} />
-            <div>
-              <h2>{selected.name} <span>({selected.role})</span></h2>
-              <small>{selectedSource?.isFamily ? '家庭支持角色' : selected.subtitle}</small>
-              <div className="tags">
-                {selected.traits.map((trait) => <span key={trait}># {trait}</span>)}
+            <div className="relative w-full" style={{ minHeight: 340 }}>
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 700 300" preserveAspectRatio="none">
+                <line x1="175" y1="65" x2="525" y2="65" stroke="#F08A2D" strokeWidth="2.5" />
+                <line x1="175" y1="65" x2="525" y2="235" stroke="#9A6AD5" strokeWidth="2.5" strokeDasharray="7 7" />
+                <line x1="525" y1="65" x2="175" y2="235" stroke="#9A6AD5" strokeWidth="2.5" strokeDasharray="7 7" />
+                <line x1="175" y1="235" x2="525" y2="235" stroke="#61A94F" strokeWidth="2.5" strokeDasharray="7 7" />
+                <line x1="175" y1="65" x2="175" y2="235" stroke="#4A91DC" strokeWidth="2.5" />
+                <line x1="525" y1="65" x2="525" y2="235" stroke="#4A91DC" strokeWidth="2.5" />
+              </svg>
+
+              {/* Relation labels */}
+              <span className="absolute left-1/2 -translate-x-1/2 text-[11px] font-black px-2.5 py-0.5 rounded-full border border-current bg-[#FFF8ED] text-[#EF6D1F]" style={{ top: '14%' }}>親密／好友</span>
+              <span className="absolute left-1/2 -translate-x-1/2 text-[11px] font-black px-2.5 py-0.5 rounded-full border border-current bg-[#FFF8ED] text-[#8B66C9]" style={{ top: '48%' }}>鄰居關係</span>
+              <span className="absolute text-[11px] font-black px-2.5 py-0.5 rounded-full border border-current bg-[#FFF8ED] text-[#3479C8]" style={{ left: '2%', top: '46%' }}>同學</span>
+              <span className="absolute text-[11px] font-black px-2.5 py-0.5 rounded-full border border-current bg-[#FFF8ED] text-[#3479C8]" style={{ right: '2%', top: '46%' }}>同學</span>
+              <span className="absolute left-1/2 -translate-x-1/2 text-[11px] font-black px-2.5 py-0.5 rounded-full border border-current bg-[#FFF8ED] text-[#3A9B54]" style={{ bottom: '10%' }}>死黨</span>
+
+              {/* Person cards */}
+              {[
+                { id: 'char_xiaoping', pos: 'absolute left-0 top-0' },
+                { id: 'char_kehua', pos: 'absolute right-0 top-0', reverse: true },
+                { id: 'char_xiaowen', pos: 'absolute left-0 bottom-0' },
+                { id: 'char_bojun', pos: 'absolute right-0 bottom-0', reverse: true },
+              ].map(({ id, pos, reverse }) => {
+                const c = storyCharacters.find(sc => sc.id === id)!;
+                const isActive = selected.id === id;
+                return (
+                  <button
+                    key={id}
+                    onClick={() => setSelectedId(id)}
+                    className={`${pos} w-[46%] sm:w-[220px] rounded-2xl border-2 bg-[#FFFDF8] shadow-sm flex items-center gap-2.5 p-2.5 text-left transition-all cursor-pointer z-10 ${
+                      reverse ? 'flex-row-reverse text-right' : ''
+                    } ${isActive ? 'border-[#F97316] shadow-md scale-[1.02]' : 'border-[#EFC895] hover:border-[#F0AE5F]'}`}
+                  >
+                    <img src={portraitById[id]} alt={c.name} className="w-16 h-14 object-cover rounded-xl shrink-0" referrerPolicy="no-referrer" />
+                    <div className="min-w-0">
+                      <div className="text-sm font-black text-[#4A321F]">{c.name}</div>
+                      <div className="text-[10px] font-bold text-[#6B4B35] leading-snug">{c.subtitle}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Family support strip */}
+            <div className="mt-4 border-2 border-[#EAD5C3] rounded-2xl bg-[#FFF8ED] p-3 flex flex-col sm:flex-row items-center gap-3">
+              <div className="flex flex-col items-center gap-1 text-[#D56719] font-black text-xs shrink-0 px-2">
+                <HeartHandshake className="w-5 h-5" />
+                <span>家庭支持</span>
               </div>
-              <p>{selected.bio}</p>
+              {['char_dad', 'char_grandpa'].map((id) => {
+                const c = storyCharacters.find(sc => sc.id === id)!;
+                return (
+                  <button
+                    key={id}
+                    onClick={() => setSelectedId(id)}
+                    className={`flex-1 w-full flex items-center gap-3 bg-[#FFFDF8] border rounded-2xl p-2.5 text-left transition-all cursor-pointer ${selected.id === id ? 'border-[#F97316] shadow-sm' : 'border-[#EFC895]'}`}
+                  >
+                    <img src={portraitById[id]} alt={c.name} className="w-16 h-11 object-cover rounded-xl shrink-0" referrerPolicy="no-referrer" />
+                    <div className="min-w-0">
+                      <div className="text-xs font-black text-[#4A321F]">{c.name}</div>
+                      <div className="text-[10px] font-bold text-[#6B4B35] leading-snug">{c.subtitle}</div>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
-        </aside>
-      </section>
 
-      <section className="lesson-card card-panel">
-        <div className="lesson-icon"><BookOpen size={28} /></div>
-        <div>
-          <h2>角色關係與生命課題</h2>
-          <p>六位角色展現了青春中常見的不同生命主題，包括友誼、理解、溝通、責任、支持與選擇。在家庭、朋友與同儕的陪伴下，我們學會面對挑戰、建立自我，並在關係中找到成長的力量。</p>
+          {/* Right: sidebar */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm flex gap-3 items-start">
+              <HeartHandshake className="w-6 h-6 text-[#F07B1B] shrink-0 mt-0.5" />
+              <div>
+                <h3 className="text-xs font-black text-[#4A321F] mb-1">
+                  當前選取關係故事 <span className="text-[10px] font-bold text-[#B4570B] tracking-wider">(RELATIONSHIP INSIGHT)</span>
+                </h3>
+                <strong className="block text-xs font-black text-[#4A321F] mb-1">{relationship.title}</strong>
+                <p className="text-[11px] text-[#6B4B35] font-bold leading-relaxed">{relationship.body}</p>
+              </div>
+            </div>
+
+            <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-5 shadow-sm">
+              <h3 className="text-xs font-black text-[#4A321F] mb-3 flex items-center gap-1.5">
+                <UsersRound className="w-3.5 h-3.5" /> 人物角色卡總覽
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {storyCharacters.map((character) => (
+                  <button
+                    key={character.id}
+                    onClick={() => setSelectedId(character.id)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-black border transition-all cursor-pointer ${
+                      selected.id === character.id
+                        ? 'bg-[#E65100] text-white border-[#E65100]'
+                        : 'bg-[#FFFAF2] text-[#5B3218] border-[#EFC895] hover:bg-orange-50'
+                    }`}
+                  >
+                    {character.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white border-2 border-[#9FC7EE] rounded-3xl p-5 shadow-sm flex gap-4">
+              <img src={portraitById[selected.id] || selected.image} alt={selected.name} className="w-24 sm:w-28 h-32 sm:h-36 object-cover rounded-2xl shrink-0" referrerPolicy="no-referrer" />
+              <div className="min-w-0">
+                <h2 className="text-base font-black text-[#4A321F]">{selected.name} <span className="text-xs font-bold text-slate-500">({selected.role})</span></h2>
+                <p className="text-[11px] text-slate-500 font-bold mb-2">{selectedSource?.isFamily ? '家庭支持角色' : selected.subtitle}</p>
+                <div className="flex flex-wrap gap-1.5 mb-2">
+                  {selected.traits.map((trait) => (
+                    <span key={trait} className="text-[10px] font-black border border-[#9FC7EE] bg-[#EEF6FF] text-[#2F6FB3] rounded-full px-2.5 py-0.5"># {trait}</span>
+                  ))}
+                </div>
+                <p className="text-[11px] text-[#43352B] font-bold leading-relaxed">{selected.bio}</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <Search className="lesson-search" size={100} />
-      </section>
+
+        {/* Bottom: lesson card */}
+        <div className="bg-white border-2 border-[#EAD5C3] rounded-3xl p-6 shadow-sm flex items-center gap-5">
+          <div className="w-14 h-14 rounded-full border-4 border-[#F7D7A2] flex items-center justify-center text-[#D87B1F] shrink-0">
+            <BookOpen className="w-6 h-6" />
+          </div>
+          <div>
+            <h2 className="text-sm font-black text-[#4A321F] mb-1.5">角色關係與生命課題</h2>
+            <p className="text-xs text-[#6B4B35] font-bold leading-relaxed">
+              六位角色展現了青春中常見的不同生命主題，包括友誼、理解、溝通、責任、支持與選擇。在家庭、朋友與同儕的陪伴下，我們學會面對挑戰、建立自我，並在關係中找到成長的力量。
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
-
-const styles = `
-.role-story-page{min-height:100vh;padding:22px;background:linear-gradient(180deg,#fffaf2 0%,#fff7eb 58%,#fffdf8 100%);color:#40200f;font-family:"Noto Serif TC","Noto Sans TC","Microsoft JhengHei",serif}.card-panel{border:1.5px solid #efc895;border-radius:20px;background:rgba(255,253,247,.92);box-shadow:0 12px 30px rgba(127,78,23,.06)}.role-hero{position:relative;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;min-height:150px;border:1.5px solid #efc895;border-radius:18px;overflow:hidden;background:linear-gradient(90deg,#fff8eb 0%,#fffdf7 54%,#fff2dc 100%)}.role-hero:before,.role-hero:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(239,178,95,.24),transparent 68%)}.role-hero:before{left:-70px;top:-70px}.role-hero:after{right:160px;bottom:-110px}.role-hero-copy{position:relative;z-index:2;padding:24px 32px}.role-hero h1{font-size:32px;line-height:1.2;margin:0 0 10px;font-weight:900;letter-spacing:.04em}.role-hero p{font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:14px;font-weight:700;letter-spacing:.02em;margin:0}.role-hero img{height:150px;width:100%;object-fit:cover;object-position:center bottom;align-self:end}.role-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:14px;margin:14px auto 14px;max-width:1240px}.relation-map{padding:16px 18px 14px}.relation-map h2{text-align:center;font-size:18px;font-weight:900;letter-spacing:.06em;margin:0 0 8px}.map-canvas{position:relative;height:350px;width:700px;max-width:100%;margin:0 auto;border-top:1px solid #f2ddc0}.relation-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.relation-lines line{stroke-width:3}.dashed{stroke-dasharray:8 8}.line-orange{stroke:#f08a2d}.line-purple{stroke:#9a6ad5}.line-green{stroke:#61a94f}.line-blue{stroke:#4a91dc}.map-card{position:absolute;width:200px;height:84px;border:1.5px solid #efc895;border-radius:16px;background:#fffdf8;display:grid;grid-template-columns:1fr 112px;align-items:center;gap:10px;padding:8px 10px;text-align:left;transition:.2s;box-shadow:0 6px 18px rgba(112,69,24,.07)}.map-card img{width:80px;height:68px;object-fit:cover;border-radius:10px;border:1px solid #efc895;background:#fff}.map-card strong{display:block;font-size:14px;font-weight:900;margin-bottom:4px}.map-card span{display:block;font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:10px;line-height:1.4;color:#6b4b35;font-weight:700}.map-card.active{border-color:#f97316;box-shadow:0 0 0 2px rgba(249,115,22,.14),0 12px 26px rgba(112,69,24,.1)}.top-left{left:26px;top:34px}.top-right{right:26px;top:34px;grid-template-columns:80px 1fr}.bottom-left{left:26px;bottom:28px}.bottom-right{right:26px;bottom:28px;grid-template-columns:80px 1fr}.relation-label{position:absolute;z-index:3;border-radius:999px;border:1px solid currentColor;background:#fff8ed;padding:3px 10px;font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:11px;font-weight:900}.label-friend{left:50%;top:75px;transform:translateX(-50%);color:#ef6d1f}.label-neighbor{left:50%;top:178px;transform:translateX(-50%);color:#8b66c9}.label-classmate-left{left:36px;top:169px;color:#3479c8}.label-classmate-right{right:42px;top:169px;color:#3479c8}.label-buddy{left:50%;bottom:54px;transform:translateX(-50%);color:#3a9b54}.family-strip{display:grid;grid-template-columns:90px 1fr 1fr;gap:8px;align-items:center;border:1.5px solid #efc895;border-radius:14px;padding:8px;background:#fff8ed;margin-top:12px}.family-title{display:flex;flex-direction:column;align-items:center;gap:3px;color:#d56719;font-weight:900;font-size:12px}.family-card{border:1px solid #efc895;border-radius:14px;background:#fffdf8;display:flex;align-items:center;gap:13px;padding:8px;text-align:left}.family-card img{width:80px;height:50px;object-fit:cover;border-radius:10px}.family-card strong{font-size:13px}.family-card span{font-size:11px;line-height:1.4;color:#6b4b35}.story-side{display:flex;flex-direction:column;gap:14px}.insight-card{display:flex;gap:12px;padding:14px 18px;align-items:center}.insight-card svg{color:#f07b1b;flex:0 0 auto}.insight-card h3{font-size:14px;font-weight:900;margin:0 0 5px}.insight-card h3 span{font-size:10px;letter-spacing:.04em}.insight-card strong{font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:13px}.insight-card p{font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:12px;line-height:1.6;margin:5px 0 0}.selector-card{padding:14px 18px}.selector-card h3{display:flex;align-items:center;gap:6px;margin:0 0 10px;font-size:14px;font-weight:900}.pill-row{display:flex;flex-wrap:wrap;gap:10px}.pill-row button{min-width:0;border:1px solid #efc895;border-radius:999px;background:#fffaf2;color:#5b3218;padding:6px 12px;font-weight:900;font-size:12px}.pill-row button.selected{background:#f58a22;color:white;border-color:#f58a22}.profile-card{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:14px}.profile-card>img{width:110px;height:135px;object-fit:cover;border:1.5px solid #9fc7ee;border-radius:12px;background:#fff}.profile-card h2{font-size:18px;margin:0 0 4px;font-weight:900}.profile-card h2 span{font-size:13px}.profile-card small{display:block;font-size:11px;color:#6b7280;font-weight:700;margin-bottom:8px}.tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}.tags span{border:1px solid #9fc7ee;background:#eef6ff;color:#2f6fb3;border-radius:999px;padding:3px 9px;font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;font-weight:900;font-size:10px}.profile-card p{font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:12px;line-height:1.6;margin:0;color:#43352b}.lesson-card{position:relative;display:flex;align-items:center;gap:16px;max-width:1240px;margin:0 auto;padding:16px 90px 16px 22px;overflow:hidden}.lesson-icon{width:60px;height:60px;border-radius:50%;border:6px solid #f7d7a2;display:flex;align-items:center;justify-content:center;color:#d87b1f;flex:0 0 auto}.lesson-card h2{font-size:18px;font-weight:900;margin:0 0 6px}.lesson-card p{font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:13px;line-height:1.6;margin:0}.lesson-search{position:absolute;right:28px;bottom:-28px;color:#e8c696;opacity:.55}@media(max-width:1180px){.role-hero,.role-grid{grid-template-columns:1fr}.role-hero img{height:240px}.map-canvas{height:390px}.map-card{width:235px}.profile-card{grid-template-columns:140px 1fr}.profile-card>img{width:140px;height:175px}}@media(max-width:760px){.role-story-page{padding:12px}.role-hero-copy{padding:24px}.role-hero h1{font-size:32px}.role-hero p{font-size:16px}.map-canvas{height:auto;display:grid;gap:12px;padding-top:12px}.relation-lines,.relation-label{display:none}.map-card{position:static;width:100%;grid-template-columns:1fr 120px}.family-strip{grid-template-columns:1fr}.profile-card{grid-template-columns:1fr}.profile-card>img{width:100%;height:240px}.lesson-card{padding:20px;align-items:flex-start}.lesson-search{display:none}}
-`;

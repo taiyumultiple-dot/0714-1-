@@ -71,6 +71,8 @@ import {
   gameIcon10,
   lobbyHero,
   lobbyFloral,
+  lobbyHeroV2,
+  lobbyFloralV2,
   badgeHero,
   badgeSibian,
   badgeTongli,
@@ -1341,7 +1343,7 @@ export default function InteractiveQuestTab({
             <div id="lobby-hero-banner" className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FFF4EA] via-[#FFFBF6] to-[#FFF0E0] border-2 border-[#EAD5C3] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
               {/* Floral vine decoration, top-left of the text block */}
               <div className="absolute left-0 top-6 w-24 h-24 pointer-events-none opacity-90 select-none">
-                <img src={lobbyFloral} alt="" className="w-full h-full object-contain" />
+                <img src={lobbyFloralV2} alt="" className="w-full h-full object-contain" />
               </div>
 
               <div className="space-y-4 max-w-2xl text-center md:text-left z-10">
@@ -1362,7 +1364,7 @@ export default function InteractiveQuestTab({
               {/* Character illustration decoration: students cheering, with book + floral vines */}
               <div className="relative shrink-0 flex items-center justify-center z-10 w-full md:w-auto md:max-w-[420px]">
                 <img
-                  src={lobbyHero}
+                  src={lobbyHeroV2}
                   alt="同學們開心迎接互動遊戲"
                   className="w-full h-auto object-contain select-none"
                   referrerPolicy="no-referrer"
